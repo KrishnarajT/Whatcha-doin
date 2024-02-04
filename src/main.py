@@ -83,6 +83,8 @@ class MainApplication:
             str: The title of the active window.
         """
         active_window = gw.getActiveWindow()
+        if not active_window:
+            return "idle"
         return active_window.title
 
     def run(self):
