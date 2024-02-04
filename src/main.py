@@ -8,8 +8,23 @@ import threading
 from colorama import init, Fore, Style
 import os
 from collections import Counter
-import os
+import sys
 
+def recording_indicator():
+    while app.get_record():
+        print("\rRecording", end="")
+        for _ in range(3):
+            if not app.get_record():
+                break
+            print(".", end="")
+            sys.stdout.flush()
+            time.sleep(0.5)
+        print("\rRecording   ", end="")
+        sys.stdout.flush()
+    print("Paused   ", end="")
+    sys.stdout.flush()
+
+        
 class MainApplication:
 
     def __init__(self):
@@ -73,16 +88,16 @@ class MainApplication:
         """
         # Get the active window
         active_window = self.get_active_window()
-        print(active_window)
+        # print(active_window)
         # Update the counter
         if active_window not in self.counter:
-            print("new window")
+            # print("new window")
             self.counter[active_window] = 0
             self.start_time_dict[active_window] = datetime.datetime.now()
         else:
-            print("old window")
+            # print("old window")
             self.counter.update([active_window])
-        print(self.counter)
+        # print(self.counter)
         # check if the counter value is more than checking_interval_s
         if self.counter[active_window] >= self.registration_interval_s:
             # convert counter seconds into datetime object
@@ -92,7 +107,7 @@ class MainApplication:
             
             # add next row to the dataframe
             self.db.loc[len(self.db)] = new_row
-            print("self", self.db)
+            # print("self", self.db)
             
             # reset the counter
             self.counter[active_window] = 0
@@ -103,6 +118,7 @@ class MainApplication:
         """
         if self.record == True:
             self.record = False
+            sys.stdout.flush()
         else:
             self.record = True
 
@@ -231,6 +247,7 @@ class MainApplication:
     
     def print_db(self):
         print(self.db)
+        print("counter is", self.counter)
     
     # setter functions
     def set_thread_interval_s(self, thread_interval_s):
@@ -258,12 +275,16 @@ def user_io():
     Manages user input and output.
     """
     while True:
-        user_input = input("Enter \n'1' to Play / Pause, \n'2' to start a blank file, \n'3' to export raw data to CSV, JSON, HTML\n'4' Export Nicely to CSV, JSON, HTML \n'5' to end: ")
+        user_input = input("Enter \n'1' to Play / Pause, \n'2' to start a blank file, \n'3' to export raw data to CSV, JSON, HTML\n'4' Export Nicely to CSV, JSON, HTML \n'5' to end: \n\n\n ")
         
         if user_input == "0":
             app.print_db()
         elif user_input == "1":
             app.pause_or_resume()
+            if app.get_record() == True:
+                print("Recording ...")
+            else:
+                print("Paused")
         elif user_input == "2":
             app.start_fresh()
         elif user_input == "3":
@@ -276,7 +297,6 @@ def user_io():
             break
         else:
             print("Invalid input. Please try again.")
-            
     app.cleanup()
     
 def core():
@@ -287,7 +307,7 @@ def core():
     while True:
         if app.get_record() == True:
             schedule.run_pending()
-            print("next job", schedule.next_run())
+            # print("next job", schedule.next_run())
         if app.finish == True:
             break
         time.sleep(app.thread_interval_s)
@@ -320,7 +340,7 @@ if __name__ == "__main__":
         user_thread.start()
         core_thread.start()
 
-        print("Threads have started")
+        # print("Threads have started")
         user_thread.join()
         core_thread.join()
     except KeyboardInterrupt:
