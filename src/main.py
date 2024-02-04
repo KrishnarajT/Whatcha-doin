@@ -84,7 +84,7 @@ class MainApplication:
         """
         active_window = gw.getActiveWindow()
         if not active_window:
-            return "idle"
+            return "Unknown"
         return active_window.title
 
     def run(self):
