@@ -2,6 +2,7 @@
 import pandas as pd
 import datetime
 import pygetwindow as gw
+import pyautogui as pag
 import schedule
 import time
 import threading 
@@ -36,6 +37,8 @@ class MainApplication:
         self.finish = False
         self.script_directory = os.path.dirname(os.path.abspath(__file__))
         self.data_directory = os.path.join(os.path.dirname(self.script_directory), 'data')
+        self.cursor_position = pag.position()
+        self.cursor_counter = 0
         self.init_db()
         
     def init_db(self):
@@ -88,6 +91,13 @@ class MainApplication:
         """
         # Get the active window
         active_window = self.get_active_window()
+        if self.cursor_position == pag.position():
+            self.cursor_counter += 1
+        else:
+            self.cursor_position = pag.position()
+            self.cursor_counter = 0
+        if self.cursor_counter > 100:
+            active_window = "idle"
         # print(active_window)
         # Update the counter
         if active_window not in self.counter:
@@ -111,6 +121,7 @@ class MainApplication:
             
             # reset the counter
             self.counter[active_window] = 0
+            self.start_time_dict[active_window] = datetime.datetime.now()
                 
     def pause_or_resume(self):
         """
@@ -319,13 +330,13 @@ if __name__ == "__main__":
 
     # Print welcome message in ASCII art
     print(Fore.BLUE + Style.BRIGHT + r"""
-    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    ░  ░░░░  ░░        ░░  ░░░░░░░░░      ░░░░      ░░░  ░░░░  ░░        ░
-    ▒  ▒  ▒  ▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒   ▒▒   ▒▒  ▒▒▒▒▒▒▒
-    ▓        ▓▓      ▓▓▓▓  ▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓  ▓▓▓▓  ▓▓        ▓▓      ▓▓▓
-    █   ██   ██  ████████  ████████  ████  ██  ████  ██  █  █  ██  ███████
-    █  ████  ██        ██        ███      ████      ███  ████  ██        █
-    ██████████████████████████████████████████████████████████████████████                                                                    
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    ░  ░░░░  ░░  ░░░░  ░░░      ░░░        ░░░      ░░░  ░░░░  ░░░      ░░░░░░░░░       ░░░░      ░░░        ░░   ░░░  ░
+    ▒  ▒  ▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒▒    ▒▒  ▒
+    ▓        ▓▓        ▓▓  ▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓▓▓▓▓        ▓▓  ▓▓▓▓  ▓▓▓▓▓▓▓▓  ▓▓▓▓  ▓▓  ▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓▓  ▓  ▓  ▓
+    █   ██   ██  ████  ██        █████  █████  ████  ██  ████  ██        ████████  ████  ██  ████  █████  █████  ██    █
+    █  ████  ██  ████  ██  ████  █████  ██████      ███  ████  ██  ████  ████████       ████      ███        ██  ███   █
+    ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                                                                    
     """ + Style.RESET_ALL)
     schedule.every(app.thread_interval_s).seconds.do(app.run)
     # manage threads
