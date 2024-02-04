@@ -9,6 +9,7 @@ from colorama import init, Fore, Style
 import os
 from collections import Counter
 import os
+
 class MainApplication:
 
     def __init__(self):
@@ -35,8 +36,17 @@ class MainApplication:
         
         # if the csv file exists, import it to self.db
         if os.path.exists(os.path.join(self.data_directory, "data.csv")):
-            self.db = pd.read_csv(os.path.join(self.data_directory, "data.csv"))
+            self.db = pd.read_csv(os.path.join(self.data_directory, "data.csv"), dtype={"Title": str, "Start Time": str, "Registered End Time": str, "Real Duration": str})
             print("imported data")
+            
+            try:
+                # find sum of duration
+                self.db["Real Duration"] = pd.to_timedelta(self.db["Real Duration"])
+                print("imported data")
+                print("total duration", self.db["Real Duration"].sum())
+            except Exception as e:
+                print(e)
+                print("could not convert duration to timedelta")
         else:
             print("no data to import, starting fresh")
         
@@ -124,8 +134,8 @@ class MainApplication:
 
         print("cleaned up")
     
-    # export to csv
-    def export_to_csv(self):
+    # export raw data
+    def export_raw(self):
         """
         Exports the database to a CSV file.
         """
@@ -145,33 +155,19 @@ class MainApplication:
         # Save the dataframe to a file
         self.db.to_csv(os.path.join(data_directory, "data.csv"), index=False)
         print("Saved to ", os.path.join(data_directory, "data.csv"))
-    
-    # export to json
-    def export_to_json(self):
-        """
-        Exports the database to a JSON file.
-        """
-        # Define the data directory
-        data_directory = os.path.join(os.path.dirname(self.script_directory), 'data')
         
-        # Create the data directory if it does not exist
-        if not os.path.exists(data_directory):
-            os.makedirs(data_directory)
-        print("data directory", data_directory)
-        
-        # Check if the dataframe is empty
-        if self.db.empty:
-            print("No data to save")
-            return
-        
-        # Save the dataframe to a file
+        # export to json
         self.db.to_json(os.path.join(data_directory, "data.json"), orient="records")
         print("Saved to ", os.path.join(data_directory, "data.json"))
-    
-    # export to html
-    def export_to_html(self):
+        
+        # export to html
+        self.db.to_html(os.path.join(data_directory, "data.html"))
+        print("Saved to ", os.path.join(data_directory, "data.html"))
+        
+    # export collaborative data
+    def export_collaborative_data(self):
         """
-        Exports the database to a HTML file.
+        Exports the database to a collaborative data file.
         """
         # Define the data directory
         data_directory = os.path.join(os.path.dirname(self.script_directory), 'data')
@@ -186,9 +182,33 @@ class MainApplication:
             print("No data to save")
             return
         
-        # Save the dataframe to a file
-        self.db.to_html(os.path.join(data_directory, "data.html"))
-        print("Saved to ", os.path.join(data_directory, "data.html"))
+        new_db = pd.DataFrame(columns=["Title", "Start Time", "Registerd End Time", "Real Duration"])
+        
+        # find similar columns in self.db, and add the duration to append to newdb
+        # find all unique titles in self.db
+        unique_titles = self.db["Title"].unique()
+        print("unique titles", unique_titles)
+        
+        # iterate through all unique titles in self.db
+        for i in unique_titles:
+            # find all rows with the same title
+            rows = self.db.loc[self.db["Title"] == i]
+            print("rows", rows)
+            # find the sum of the duration of all rows
+            duration = rows["Real Duration"].sum()
+            print("duration", duration)
+            # add the duration to new_db
+            new_db.loc[len(new_db)] = [i, rows.iloc[0]["Start Time"], rows.iloc[-1]["Registerd End Time"], duration]
+
+        print(new_db)
+        
+        # save new db in all formats
+        new_db.to_csv(os.path.join(data_directory, "collaborative_data.csv"), index=False)
+        new_db.to_json(os.path.join(data_directory, "collaborative_data.json"), orient="records")
+        new_db.to_html(os.path.join(data_directory, "collaborative_data.html"))
+        
+        print("Saved to ", os.path.join(data_directory, "collaborative_data.csv"))
+        print("in csv, json, and html")
     
     # getter functions
     def get_thread_interval_s(self):
@@ -238,30 +258,19 @@ def user_io():
     Manages user input and output.
     """
     while True:
-        user_input = input("Enter \n'1' to begin \n'2' to end, \n'3' to start a blank file, \n'4' to export to CSV, \n'5' to export to JSON, \n'6' to export to HTML, or \n'7' to end: ")
+        user_input = input("Enter \n'1' to Play / Pause, \n'2' to start a blank file, \n'3' to export raw data to CSV, JSON, HTML\n'4' Export Nicely to CSV, JSON, HTML \n'5' to end: ")
         
         if user_input == "0":
             app.print_db()
         elif user_input == "1":
             app.pause_or_resume()
-            app.run()
         elif user_input == "2":
-            app.pause_or_resume()
-        elif user_input == "3":
             app.start_fresh()
-            # Start a blank file
-            # Code to start a blank file
-            pass
+        elif user_input == "3":
+            app.export_raw()
         elif user_input == "4":
-            # Export to CSV
-            app.export_to_csv()
+            app.export_collaborative_data()
         elif user_input == "5":
-            # Export to JSON
-            app.export_to_json()
-        elif user_input == "6":
-            # Export to HTML
-            app.export_to_html()
-        elif user_input == "7":
             # End the application
             app.finish = True
             break
