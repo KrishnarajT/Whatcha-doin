@@ -54,6 +54,10 @@ class MainApplication:
         
         # if the csv file exists, import it to self.db
         if os.path.exists(os.path.join(self.data_directory, "data.csv")):
+            with open(os.path.join(self.data_directory, "data.csv"), "r") as f:
+                if len(f.readlines()) <= 1:
+                    print("no data to import, starting fresh")
+                    return
             self.db = pd.read_csv(os.path.join(self.data_directory, "data.csv"), dtype={"Title": str, "Start Time": str, "Registered End Time": str, "Real Duration": str})
             print("imported data")
             
@@ -82,11 +86,12 @@ class MainApplication:
         Returns:
             str: The title of the active window.
         """
-        active_window = gw.getActiveWindow()
-        if not active_window:
+        try:
+            active_window = gw.getActiveWindow()
+            return active_window.title
+        except Exception as e:
+            print(e)
             return "Unknown"
-        return active_window.title
-
     def run(self):
         """
         Runs the application. This runs every thread_interval_s seconds from the thread. 
