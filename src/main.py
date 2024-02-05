@@ -35,8 +35,7 @@ class MainApplication:
         self.counter = Counter()
         self.start_time_dict = {}
         self.finish = False
-        self.script_directory = os.path.dirname(os.path.abspath(__file__))
-        self.data_directory = os.path.join(os.path.dirname(self.script_directory), 'data')
+        self.data_directory = os.path.join(os.path.expanduser("~\Documents"), "Whatcha Doin Data")
         self.cursor_position = pag.position()
         self.cursor_counter = 0
         self.init_db()
@@ -45,7 +44,7 @@ class MainApplication:
         """
         Initializes the database.
         """
-        self.db = pd.DataFrame(columns=["Title", "Start Time", "Registerd End Time", "Real Duration"])
+        self.db = pd.DataFrame(columns=["Title", "Start Time", "Registered End Time", "Real Duration"])
         
         # check if the data directory exists
         if not os.path.exists(self.data_directory):
@@ -76,7 +75,7 @@ class MainApplication:
         """
         Starts a fresh database.
         """
-        self.db = pd.DataFrame(columns=["Title", "Start Time", "Registerd End Time", "Real Duration"])
+        self.db = pd.DataFrame(columns=["Title", "Start Time", "Registered End Time", "Real Duration"])
         print("Will start fresh")
     
     def get_active_window(self):
@@ -88,6 +87,10 @@ class MainApplication:
         """
         try:
             active_window = gw.getActiveWindow()
+            if active_window.title == '':
+                return 'Desktop'
+            if ',' in active_window.title:
+                return ' '.join(active_window.title.split(','))
             return active_window.title
         except Exception as e:
             print(e)
@@ -151,16 +154,11 @@ class MainApplication:
         """
         # clear the schedule
         schedule.clear()
-        
-        print(self.script_directory)
-        
-        # Define the data directory
-        data_directory = os.path.join(os.path.dirname(self.script_directory), 'data')
-        
+        # save the data        
         # Create the data directory if it does not exist
-        if not os.path.exists(data_directory):
-            os.makedirs(data_directory)
-        print("data directory", data_directory)
+        if not os.path.exists(self.data_directory):
+            os.makedirs(self.data_directory)
+        print("data directory", self.data_directory)
         
         # Check if the dataframe is empty
         if self.db.empty:
@@ -168,8 +166,8 @@ class MainApplication:
             return
         
         # Save the dataframe to a file
-        self.db.to_csv(os.path.join(data_directory, "data.csv"), index=False)
-        print("Saved to ", os.path.join(data_directory, "data.csv"))
+        self.db.to_csv(os.path.join(self.data_directory, "data.csv"), index=False)
+        print("Saved to ", os.path.join(self.data_directory, "data.csv"))
 
         print("cleaned up")
     
@@ -178,13 +176,11 @@ class MainApplication:
         """
         Exports the database to a CSV file.
         """
-        # Define the data directory
-        data_directory = os.path.join(os.path.dirname(self.script_directory), 'data')
-        
+
         # Create the data directory if it does not exist
-        if not os.path.exists(data_directory):
-            os.makedirs(data_directory)
-        print("data directory", data_directory)
+        if not os.path.exists(self.data_directory):
+            os.makedirs(self.data_directory)
+        print("data directory", self.data_directory)
         
         # Check if the dataframe is empty
         if self.db.empty:
@@ -192,36 +188,33 @@ class MainApplication:
             return
         
         # Save the dataframe to a file
-        self.db.to_csv(os.path.join(data_directory, "data.csv"), index=False)
-        print("Saved to ", os.path.join(data_directory, "data.csv"))
+        self.db.to_csv(os.path.join(self.data_directory, "data.csv"), index=False)
+        print("Saved to ", os.path.join(self.data_directory, "data.csv"))
         
         # export to json
-        self.db.to_json(os.path.join(data_directory, "data.json"), orient="records")
-        print("Saved to ", os.path.join(data_directory, "data.json"))
+        self.db.to_json(os.path.join(self.data_directory, "data.json"), orient="records")
+        print("Saved to ", os.path.join(self.data_directory, "data.json"))
         
         # export to html
-        self.db.to_html(os.path.join(data_directory, "data.html"))
-        print("Saved to ", os.path.join(data_directory, "data.html"))
+        self.db.to_html(os.path.join(self.data_directory, "data.html"))
+        print("Saved to ", os.path.join(self.data_directory, "data.html"))
         
     # export collaborative data
     def export_collaborative_data(self):
         """
         Exports the database to a collaborative data file.
-        """
-        # Define the data directory
-        data_directory = os.path.join(os.path.dirname(self.script_directory), 'data')
-        
+        """        
         # Create the data directory if it does not exist
-        if not os.path.exists(data_directory):
-            os.makedirs(data_directory)
-        print("data directory", data_directory)
+        if not os.path.exists(self.data_directory):
+            os.makedirs(self.data_directory)
+        print("data directory", self.data_directory)
         
         # Check if the dataframe is empty
         if self.db.empty:
             print("No data to save")
             return
         
-        new_db = pd.DataFrame(columns=["Title", "Start Time", "Registerd End Time", "Real Duration"])
+        new_db = pd.DataFrame(columns=["Title", "Start Time", "Registered End Time", "Real Duration"])
         
         # find similar columns in self.db, and add the duration to append to newdb
         # find all unique titles in self.db
@@ -237,16 +230,18 @@ class MainApplication:
             duration = rows["Real Duration"].sum()
             # print("duration", duration)
             # add the duration to new_db
-            new_db.loc[len(new_db)] = [i, rows.iloc[0]["Start Time"], rows.iloc[-1]["Registerd End Time"], duration]
+            # print(len(new_db), i, rows.iloc[0]["Start Time"], rows.iloc[-1]["Registered End Time"], duration)
+            new_db.loc[len(new_db)] = [i, rows.iloc[0]["Start Time"], rows.iloc[-1]["Registered End Time"], duration]
 
         # print(new_db)
-        
+        # sort newdb by duration
+        new_db = new_db.sort_values(by="Real Duration", ascending=False, ignore_index=True)
         # save new db in all formats
-        new_db.to_csv(os.path.join(data_directory, "collaborative_data.csv"), index=False)
-        new_db.to_json(os.path.join(data_directory, "collaborative_data.json"), orient="records")
-        new_db.to_html(os.path.join(data_directory, "collaborative_data.html"))
+        new_db.to_csv(os.path.join(self.data_directory, "collaborative_data.csv"), index=False)
+        new_db.to_json(os.path.join(self.data_directory, "collaborative_data.json"), orient="records")
+        new_db.to_html(os.path.join(self.data_directory, "collaborative_data.html"))
         
-        print("Saved to ", os.path.join(data_directory, "collaborative_data.csv"))
+        print("Saved to ", os.path.join(self.data_directory, "collaborative_data.csv"))
         print("in csv, json, and html")
     
     # getter functions
@@ -300,26 +295,30 @@ def user_io():
     while True:
         user_input = input("Enter \n'1' to Play / Pause, \n'2' to start a blank file, \n'3' to export raw data to CSV, JSON, HTML\n'4' Export Nicely to CSV, JSON, HTML \n'5' to end: \n\n\n ")
         
-        if user_input == "0":
-            app.print_db()
-        elif user_input == "1":
-            app.pause_or_resume()
-            if app.get_record() == True:
-                print("Recording ...")
+        try: 
+            if user_input == "0":
+                app.print_db()
+            elif user_input == "1":
+                app.pause_or_resume()
+                if app.get_record() == True:
+                    print("Recording ...")
+                else:
+                    print("Paused")
+            elif user_input == "2":
+                app.start_fresh()
+            elif user_input == "3":
+                app.export_raw()
+            elif user_input == "4":
+                app.export_collaborative_data()
+            elif user_input == "5":
+                # End the application
+                app.finish = True
+                break
             else:
-                print("Paused")
-        elif user_input == "2":
-            app.start_fresh()
-        elif user_input == "3":
-            app.export_raw()
-        elif user_input == "4":
-            app.export_collaborative_data()
-        elif user_input == "5":
-            # End the application
-            app.finish = True
-            break
-        else:
-            print("Invalid input. Please try again.")
+                print("Invalid input. Please try again.")
+        except Exception as e:
+            print(e)
+            print(e.with_traceback())
     app.cleanup()
     
 def core():
