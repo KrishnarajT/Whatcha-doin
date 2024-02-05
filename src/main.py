@@ -130,6 +130,11 @@ class MainApplication:
             self.counter[active_window] = 0
             self.start_time_dict[active_window] = datetime.datetime.now()
                 
+            # if len of db is a multiple of 500, autosave
+            if (len(self.db)) % 500 == 0 and len(self.db) != 0:
+                print("Autosaving after 500 records.")
+                self.export_raw()
+
     def pause_or_resume(self):
         """
         Pauses or resumes the application.
