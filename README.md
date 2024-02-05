@@ -1,6 +1,8 @@
 # Whatcha Doin
 An app to track time spent on each app with ability to export data well for analysis. 
 
+![](./screenshots/start.jpg)
+
 ## Start time
 this is when tracking the app usage starts
 
