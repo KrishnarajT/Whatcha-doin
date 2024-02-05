@@ -259,7 +259,7 @@ class MainApplication:
         return self.db
     
     def print_db(self):
-        print(self.db)
+        print(self.db.tail())
         print("counter is", self.counter)
     
     # setter functions
