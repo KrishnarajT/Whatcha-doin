@@ -216,20 +216,20 @@ class MainApplication:
         # find similar columns in self.db, and add the duration to append to newdb
         # find all unique titles in self.db
         unique_titles = self.db["Title"].unique()
-        print("unique titles", unique_titles)
+        # print("unique titles", unique_titles)
         
         # iterate through all unique titles in self.db
         for i in unique_titles:
             # find all rows with the same title
             rows = self.db.loc[self.db["Title"] == i]
-            print("rows", rows)
+            # print("rows", rows)
             # find the sum of the duration of all rows
             duration = rows["Real Duration"].sum()
-            print("duration", duration)
+            # print("duration", duration)
             # add the duration to new_db
             new_db.loc[len(new_db)] = [i, rows.iloc[0]["Start Time"], rows.iloc[-1]["Registerd End Time"], duration]
 
-        print(new_db)
+        # print(new_db)
         
         # save new db in all formats
         new_db.to_csv(os.path.join(data_directory, "collaborative_data.csv"), index=False)
