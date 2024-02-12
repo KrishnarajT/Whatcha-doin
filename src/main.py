@@ -12,10 +12,18 @@ from collections import Counter
 import sys
 
 
-def clean_string(string):
-    # convert to utf-8
-    string = string.encode("utf-8", "ignore").decode("utf-8")
-    return string
+def clean_string(given_string):
+    if given_string == "":
+        given_string = "Desktop"
+    if "," in given_string:
+        given_string = given_string.replace(",", " ")
+
+    # if there are any non ascii characters, remove them
+    try:
+        given_string = "".join(i for i in given_string if ord(i) < 128)
+    except Exception as e:
+        print(e)
+    return given_string
 
 
 def recording_indicator():
@@ -86,12 +94,13 @@ class MainApplication:
                     os.path.join(self.data_directory, "data.csv"),
                     dtype={
                         "Title": str,
-                        "Start Time": str,
-                        "Registered End Time": str,
+                        "Start Time": float,
+                        "Registered End Time": float,
                         "Real Duration": str,
                     },
                 )
                 print("imported data")
+                print(self.db)
 
                 try:
                     # find sum of duration
@@ -110,20 +119,21 @@ class MainApplication:
             # check json
             if os.path.exists(os.path.join(self.data_directory, "data.json")):
                 # Read the JSON file
-                data = pd.read_json("data.json")
+                data = pd.read_json(os.path.join(self.data_directory, "data.json"))
 
-                # Create a DataFrame from the JSON data
-                df = pd.DataFrame(data)
+                self.db = data
+                print(self.db.dtypes)
+                print(self.db.iloc[0])
 
-                # Append the DataFrame to the existing database
-                self.db = self.db.append(df, ignore_index=True)
-
-                # convert all time values from unix time to datetime.datetime.now() object
-                self.db["Start Time"] = pd.to_datetime(self.db["Start Time"], unit="s")
+                # convert start time and end time to datetime objects from unix time
+                self.db["Start Time"] = pd.to_datetime(self.db["Start Time"], infer_datetime_format=True)
+                self.db["Registered End Time"] = pd.to_datetime(
+                    self.db["Registered End Time"], infer_datetime_format=True
+                )
 
                 # also convert duration to timedelta objects from seconds
-                self.db["Real Duration"] = datetime.timedelta(
-                    seconds=self.db["Real Duration"]
+                self.db["Real Duration"] = pd.to_timedelta(
+                    self.db["Real Duration"] / 1000, unit="s"
                 )
                 print("read json")
             else:
@@ -147,14 +157,11 @@ class MainApplication:
         """
         try:
             active_window = gw.getActiveWindow()
-            if active_window.title == "":
-                return "Desktop"
-            if "," in active_window.title:
-                return " ".join(active_window.title.split(","))
-            return active_window.title
+            active_window_title = clean_string(active_window.title)
+            return active_window_title
         except Exception as e:
             print(e)
-            return "Unknown"
+            return "Sleeping"
 
     def run(self):
         """
@@ -176,7 +183,7 @@ class MainApplication:
         if active_window not in self.counter:
             # print("new window")
             self.counter[active_window] = 0
-            self.start_time_dict[active_window] = datetime.datetime.now()
+            self.start_time_dict[active_window] = datetime.datetime.now().timestamp()
         else:
             # print("old window")
             self.counter.update([active_window])
@@ -189,7 +196,7 @@ class MainApplication:
             new_row = [
                 active_window,
                 self.start_time_dict[active_window],
-                datetime.datetime.now(),
+                datetime.datetime.now().timestamp(),
                 self.duration,
             ]
 
@@ -199,7 +206,7 @@ class MainApplication:
 
             # reset the counter
             self.counter[active_window] = 0
-            self.start_time_dict[active_window] = datetime.datetime.now()
+            self.start_time_dict[active_window] = datetime.datetime.now().timestamp()
 
             # if len of db is a multiple of 500, autosave
             if (len(self.db)) % 500 == 0 and len(self.db) != 0:
@@ -265,9 +272,22 @@ class MainApplication:
         )
         print("Saved to ", os.path.join(self.data_directory, "data.json"))
 
-        # export to html
-        self.db.to_html(os.path.join(self.data_directory, "data.html"))
+        # Convert column to human-readable format
+        temp_db = self.db.copy()
+        temp_db["Start Time"] = temp_db["Start Time"].apply(
+            lambda x: datetime.datetime.fromtimestamp(x).strftime("%d %B %Y %H:%M:%S")
+        )
+        temp_db["Registered End Time"] = temp_db["Registered End Time"].apply(
+            lambda x: datetime.datetime.fromtimestamp(x).strftime("%d %B %Y %H:%M:%S")
+        )
+        # Export to HTML
+        temp_db.to_html(os.path.join(self.data_directory, "data.html"))
         print("Saved to ", os.path.join(self.data_directory, "data.html"))
+
+        # delete space occupied by temp_db
+        del temp_db
+        print(self.db.dtypes)
+        print(self.db.iloc[0])
 
     # export collaborative data
     def export_collaborative_data(self):
@@ -292,6 +312,8 @@ class MainApplication:
         # find all unique titles in self.db
         unique_titles = self.db["Title"].unique()
         # print("unique titles", unique_titles)
+
+        print(self.db.dtypes)
 
         # iterate through all unique titles in self.db
         for i in unique_titles:
@@ -323,10 +345,18 @@ class MainApplication:
             os.path.join(self.data_directory, "collaborative_data.json"),
             orient="records",
         )
+        # convert datetime to human readable format
+        new_db["Start Time"] = new_db["Start Time"].apply(
+            lambda x: datetime.datetime.fromtimestamp(x).strftime("%d %B %Y %H:%M:%S")
+        )
+        new_db["Registered End Time"] = new_db["Registered End Time"].apply(
+            lambda x: datetime.datetime.fromtimestamp(x).strftime("%d %B %Y %H:%M:%S")
+        )
         new_db.to_html(os.path.join(self.data_directory, "collaborative_data.html"))
 
         print("Saved to ", os.path.join(self.data_directory, "collaborative_data.csv"))
         print("in csv, json, and html")
+        del new_db
 
     # getter functions
     def get_thread_interval_s(self):
@@ -349,7 +379,7 @@ class MainApplication:
 
     def print_db(self):
         print(self.db.tail(30))
-        # print("counter is", self.counter)
+        print("counter is", self.counter)
 
     # setter functions
     def set_thread_interval_s(self, thread_interval_s):
