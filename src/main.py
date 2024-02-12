@@ -47,7 +47,15 @@ class MainApplication:
         )
         self.cursor_position = pag.position()
         self.cursor_counter = 0
+        self.idle_detection = False
+        print("Idle Detection is Disabled by default.")
         self.init_db()
+
+    def flip_idle_detection(self):
+        self.idle_detection = not self.idle_detection
+
+    def get_idle_detection(self):
+        return self.idle_detection
 
     def init_db(self):
         """
@@ -154,13 +162,15 @@ class MainApplication:
         """
         # Get the active window
         active_window = self.get_active_window()
-        if self.cursor_position == pag.position():
-            self.cursor_counter += 1
-        else:
-            self.cursor_position = pag.position()
-            self.cursor_counter = 0
-        if self.cursor_counter > 100:
-            active_window = "idle"
+
+        if self.idle_detection:
+            if self.cursor_position == pag.position():
+                self.cursor_counter += 1
+            else:
+                self.cursor_position = pag.position()
+                self.cursor_counter = 0
+            if self.cursor_counter > 300:
+                active_window = "idle"
         # print(active_window)
         # Update the counter
         if active_window not in self.counter:
@@ -370,7 +380,7 @@ def user_io():
     """
     while True:
         user_input = input(
-            "Enter \n'1' to Play / Pause, \n'2' to start a blank file, \n'3' to export raw data to CSV, JSON, HTML\n'4' Export Nicely to CSV, JSON, HTML \n'5' to end: \n\n\n "
+            "Enter \n'1' to Play / Pause, \n'2' to start a blank file, \n'3' to export raw data to CSV, JSON, HTML\n'4' Export Nicely to CSV, JSON, HTML \n'5' to Enable/Disable Idle Detection\n'6' to Exit: \n\n\n"
         )
 
         try:
@@ -389,6 +399,16 @@ def user_io():
             elif user_input == "4":
                 app.export_collaborative_data()
             elif user_input == "5":
+                app.flip_idle_detection()
+                print(
+                    "Idle detection is",
+                    (
+                        "Enabled. If you cursor doesnt move for 5 mins, you are idle. "
+                        if app.get_idle_detection()
+                        else "Disabled"
+                    ),
+                )
+            elif user_input == "6":
                 # End the application
                 app.finish = True
                 break
