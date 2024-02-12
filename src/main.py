@@ -11,6 +11,11 @@ import os
 from collections import Counter
 import sys
 
+def clean_string(string):
+    # convert to utf-8
+    string = string.encode('utf-8', 'ignore').decode('utf-8')
+    return string
+
 def recording_indicator():
     while app.get_record():
         print("\rRecording", end="")
@@ -51,25 +56,52 @@ class MainApplication:
             os.makedirs(self.data_directory)
         print("data directory", self.data_directory)
         
-        # if the csv file exists, import it to self.db
-        if os.path.exists(os.path.join(self.data_directory, "data.csv")):
-            with open(os.path.join(self.data_directory, "data.csv"), "r") as f:
-                if len(f.readlines()) <= 1:
-                    print("no data to import, starting fresh")
-                    return
-            self.db = pd.read_csv(os.path.join(self.data_directory, "data.csv"), dtype={"Title": str, "Start Time": str, "Registered End Time": str, "Real Duration": str})
-            print("imported data")
-            
-            try:
-                # find sum of duration
-                self.db["Real Duration"] = pd.to_timedelta(self.db["Real Duration"])
+        # try to get data
+        try:
+            # if the csv file exists, import it to self.db
+            if os.path.exists(os.path.join(self.data_directory, "data.csv")):
+                with open(os.path.join(self.data_directory, "data.csv"), "r") as f:
+                    if os.stat(os.path.join(self.data_directory, "data.csv")).st_size == 0:
+                        print("File is empty")
+                        print("no data to import, starting fresh")
+                        return
+                self.db = pd.read_csv(os.path.join(self.data_directory, "data.csv"), dtype={"Title": str, "Start Time": str, "Registered End Time": str, "Real Duration": str})
                 print("imported data")
-                print("total duration", self.db["Real Duration"].sum())
-            except Exception as e:
-                print(e)
-                print("could not convert duration to timedelta")
-        else:
-            print("no data to import, starting fresh")
+                
+                try:
+                    # find sum of duration
+                    self.db["Real Duration"] = pd.to_timedelta(self.db["Real Duration"])
+                    print("imported data")
+                    print("total duration", self.db["Real Duration"].sum())
+                except Exception as e:
+                    print(e)
+                    print("could not convert duration to timedelta")
+            else:
+                print("no data to import, starting fresh")
+            
+        except Exception as e:
+            print(e)
+            print("could not read csv due to some issues")
+            # check json
+            if os.path.exists(os.path.join(self.data_directory, 'data.json')):
+                # Read the JSON file
+                data = pd.read_json('data.json')
+
+                # Create a DataFrame from the JSON data
+                df = pd.DataFrame(data)
+
+                # Append the DataFrame to the existing database
+                self.db = self.db.append(df, ignore_index=True)
+                
+                # convert all time values from unix time to datetime.datetime.now() object
+                self.db['Start Time'] = pd.to_datetime(self.db['Start Time'], unit='s')
+                
+                # also convert duration to timedelta objects from seconds
+                self.db['Real Duration'] = datetime.timedelta(seconds=self.db['Real Duration'])
+                print("read json")
+            else:
+                print("no data to import, starting fresh")
+            
         
     def start_fresh(self):
         """
