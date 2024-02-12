@@ -10,6 +10,7 @@ from colorama import init, Fore, Style
 import os
 from collections import Counter
 import sys
+import pytz
 
 
 def clean_string(given_string):
@@ -90,22 +91,38 @@ class MainApplication:
                         print("File is empty")
                         print("no data to import, starting fresh")
                         return
-                self.db = pd.read_csv(
-                    os.path.join(self.data_directory, "data.csv"),
-                    dtype={
-                        "Title": str,
-                        "Start Time": float,
-                        "Registered End Time": float,
-                        "Real Duration": str,
-                    },
-                )
+                try:
+                    self.db = pd.read_csv(
+                        os.path.join(self.data_directory, "data.csv"),
+                        dtype={
+                            "Title": str,
+                            "Start Time": int,
+                            "Registered End Time": int,
+                            "Real Duration": int,
+                        },
+                    )
+                    # convert start time and end time to datetime objects from unix time
+                    self.db["Start Time"] = pd.to_datetime(self.db["Start Time"])
+                    self.db["Registered End Time"] = pd.to_datetime(
+                        self.db["Registered End Time"]
+                    )
+                except Exception as e:
+                    self.db = pd.read_csv(os.path.join(self.data_directory, "data.csv"))
+                    # convert to unix time
+                    self.db["Start Time"] = (
+                        pd.to_datetime(self.db["Start Time"]).astype("int64") / 10**9
+                    )
+                    self.db["Registered End Time"] = (
+                        pd.to_datetime(self.db["Registered End Time"]).astype("int64")
+                        / 10**9
+                    )
+
                 print("imported data")
-                print(self.db)
+                # print(self.db)
 
                 try:
                     # find sum of duration
                     self.db["Real Duration"] = pd.to_timedelta(self.db["Real Duration"])
-                    print("imported data")
                     print("total duration", self.db["Real Duration"].sum())
                 except Exception as e:
                     print(e)
@@ -119,17 +136,20 @@ class MainApplication:
             # check json
             if os.path.exists(os.path.join(self.data_directory, "data.json")):
                 # Read the JSON file
-                data = pd.read_json(os.path.join(self.data_directory, "data.json"))
+                data = pd.read_json(
+                    os.path.join(self.data_directory, "data.json"),
+                    dtype={
+                        "Title": str,
+                        "Start Time": int,
+                        "Registered End Time": int,
+                        "Real Duration": int,
+                    },
+                )
 
                 self.db = data
+
                 print(self.db.dtypes)
                 print(self.db.iloc[0])
-
-                # convert start time and end time to datetime objects from unix time
-                self.db["Start Time"] = pd.to_datetime(self.db["Start Time"], infer_datetime_format=True)
-                self.db["Registered End Time"] = pd.to_datetime(
-                    self.db["Registered End Time"], infer_datetime_format=True
-                )
 
                 # also convert duration to timedelta objects from seconds
                 self.db["Real Duration"] = pd.to_timedelta(
@@ -183,7 +203,11 @@ class MainApplication:
         if active_window not in self.counter:
             # print("new window")
             self.counter[active_window] = 0
-            self.start_time_dict[active_window] = datetime.datetime.now().timestamp()
+            self.start_time_dict[active_window] = (
+                datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
+                .replace(microsecond=0)
+                .timestamp(),
+            )[0]
         else:
             # print("old window")
             self.counter.update([active_window])
@@ -196,7 +220,9 @@ class MainApplication:
             new_row = [
                 active_window,
                 self.start_time_dict[active_window],
-                datetime.datetime.now().timestamp(),
+                datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
+                .replace(microsecond=0)
+                .timestamp(),
                 self.duration,
             ]
 
@@ -206,7 +232,11 @@ class MainApplication:
 
             # reset the counter
             self.counter[active_window] = 0
-            self.start_time_dict[active_window] = datetime.datetime.now().timestamp()
+            self.start_time_dict[active_window] = (
+                datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
+                .replace(microsecond=0)
+                .timestamp(),
+            )[0]
 
             # if len of db is a multiple of 500, autosave
             if (len(self.db)) % 500 == 0 and len(self.db) != 0:
@@ -286,8 +316,8 @@ class MainApplication:
 
         # delete space occupied by temp_db
         del temp_db
-        print(self.db.dtypes)
-        print(self.db.iloc[0])
+        # print(self.db.dtypes)
+        # print(self.db.iloc[0])
 
     # export collaborative data
     def export_collaborative_data(self):
@@ -313,7 +343,7 @@ class MainApplication:
         unique_titles = self.db["Title"].unique()
         # print("unique titles", unique_titles)
 
-        print(self.db.dtypes)
+        # print(self.db.dtypes)
 
         # iterate through all unique titles in self.db
         for i in unique_titles:
@@ -379,7 +409,7 @@ class MainApplication:
 
     def print_db(self):
         print(self.db.tail(30))
-        print("counter is", self.counter)
+        # print("counter is", self.counter)
 
     # setter functions
     def set_thread_interval_s(self, thread_interval_s):
