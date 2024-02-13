@@ -98,24 +98,30 @@ class MainApplication:
                             "Title": str,
                             "Start Time": int,
                             "Registered End Time": int,
-                            "Real Duration": int,
+                            "Real Duration": str,
                         },
                     )
-                    # convert start time and end time to datetime objects from unix time
-                    self.db["Start Time"] = pd.to_datetime(self.db["Start Time"])
-                    self.db["Registered End Time"] = pd.to_datetime(
-                        self.db["Registered End Time"]
-                    )
                 except Exception as e:
-                    self.db = pd.read_csv(os.path.join(self.data_directory, "data.csv"))
-                    # convert to unix time
-                    self.db["Start Time"] = (
-                        pd.to_datetime(self.db["Start Time"]).astype("int64") / 10**9
-                    )
-                    self.db["Registered End Time"] = (
-                        pd.to_datetime(self.db["Registered End Time"]).astype("int64")
-                        / 10**9
-                    )
+                    print(e)
+                    if (
+                        self.db["Start Time"].dtype != "int64"
+                        or self.db["Registered End Time"].dtype != "int64"
+                    ):
+                        self.db = pd.read_csv(
+                            os.path.join(self.data_directory, "data.csv")
+                        )
+                        # convert to unix time
+                        self.db["Start Time"] = (
+                            pd.to_datetime(self.db["Start Time"]).astype("int64")
+                            / 10**9
+                        )
+                        self.db["Registered End Time"] = (
+                            pd.to_datetime(self.db["Registered End Time"]).astype(
+                                "int64"
+                            )
+                            / 10**9
+                        )
+                    raise Exception("Could not convert time to datetime, trying json")
 
                 print("imported data")
                 # print(self.db)
@@ -129,6 +135,7 @@ class MainApplication:
                     print("could not convert duration to timedelta")
             else:
                 print("no data to import, starting fresh")
+                raise Exception("Trying to find json file.")
 
         except Exception as e:
             print(e)
@@ -242,6 +249,15 @@ class MainApplication:
             if (len(self.db)) % 500 == 0 and len(self.db) != 0:
                 print("Autosaving after 500 records.")
                 self.export_raw()
+                if len(self.db) == 20000:
+                    print("Maximum records reached. Will start fresh.")
+                    # export raw, but with a different name
+                    self.export_raw(
+                        new_name=True,
+                        name=datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"),
+                    )
+                    # start fresh
+                    self.start_fresh()
 
     def pause_or_resume(self):
         """
@@ -277,12 +293,19 @@ class MainApplication:
         print("cleaned up")
 
     # export raw data
-    def export_raw(self):
+    def export_raw(self, new_name=False, name="new_data"):
         """
         Exports the database to a CSV file.
         """
-
+        # print(self.db.dtypes)
+        # print(self.db.iloc[0])
         # Create the data directory if it does not exist
+
+        if not new_name:
+            current_name = "data"
+        else:
+            current_name = name
+
         if not os.path.exists(self.data_directory):
             os.makedirs(self.data_directory)
         print("data directory", self.data_directory)
@@ -293,14 +316,16 @@ class MainApplication:
             return
 
         # Save the dataframe to a file
-        self.db.to_csv(os.path.join(self.data_directory, "data.csv"), index=False)
-        print("Saved to ", os.path.join(self.data_directory, "data.csv"))
+        self.db.to_csv(
+            os.path.join(self.data_directory, f"{current_name}.csv"), index=False
+        )
+        print("Saved to ", os.path.join(self.data_directory, f"{current_name}.csv"))
 
         # export to json
         self.db.to_json(
-            os.path.join(self.data_directory, "data.json"), orient="records"
+            os.path.join(self.data_directory, f"{current_name}.json"), orient="records"
         )
-        print("Saved to ", os.path.join(self.data_directory, "data.json"))
+        print("Saved to ", os.path.join(self.data_directory, f"{current_name}.json"))
 
         # Convert column to human-readable format
         temp_db = self.db.copy()
@@ -311,8 +336,8 @@ class MainApplication:
             lambda x: datetime.datetime.fromtimestamp(x).strftime("%d %B %Y %H:%M:%S")
         )
         # Export to HTML
-        temp_db.to_html(os.path.join(self.data_directory, "data.html"))
-        print("Saved to ", os.path.join(self.data_directory, "data.html"))
+        temp_db.to_html(os.path.join(self.data_directory, f"{current_name}.html"))
+        print("Saved to ", os.path.join(self.data_directory, f"{current_name}.html"))
 
         # delete space occupied by temp_db
         del temp_db
