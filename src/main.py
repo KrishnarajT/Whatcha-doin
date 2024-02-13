@@ -256,6 +256,10 @@ class MainApplication:
                         new_name=True,
                         name=datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"),
                     )
+                    self.export_collaborative_data(
+                        new_name=True,
+                        name=datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"),
+                    )
                     # start fresh
                     self.start_fresh()
 
@@ -345,10 +349,16 @@ class MainApplication:
         # print(self.db.iloc[0])
 
     # export collaborative data
-    def export_collaborative_data(self):
+    def export_collaborative_data(self, new_name=False, name="new_cdata"):
         """
         Exports the database to a collaborative data file.
         """
+        
+        if not new_name:
+            current_name = "collaborative_data"
+        else:
+            current_name = 'collaborative_data' + name
+            
         # Create the data directory if it does not exist
         if not os.path.exists(self.data_directory):
             os.makedirs(self.data_directory)
@@ -394,10 +404,10 @@ class MainApplication:
         )
         # save new db in all formats
         new_db.to_csv(
-            os.path.join(self.data_directory, "collaborative_data.csv"), index=False
+            os.path.join(self.data_directory, f"{current_name}.csv"), index=False
         )
         new_db.to_json(
-            os.path.join(self.data_directory, "collaborative_data.json"),
+            os.path.join(self.data_directory, f"{current_name}.json"),
             orient="records",
         )
         # convert datetime to human readable format
@@ -407,9 +417,9 @@ class MainApplication:
         new_db["Registered End Time"] = new_db["Registered End Time"].apply(
             lambda x: datetime.datetime.fromtimestamp(x).strftime("%d %B %Y %H:%M:%S")
         )
-        new_db.to_html(os.path.join(self.data_directory, "collaborative_data.html"))
+        new_db.to_html(os.path.join(self.data_directory, f"{current_name}.html"))
 
-        print("Saved to ", os.path.join(self.data_directory, "collaborative_data.csv"))
+        print("Saved to ", os.path.join(self.data_directory, f"{current_name}.csv"))
         print("in csv, json, and html")
         del new_db
 
