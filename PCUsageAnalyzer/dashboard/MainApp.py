@@ -3,28 +3,10 @@ import pandas as pd
 import datetime
 import pygetwindow as gw
 import pyautogui as pag
-import schedule
-import time
-import threading
-from colorama import init, Fore, Style
 import os
 from collections import Counter
 import sys
 import pytz
-
-
-def clean_string(given_string):
-    if given_string == "":
-        given_string = "Desktop"
-    if "," in given_string:
-        given_string = given_string.replace(",", " ")
-
-    # if there are any non ascii characters, remove them
-    try:
-        given_string = "".join(i for i in given_string if ord(i) < 128)
-    except Exception as e:
-        print(e)
-    return given_string
 
 
 class MainApplication:
@@ -44,6 +26,20 @@ class MainApplication:
         self.idle_detection = False
         print("Idle Detection is Disabled by default.")
         self.init_db()
+
+
+    def clean_string(self, given_string):
+        if given_string == "":
+            given_string = "Desktop"
+        if "," in given_string:
+            given_string = given_string.replace(",", " ")
+
+        # if there are any non ascii characters, remove them
+        try:
+            given_string = "".join(i for i in given_string if ord(i) < 128)
+        except Exception as e:
+            print(e)
+        return given_string
 
     def flip_idle_detection(self):
         self.idle_detection = not self.idle_detection
@@ -169,7 +165,7 @@ class MainApplication:
         """
         try:
             active_window = gw.getActiveWindow()
-            active_window_title = clean_string(active_window.title)
+            active_window_title = self.clean_string(active_window.title)
             return active_window_title
         except Exception as e:
             print(e)
@@ -262,8 +258,6 @@ class MainApplication:
         """
         Cleans up the application.
         """
-        # clear the schedule
-        schedule.clear()
         # save the data
         # Create the data directory if it does not exist
         if not os.path.exists(self.data_directory):
@@ -338,12 +332,12 @@ class MainApplication:
         """
         Exports the database to a collaborative data file.
         """
-        
+
         if not new_name:
             current_name = "collaborative_data"
         else:
-            current_name = 'collaborative_data' + name
-            
+            current_name = "collaborative_data" + name
+
         # Create the data directory if it does not exist
         if not os.path.exists(self.data_directory):
             os.makedirs(self.data_directory)
@@ -424,12 +418,15 @@ class MainApplication:
     def get_start_time_dict(self):
         return self.start_time_dict
 
+    def get_finish(self):
+        return self.finish
     def get_db(self):
         return self.db
 
     def print_db(self):
+        print(self.get_record())
         print(self.db.tail(30))
-        # print("counter is", self.counter)
+        print("counter is", self.counter)
 
     # setter functions
     def set_thread_interval_s(self, thread_interval_s):
@@ -450,118 +447,5 @@ class MainApplication:
     def set_start_time_dict(self, start_time_dict):
         self.start_time_dict = start_time_dict
 
-
-app = MainApplication()
-
-
-def user_io():
-    """
-    Manages user input and output.
-    """
-    while True:
-        user_input = input(
-            "Enter \n'1' to Play / Pause, \n'2' to start a blank file, \n'3' to export raw data to CSV, JSON, HTML\n'4' Export Nicely to CSV, JSON, HTML \n'5' to Enable/Disable Idle Detection\n'6' to Exit: \n\n\n"
-        )
-
-        try:
-            if user_input == "0":
-                app.print_db()
-            elif user_input == "1":
-                app.pause_or_resume()
-                if app.get_record() == True:
-                    print("Recording ...")
-                else:
-                    print("Paused")
-            elif user_input == "2":
-                app.start_fresh()
-            elif user_input == "3":
-                app.export_raw()
-            elif user_input == "4":
-                app.export_collaborative_data()
-            elif user_input == "5":
-                app.flip_idle_detection()
-                print(
-                    "Idle detection is",
-                    (
-                        "Enabled. If you cursor doesnt move for 5 mins, you are idle. "
-                        if app.get_idle_detection()
-                        else "Disabled"
-                    ),
-                )
-            elif user_input == "6":
-                # End the application
-                app.finish = True
-                break
-            else:
-                print("Invalid input. Please try again.")
-        except Exception as e:
-            print(e)
-            print(e.with_traceback())
-    app.cleanup()
-
-
-def core():
-    """
-    Manages the core logic of the application.
-    """
-
-    while True:
-        if app.get_record() == True:
-            schedule.run_pending()
-            # print("next job", schedule.next_run())
-        if app.finish == True:
-            break
-        time.sleep(app.thread_interval_s)
-    print("done with core logic")
-
-
-if __name__ == "__main__":
-    # Initialize colorama
-    init()
-
-    # Print welcome message in ASCII art
-    print(
-        Fore.BLUE
-        + Style.BRIGHT
-        + r"""
-    /$$      /$$ /$$                   /$$               /$$                             /$$           /$$          
-    | $$  /$ | $$| $$                  | $$              | $$                            | $$          |__/          
-    | $$ /$$$| $$| $$$$$$$   /$$$$$$  /$$$$$$    /$$$$$$$| $$$$$$$   /$$$$$$         /$$$$$$$  /$$$$$$  /$$ /$$$$$$$ 
-    | $$/$$ $$ $$| $$__  $$ |____  $$|_  $$_/   /$$_____/| $$__  $$ |____  $$       /$$__  $$ /$$__  $$| $$| $$__  $$
-    | $$$$_  $$$$| $$  \ $$  /$$$$$$$  | $$    | $$      | $$  \ $$  /$$$$$$$      | $$  | $$| $$  \ $$| $$| $$  \ $$
-    | $$$/ \  $$$| $$  | $$ /$$__  $$  | $$ /$$| $$      | $$  | $$ /$$__  $$      | $$  | $$| $$  | $$| $$| $$  | $$
-    | $$/   \  $$| $$  | $$|  $$$$$$$  |  $$$$/|  $$$$$$$| $$  | $$|  $$$$$$$      |  $$$$$$$|  $$$$$$/| $$| $$  | $$
-    |__/     \__/|__/  |__/ \_______/   \___/   \_______/|__/  |__/ \_______/       \_______/ \______/ |__/|__/  |__/                                                                                                                                                                        
-    """
-        + Style.RESET_ALL
-    )
-    schedule.every(app.thread_interval_s).seconds.do(app.run)
-    # manage threads
-    # thread 1 for running user io
-    user_thread = threading.Thread(target=user_io)
-    # thread 2 for running core logic
-    core_thread = threading.Thread(target=core)
-
-    try:
-
-        # Start the threads
-        user_thread.start()
-        core_thread.start()
-
-        # print("Threads have started")
-        user_thread.join()
-        core_thread.join()
-    except KeyboardInterrupt:
-        # cleanly exit the application
-        app.cleanup()
-        print("Application has ended")
-        os._exit(0)
-    except Exception as e:
-        print(e)
-        # cleanly exit the application
-        app.cleanup()
-        print("Application has ended")
-        os._exit(0)
-    # cleanly exit the application
-    print("Application has ended")
-    os._exit(0)
+    def set_finish(self, finish):
+        self.finish = finish

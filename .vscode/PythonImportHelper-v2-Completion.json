@@ -280,6 +280,14 @@
         "documentation": {}
     },
     {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -320,27 +328,39 @@
         "documentation": {}
     },
     {
-        "label": "login_required",
-        "importPath": "django.contrib.auth.decorators",
-        "description": "django.contrib.auth.decorators",
+        "label": "pandas",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "django.contrib.auth.decorators",
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
         "documentation": {}
     },
     {
-        "label": "login_required",
-        "importPath": "django.contrib.auth.decorators",
-        "description": "django.contrib.auth.decorators",
+        "label": "datetime",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "django.contrib.auth.decorators",
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
         "documentation": {}
     },
     {
-        "label": "login_required",
-        "importPath": "django.contrib.auth.decorators",
-        "description": "django.contrib.auth.decorators",
+        "label": "pygetwindow",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "django.contrib.auth.decorators",
+        "importPath": "pygetwindow",
+        "description": "pygetwindow",
+        "detail": "pygetwindow",
+        "documentation": {}
+    },
+    {
+        "label": "pyautogui",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pyautogui",
+        "description": "pyautogui",
+        "detail": "pyautogui",
         "documentation": {}
     },
     {
@@ -350,6 +370,91 @@
         "importPath": "os",
         "description": "os",
         "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "Counter",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "Counter",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "pytz",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytz",
+        "description": "pytz",
+        "detail": "pytz",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "schedule",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "schedule",
+        "description": "schedule",
+        "detail": "schedule",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "threading",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "threading",
+        "description": "threading",
+        "detail": "threading",
         "documentation": {}
     },
     {
@@ -434,78 +539,6 @@
         "documentation": {}
     },
     {
-        "label": "sys",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "sys",
-        "description": "sys",
-        "detail": "sys",
-        "documentation": {}
-    },
-    {
-        "label": "pandas",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pandas",
-        "description": "pandas",
-        "detail": "pandas",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "datetime",
-        "description": "datetime",
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "pygetwindow",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pygetwindow",
-        "description": "pygetwindow",
-        "detail": "pygetwindow",
-        "documentation": {}
-    },
-    {
-        "label": "pyautogui",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pyautogui",
-        "description": "pyautogui",
-        "detail": "pyautogui",
-        "documentation": {}
-    },
-    {
-        "label": "schedule",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "schedule",
-        "description": "schedule",
-        "detail": "schedule",
-        "documentation": {}
-    },
-    {
-        "label": "time",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "time",
-        "description": "time",
-        "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "threading",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "threading",
-        "description": "threading",
-        "detail": "threading",
-        "documentation": {}
-    },
-    {
         "label": "init",
         "importPath": "colorama",
         "description": "colorama",
@@ -527,23 +560,6 @@
         "description": "colorama",
         "isExtraImport": true,
         "detail": "colorama",
-        "documentation": {}
-    },
-    {
-        "label": "Counter",
-        "importPath": "collections",
-        "description": "collections",
-        "isExtraImport": true,
-        "detail": "collections",
-        "documentation": {}
-    },
-    {
-        "label": "pytz",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "pytz",
-        "description": "pytz",
-        "detail": "pytz",
         "documentation": {}
     },
     {
@@ -600,11 +616,29 @@
         "documentation": {}
     },
     {
+        "label": "MainApplication",
+        "kind": 6,
+        "importPath": "PCUsageAnalyzer.dashboard.MainApp",
+        "description": "PCUsageAnalyzer.dashboard.MainApp",
+        "peekOfCode": "class MainApplication:\n    def __init__(self):\n        self.thread_interval_s = 1\n        self.registration_interval_s = 10\n        self.record = False\n        self.counter = Counter()\n        self.start_time_dict = {}\n        self.finish = False\n        self.data_directory = os.path.join(\n            os.path.expanduser(\"~\\Documents\"), \"PC Usage Analyzer Data\"",
+        "detail": "PCUsageAnalyzer.dashboard.MainApp",
+        "documentation": {}
+    },
+    {
+        "label": "CleanupMiddleware",
+        "kind": 6,
+        "importPath": "PCUsageAnalyzer.dashboard.middlewares",
+        "description": "PCUsageAnalyzer.dashboard.middlewares",
+        "peekOfCode": "class CleanupMiddleware:\n    def __init__(self, get_response):\n        self.get_response = get_response\n    def __call__(self, request):\n        response = self.get_response(request)\n        print(\"Processing response\")\n        # Your code here\n        return response",
+        "detail": "PCUsageAnalyzer.dashboard.middlewares",
+        "documentation": {}
+    },
+    {
         "label": "urlpatterns",
         "kind": 5,
         "importPath": "PCUsageAnalyzer.dashboard.urls",
         "description": "PCUsageAnalyzer.dashboard.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", views.load_dashboard, name=\"dashboard\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.load_homepage, name=\"home\"),\n    path(\"dash\", views.load_dashboard, name=\"dashboard\"),\n    path(\"startapp\", views.start_app, name=\"startapp\"),\n    path(\"pauseorresume\", views.pause_or_resume_app, name=\"pauseorresume\"),\n    path(\"printdb\", views.print_db, name=\"printdb\")\n]",
         "detail": "PCUsageAnalyzer.dashboard.urls",
         "documentation": {}
     },
@@ -613,7 +647,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")",
+        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\ndef start_app(request):\n    # print all the variables of this request\n    print(request)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -622,7 +656,70 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")",
+        "peekOfCode": "def load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\ndef start_app(request):\n    # print all the variables of this request\n    print(request)\n    print(request.POST[\"start\"])\n    # if request is post, find variables\n    if request.method == \"POST\":",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "load_homepage",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def load_homepage(request):\n    return render(request, \"dashboard/index.html\")\ndef start_app(request):\n    # print all the variables of this request\n    print(request)\n    print(request.POST[\"start\"])\n    # if request is post, find variables\n    if request.method == \"POST\":\n        get_action = request.POST[\"start\"]\n        if \"start\" in get_action.lower():",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "start_app",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def start_app(request):\n    # print all the variables of this request\n    print(request)\n    print(request.POST[\"start\"])\n    # if request is post, find variables\n    if request.method == \"POST\":\n        get_action = request.POST[\"start\"]\n        if \"start\" in get_action.lower():\n            # schedule\n            schedule.every(app.thread_interval_s).seconds.do(app.run)",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "pause_or_resume_app",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(app.get_record())\n    return render(request, \"dashboard/dashboard.html\")\ndef stop_app():\n    app.set_finish(True)\n@login_required\ndef print_db(request):\n    app.print_db()\n    return render(request, \"dashboard/index.html\")",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "stop_app",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def stop_app():\n    app.set_finish(True)\n@login_required\ndef print_db(request):\n    app.print_db()\n    return render(request, \"dashboard/index.html\")\ndef run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "print_db",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def print_db(request):\n    app.print_db()\n    return render(request, \"dashboard/index.html\")\ndef run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:\n            break",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "run_core",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:\n            break\n        time.sleep(app.thread_interval_s)",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "app = MainApp.MainApplication()\n@login_required\ndef index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\ndef start_app(request):",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -703,7 +800,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "MIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",\n    \"django.middleware.clickjacking.XFrameOptionsMiddleware\",\n]\nROOT_URLCONF = \"PCUsageAnalyzer.urls\"",
+        "peekOfCode": "MIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",\n    \"django.middleware.clickjacking.XFrameOptionsMiddleware\",\n    \"dashboard.middlewares.CleanupMiddleware\",\n]",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -910,7 +1007,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.user_auth.views",
         "description": "PCUsageAnalyzer.user_auth.views",
-        "peekOfCode": "def login_user(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        # check if the user exists\n        user = authenticate(request, username=username, password=password)\n        if user is not None:\n            # if user exists, log them in\n            login(request, user)\n            return redirect(\"dashboard\")",
+        "peekOfCode": "def login_user(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        # check if the user exists\n        user = authenticate(request, username=username, password=password)\n        if user is not None:\n            # if user exists, log them in\n            login(request, user)\n            return redirect(\"home\")",
         "detail": "PCUsageAnalyzer.user_auth.views",
         "documentation": {}
     },
@@ -974,15 +1071,6 @@
         "importPath": "src.terminal_ui",
         "description": "src.terminal_ui",
         "peekOfCode": "def clean_string(given_string):\n    if given_string == \"\":\n        given_string = \"Desktop\"\n    if \",\" in given_string:\n        given_string = given_string.replace(\",\", \" \")\n    # if there are any non ascii characters, remove them\n    try:\n        given_string = \"\".join(i for i in given_string if ord(i) < 128)\n    except Exception as e:\n        print(e)",
-        "detail": "src.terminal_ui",
-        "documentation": {}
-    },
-    {
-        "label": "recording_indicator",
-        "kind": 2,
-        "importPath": "src.terminal_ui",
-        "description": "src.terminal_ui",
-        "peekOfCode": "def recording_indicator():\n    while app.get_record():\n        print(\"\\rRecording\", end=\"\")\n        for _ in range(3):\n            if not app.get_record():\n                break\n            print(\".\", end=\"\")\n            sys.stdout.flush()\n            time.sleep(0.5)\n        print(\"\\rRecording   \", end=\"\")",
         "detail": "src.terminal_ui",
         "documentation": {}
     },

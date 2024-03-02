@@ -1,5 +1,18 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
-<!-- Your content goes here -->
+<div>
+  <form method="post" action="{% url 'pauseorresume' %}">
+    {% csrf_token %}
+    <div class="flex justify-center items-center p-4 flex-col">
+      <div class="flex justify-center m-4">
+        <input
+          type="submit"
+          value="Start"
+          name="start"
+          class="p-4 w-96 h-20 bg-blue-400 text-3xl hover:bg-blue-500/80 hover:scale-105 outline rounded-lg"
+        />
+      </div>
+    </div>
+  </form>
+</div>
 {% endblock %}
