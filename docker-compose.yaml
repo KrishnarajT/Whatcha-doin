@@ -1,0 +1,14 @@
+version: '3.10'
+services:
+  web:
+    build: .
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        cd PCUsageAnalyzer &&
+        python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
