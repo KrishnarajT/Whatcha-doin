@@ -27,7 +27,6 @@ class MainApplication:
         print("Idle Detection is Disabled by default.")
         self.init_db()
 
-
     def clean_string(self, given_string):
         if given_string == "":
             given_string = "Desktop"
@@ -273,6 +272,15 @@ class MainApplication:
         self.db.to_csv(os.path.join(self.data_directory, "data.csv"), index=False)
         print("Saved to ", os.path.join(self.data_directory, "data.csv"))
 
+        # clear class variables
+        self.db = pd.DataFrame(
+            columns=["Title", "Start Time", "Registered End Time", "Real Duration"]
+        )
+        self.counter = Counter()
+        self.start_time_dict = {}
+        self.record = False
+        self.finish = False
+
         print("cleaned up")
 
     # export raw data
@@ -420,6 +428,7 @@ class MainApplication:
 
     def get_finish(self):
         return self.finish
+
     def get_db(self):
         return self.db
 

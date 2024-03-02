@@ -638,7 +638,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.dashboard.urls",
         "description": "PCUsageAnalyzer.dashboard.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", views.load_homepage, name=\"home\"),\n    path(\"dash\", views.load_dashboard, name=\"dashboard\"),\n    path(\"startapp\", views.start_app, name=\"startapp\"),\n    path(\"pauseorresume\", views.pause_or_resume_app, name=\"pauseorresume\"),\n    path(\"printdb\", views.print_db, name=\"printdb\")\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.load_homepage, name=\"home\"),\n    path(\"dash\", views.load_dashboard, name=\"dashboard\"),\n    path(\"startapp\", views.start_app, name=\"startapp\"),\n    path(\"pauseorresume\", views.pause_or_resume_app, name=\"pauseorresume\"),\n    path(\"printdb\", views.print_db, name=\"printdb\"),\n    path(\"stopapp\", views.stop_app, name=\"stopapp\"),\n    path(\"start_fresh\", views.start_fresh, name=\"start_fresh\"),\n    path(\"export_raw\", views.export_raw, name=\"export_raw\"),\n    path(",
         "detail": "PCUsageAnalyzer.dashboard.urls",
         "documentation": {}
     },
@@ -647,7 +647,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\ndef start_app(request):\n    # print all the variables of this request\n    print(request)",
+        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -656,7 +656,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\ndef start_app(request):\n    # print all the variables of this request\n    print(request)\n    print(request.POST[\"start\"])\n    # if request is post, find variables\n    if request.method == \"POST\":",
+        "peekOfCode": "def load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_s).seconds.do(app.run)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -665,7 +665,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def load_homepage(request):\n    return render(request, \"dashboard/index.html\")\ndef start_app(request):\n    # print all the variables of this request\n    print(request)\n    print(request.POST[\"start\"])\n    # if request is post, find variables\n    if request.method == \"POST\":\n        get_action = request.POST[\"start\"]\n        if \"start\" in get_action.lower():",
+        "peekOfCode": "def load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_s).seconds.do(app.run)\n    # start the thread for core app\n    t = threading.Thread(target=run_core)\n    t.start()",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -674,7 +674,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def start_app(request):\n    # print all the variables of this request\n    print(request)\n    print(request.POST[\"start\"])\n    # if request is post, find variables\n    if request.method == \"POST\":\n        get_action = request.POST[\"start\"]\n        if \"start\" in get_action.lower():\n            # schedule\n            schedule.every(app.thread_interval_s).seconds.do(app.run)",
+        "peekOfCode": "def start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_s).seconds.do(app.run)\n    # start the thread for core app\n    t = threading.Thread(target=run_core)\n    t.start()\n    app.set_record(True)\n    redirect(\"dashboard\")\n    return redirect(\"dashboard\")",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -683,7 +683,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(app.get_record())\n    return render(request, \"dashboard/dashboard.html\")\ndef stop_app():\n    app.set_finish(True)\n@login_required\ndef print_db(request):\n    app.print_db()\n    return render(request, \"dashboard/index.html\")",
+        "peekOfCode": "def pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(app.get_record())\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef stop_app(request):\n    app.set_finish(True)\n    app.cleanup()\n    schedule.clear()\n    return render(request, \"dashboard/index.html\")",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -692,7 +692,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def stop_app():\n    app.set_finish(True)\n@login_required\ndef print_db(request):\n    app.print_db()\n    return render(request, \"dashboard/index.html\")\ndef run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()",
+        "peekOfCode": "def stop_app(request):\n    app.set_finish(True)\n    app.cleanup()\n    schedule.clear()\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef print_db(request):\n    app.print_db()\n    # print(app.get_db())\n    return render(request, \"dashboard/index.html\")",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -701,7 +701,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def print_db(request):\n    app.print_db()\n    return render(request, \"dashboard/index.html\")\ndef run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:\n            break",
+        "peekOfCode": "def print_db(request):\n    app.print_db()\n    # print(app.get_db())\n    return render(request, \"dashboard/index.html\")\ndef run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -710,7 +710,43 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:\n            break\n        time.sleep(app.thread_interval_s)",
+        "peekOfCode": "def run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:\n            break\n        time.sleep(app.thread_interval_s)\ndef start_fresh(request):\n    app.start_fresh()",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "start_fresh",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def start_fresh(request):\n    app.start_fresh()\n    return render(request, \"dashboard/dashboard.html\")\ndef export_raw(request):\n    app.export_raw()\n    return render(request, \"dashboard/dashboard.html\")\ndef export_collaborative_data(request):\n    app.export_collaborative_data()\n    return render(request, \"dashboard/dashboard.html\")\ndef flip_idle_detection(request):",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "export_raw",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def export_raw(request):\n    app.export_raw()\n    return render(request, \"dashboard/dashboard.html\")\ndef export_collaborative_data(request):\n    app.export_collaborative_data()\n    return render(request, \"dashboard/dashboard.html\")\ndef flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "export_collaborative_data",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def export_collaborative_data(request):\n    app.export_collaborative_data()\n    return render(request, \"dashboard/dashboard.html\")\ndef flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "flip_idle_detection",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -719,7 +755,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "app = MainApp.MainApplication()\n@login_required\ndef index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\ndef start_app(request):",
+        "peekOfCode": "app = MainApp.MainApplication()\n@login_required\ndef index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
