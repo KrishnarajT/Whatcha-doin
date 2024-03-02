@@ -22,7 +22,11 @@ def login_user(request):
         else:
             # if user does not exist, show error message
             messages.error(request, "Invalid username or password.")
-            return render(request, "user_auth/login.html")
+            return render(
+                request,
+                "user_auth/login.html",
+                {"message": "Invalid username or password."},
+            )
     return render(request, "user_auth/login.html")
 
 
@@ -36,7 +40,7 @@ def signup_user(request):
 
         # dont do anything if they are empty
         if not username or not password or not password_confirm:
-            messages.error(request, f"you havent entered anything")
+            messages.error(request, f"Please fill all the Fields")
             return render(request, "user_auth/signup.html")
         else:
             password = password.strip()
@@ -47,7 +51,6 @@ def signup_user(request):
             return redirect("login")
         # create user
         if password == password_confirm:
-            messages.error(request, "Passwords match.")
             user = User.objects.create_user(username=username, password=password)
             user.save()
             return redirect("login")
@@ -60,3 +63,10 @@ def signup_user(request):
 def logout_user(request):
     logout(request)
     return redirect("login")
+
+def about(request):
+    return render(request, "user_auth/about.html")
+
+@login_required
+def profile(request):
+    return render(request, "user_auth/profile.html")

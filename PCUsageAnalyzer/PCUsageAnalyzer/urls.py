@@ -21,8 +21,10 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("django.contrib.auth.urls")),
-    path("", include("user_auth.urls"), name="user_auth"),
-    path("dashboard/", include("dashboard.urls"), name="dashboard"),
+    path("", include("user_auth.urls")),
+    path("dashboard/", include("dashboard.urls")),
+    path("analysis/", include("analysis.urls")),
+    path("settings/", include("settings.urls")),
 ]
 
 # set up admin site

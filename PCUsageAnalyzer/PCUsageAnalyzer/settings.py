@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "analysis",
     "main_tracker",
     "notifications",
+    "settings",
     "dashboard",
 ]
 

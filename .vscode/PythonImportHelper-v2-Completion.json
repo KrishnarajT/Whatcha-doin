@@ -208,6 +208,62 @@
         "documentation": {}
     },
     {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse_lazy",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "render",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
@@ -264,51 +320,11 @@
         "documentation": {}
     },
     {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
         "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "include",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "reverse_lazy",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "views",
-        "importPath": "user_auth",
-        "description": "user_auth",
-        "isExtraImport": true,
-        "detail": "user_auth",
+        "detail": "django.contrib.auth.decorators",
         "documentation": {}
     },
     {
@@ -557,6 +573,24 @@
         "documentation": {}
     },
     {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.analysis.urls",
+        "description": "PCUsageAnalyzer.analysis.urls",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.index, name=\"analysis\"),\n]",
+        "detail": "PCUsageAnalyzer.analysis.urls",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.analysis.views",
+        "description": "PCUsageAnalyzer.analysis.views",
+        "peekOfCode": "def index(request):\n    return render(request, \"analysis/index.html\")",
+        "detail": "PCUsageAnalyzer.analysis.views",
+        "documentation": {}
+    },
+    {
         "label": "DashboardConfig",
         "kind": 6,
         "importPath": "PCUsageAnalyzer.dashboard.apps",
@@ -570,7 +604,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.dashboard.urls",
         "description": "PCUsageAnalyzer.dashboard.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", views.index, name=\"index\"),\n    path(\"dash/\", views.load_dashboard, name=\"dashboard\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.load_dashboard, name=\"dashboard\"),\n]",
         "detail": "PCUsageAnalyzer.dashboard.urls",
         "documentation": {}
     },
@@ -795,7 +829,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(\"\", include(\"django.contrib.auth.urls\")),\n    path(\"\", include(\"user_auth.urls\"), name=\"user_auth\"),\n    path(\"dashboard/\", include(\"dashboard.urls\"), name=\"dashboard\"),\n]\n# set up admin site\nadmin.site.site_header = \"PC Usage Analyzer Admin\"\nadmin.site.site_title = \"PC Usage Analyzer Admin Portal\"",
+        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(\"\", include(\"django.contrib.auth.urls\")),\n    path(\"\", include(\"user_auth.urls\")),\n    path(\"dashboard/\", include(\"dashboard.urls\")),\n    path(\"analysis/\", include(\"analysis.urls\")),\n    path(\"settings/\", include(\"settings.urls\")),\n]\n# set up admin site\nadmin.site.site_header = \"PC Usage Analyzer Admin\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
         "documentation": {}
     },
@@ -836,6 +870,24 @@
         "documentation": {}
     },
     {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.settings.urls",
+        "description": "PCUsageAnalyzer.settings.urls",
+        "peekOfCode": "urlpatterns = [path(\"\", views.load_settings, name=\"settings\")]",
+        "detail": "PCUsageAnalyzer.settings.urls",
+        "documentation": {}
+    },
+    {
+        "label": "load_settings",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.settings.views",
+        "description": "PCUsageAnalyzer.settings.views",
+        "peekOfCode": "def load_settings(request):\n    return render(request, \"settings/index.html\")",
+        "detail": "PCUsageAnalyzer.settings.views",
+        "documentation": {}
+    },
+    {
         "label": "UserAuthConfig",
         "kind": 6,
         "importPath": "PCUsageAnalyzer.user_auth.apps",
@@ -849,7 +901,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.user_auth.urls",
         "description": "PCUsageAnalyzer.user_auth.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", views.login_user, name=\"login\"),\n    path(\"signup_user\", views.signup_user, name=\"signup\"),\n    path(\"logout_user\", views.logout_user, name=\"logout\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.login_user, name=\"login\"),\n    path(\"signup_user\", views.signup_user, name=\"signup\"),\n    path(\"logout_user\", views.logout_user, name=\"logout\"),\n    path(\"profile\", views.profile, name=\"profile\"),\n    path(\"about\", views.about, name=\"about\"),\n]",
         "detail": "PCUsageAnalyzer.user_auth.urls",
         "documentation": {}
     },
@@ -867,7 +919,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.user_auth.views",
         "description": "PCUsageAnalyzer.user_auth.views",
-        "peekOfCode": "def signup_user(request):\n    if request.method == \"POST\":\n        print(request.POST)\n        # get form data\n        username = request.POST.get(\"username\", \"\")\n        password = request.POST.get(\"users_pass\", \"\")\n        password_confirm = request.POST.get(\"users_pass_again\", \"\")\n        # dont do anything if they are empty\n        if not username or not password or not password_confirm:\n            messages.error(request, f\"you havent entered anything\")",
+        "peekOfCode": "def signup_user(request):\n    if request.method == \"POST\":\n        print(request.POST)\n        # get form data\n        username = request.POST.get(\"username\", \"\")\n        password = request.POST.get(\"users_pass\", \"\")\n        password_confirm = request.POST.get(\"users_pass_again\", \"\")\n        # dont do anything if they are empty\n        if not username or not password or not password_confirm:\n            messages.error(request, f\"Please fill all the Fields\")",
         "detail": "PCUsageAnalyzer.user_auth.views",
         "documentation": {}
     },
@@ -876,7 +928,25 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.user_auth.views",
         "description": "PCUsageAnalyzer.user_auth.views",
-        "peekOfCode": "def logout_user(request):\n    logout(request)\n    return redirect(\"login\")",
+        "peekOfCode": "def logout_user(request):\n    logout(request)\n    return redirect(\"login\")\ndef about(request):\n    return render(request, \"user_auth/about.html\")\n@login_required\ndef profile(request):\n    return render(request, \"user_auth/profile.html\")",
+        "detail": "PCUsageAnalyzer.user_auth.views",
+        "documentation": {}
+    },
+    {
+        "label": "about",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.user_auth.views",
+        "description": "PCUsageAnalyzer.user_auth.views",
+        "peekOfCode": "def about(request):\n    return render(request, \"user_auth/about.html\")\n@login_required\ndef profile(request):\n    return render(request, \"user_auth/profile.html\")",
+        "detail": "PCUsageAnalyzer.user_auth.views",
+        "documentation": {}
+    },
+    {
+        "label": "profile",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.user_auth.views",
+        "description": "PCUsageAnalyzer.user_auth.views",
+        "peekOfCode": "def profile(request):\n    return render(request, \"user_auth/profile.html\")",
         "detail": "PCUsageAnalyzer.user_auth.views",
         "documentation": {}
     },
