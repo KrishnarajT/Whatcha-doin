@@ -312,6 +312,22 @@
         "documentation": {}
     },
     {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -391,14 +407,6 @@
         "description": "django.contrib.auth",
         "isExtraImport": true,
         "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "login_required",
-        "importPath": "django.contrib.auth.decorators",
-        "description": "django.contrib.auth.decorators",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.decorators",
         "documentation": {}
     },
     {
@@ -562,7 +570,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.dashboard.urls",
         "description": "PCUsageAnalyzer.dashboard.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", views.index, name=\"index\"),\n    path(\"dash/\", views.load_dashboard, name=\"dashboard\"),\n    path(\"login_user\", uv.login_user, name=\"login\"),\n    path(\"signup_user\", uv.signup_user, name=\"signup\"),\n    path(\"logout_user\", uv.logout_user, name=\"logout\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.index, name=\"index\"),\n    path(\"dash/\", views.load_dashboard, name=\"dashboard\"),\n]",
         "detail": "PCUsageAnalyzer.dashboard.urls",
         "documentation": {}
     },
@@ -571,7 +579,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")",
+        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -715,7 +723,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "LANGUAGE_CODE = \"en-us\"\nTIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field",
+        "peekOfCode": "LANGUAGE_CODE = \"en-us\"\nTIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\nLOGIN_URL = \"/\"\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -724,7 +732,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "TIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "TIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\nLOGIN_URL = \"/\"\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -733,7 +741,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\nLOGIN_URL = \"/\"\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -742,7 +750,16 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "USE_TZ = True\nLOGIN_URL = \"/\"\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
+        "documentation": {}
+    },
+    {
+        "label": "LOGIN_URL",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
+        "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
+        "peekOfCode": "LOGIN_URL = \"/\"\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -778,7 +795,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(\"user_auth/\", include(\"django.contrib.auth.urls\")),\n    path(\"user_auth/\", include(\"user_auth.urls\")),\n    path(\"dashboard/\", include(\"dashboard.urls\"), name=\"dashboard\"),\n]\n# set up admin site\nadmin.site.site_header = \"PC Usage Analyzer Admin\"\nadmin.site.site_title = \"PC Usage Analyzer Admin Portal\"",
+        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(\"\", include(\"django.contrib.auth.urls\")),\n    path(\"\", include(\"user_auth.urls\"), name=\"user_auth\"),\n    path(\"dashboard/\", include(\"dashboard.urls\"), name=\"dashboard\"),\n]\n# set up admin site\nadmin.site.site_header = \"PC Usage Analyzer Admin\"\nadmin.site.site_title = \"PC Usage Analyzer Admin Portal\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
         "documentation": {}
     },
@@ -832,7 +849,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.user_auth.urls",
         "description": "PCUsageAnalyzer.user_auth.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"login_user\", views.login_user, name=\"login\"),\n    path(\"signup_user\", views.signup_user, name=\"signup\"),\n    path(\"dashboard/\", dv.index, name=\"dashboard_index\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.login_user, name=\"login\"),\n    path(\"signup_user\", views.signup_user, name=\"signup\"),\n    path(\"logout_user\", views.logout_user, name=\"logout\"),\n]",
         "detail": "PCUsageAnalyzer.user_auth.urls",
         "documentation": {}
     },
