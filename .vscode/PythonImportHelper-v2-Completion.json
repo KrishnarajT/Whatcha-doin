@@ -56,6 +56,14 @@
         "documentation": {}
     },
     {
+        "label": "messages",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
         "label": "AppConfig",
         "importPath": "django.apps",
         "description": "django.apps",
@@ -245,6 +253,62 @@
         "description": "django.shortcuts",
         "isExtraImport": true,
         "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse_lazy",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "views",
+        "importPath": "user_auth",
+        "description": "user_auth",
+        "isExtraImport": true,
+        "detail": "user_auth",
         "documentation": {}
     },
     {
@@ -273,19 +337,76 @@
         "documentation": {}
     },
     {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
         "label": "get_wsgi_application",
         "importPath": "django.core.wsgi",
         "description": "django.core.wsgi",
         "isExtraImport": true,
         "detail": "django.core.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "dashboard.views",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "dashboard.views",
+        "description": "dashboard.views",
+        "detail": "dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "UserCreationForm",
+        "importPath": "django.contrib.auth.forms",
+        "description": "django.contrib.auth.forms",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.forms",
+        "documentation": {}
+    },
+    {
+        "label": "generic",
+        "importPath": "django.views",
+        "description": "django.views",
+        "isExtraImport": true,
+        "detail": "django.views",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "logout",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
         "documentation": {}
     },
     {
@@ -437,6 +558,33 @@
         "documentation": {}
     },
     {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.dashboard.urls",
+        "description": "PCUsageAnalyzer.dashboard.urls",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.index, name=\"index\"),\n    path(\"dash/\", views.load_dashboard, name=\"dashboard\"),\n    path(\"login_user\", uv.login_user, name=\"login\"),\n    path(\"signup_user\", uv.signup_user, name=\"signup\"),\n    path(\"logout_user\", uv.logout_user, name=\"logout\"),\n]",
+        "detail": "PCUsageAnalyzer.dashboard.urls",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "load_dashboard",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
         "label": "MainTrackerConfig",
         "kind": 6,
         "importPath": "PCUsageAnalyzer.main_tracker.apps",
@@ -495,7 +643,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",\n    \"django.contrib.messages\",\n    \"django.contrib.staticfiles\",\n]",
+        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",\n    \"django.contrib.messages\",\n    \"django.contrib.staticfiles\",\n    \"user_auth\",",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -504,7 +652,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",\n    \"django.contrib.messages\",\n    \"django.contrib.staticfiles\",\n]\nMIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",",
+        "peekOfCode": "INSTALLED_APPS = [\n    \"django.contrib.admin\",\n    \"django.contrib.auth\",\n    \"django.contrib.contenttypes\",\n    \"django.contrib.sessions\",\n    \"django.contrib.messages\",\n    \"django.contrib.staticfiles\",\n    \"user_auth\",\n    \"analysis\",\n    \"main_tracker\",",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -522,7 +670,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "ROOT_URLCONF = \"PCUsageAnalyzer.urls\"\nTEMPLATES = [\n    {\n        \"BACKEND\": \"django.template.backends.django.DjangoTemplates\",\n        \"DIRS\": [],\n        \"APP_DIRS\": True,\n        \"OPTIONS\": {\n            \"context_processors\": [\n                \"django.template.context_processors.debug\",\n                \"django.template.context_processors.request\",",
+        "peekOfCode": "ROOT_URLCONF = \"PCUsageAnalyzer.urls\"\nTEMPLATES = [\n    {\n        \"BACKEND\": \"django.template.backends.django.DjangoTemplates\",\n        \"DIRS\": [\n            BASE_DIR / \"templates\",\n        ],\n        \"APP_DIRS\": True,\n        \"OPTIONS\": {\n            \"context_processors\": [",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -531,7 +679,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "TEMPLATES = [\n    {\n        \"BACKEND\": \"django.template.backends.django.DjangoTemplates\",\n        \"DIRS\": [],\n        \"APP_DIRS\": True,\n        \"OPTIONS\": {\n            \"context_processors\": [\n                \"django.template.context_processors.debug\",\n                \"django.template.context_processors.request\",\n                \"django.contrib.auth.context_processors.auth\",",
+        "peekOfCode": "TEMPLATES = [\n    {\n        \"BACKEND\": \"django.template.backends.django.DjangoTemplates\",\n        \"DIRS\": [\n            BASE_DIR / \"templates\",\n        ],\n        \"APP_DIRS\": True,\n        \"OPTIONS\": {\n            \"context_processors\": [\n                \"django.template.context_processors.debug\",",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -567,7 +715,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "LANGUAGE_CODE = \"en-us\"\nTIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "LANGUAGE_CODE = \"en-us\"\nTIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -576,7 +724,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "TIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "TIME_ZONE = \"UTC\"\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -585,7 +733,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -594,7 +742,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.0/howto/static-files/\nSTATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -603,7 +751,16 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "STATIC_URL = \"static/\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "peekOfCode": "STATIC_URL = \"static/\"\nSTATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
+        "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_ROOT",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
+        "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
+        "peekOfCode": "STATIC_ROOT = BASE_DIR / \"static\"\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = \"django.db.models.BigAutoField\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
@@ -621,7 +778,25 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"admin/\", admin.site.urls),\n    path(\"user_auth/\", include(\"django.contrib.auth.urls\")),\n    path(\"user_auth/\", include(\"user_auth.urls\")),\n    path(\"dashboard/\", include(\"dashboard.urls\"), name=\"dashboard\"),\n]\n# set up admin site\nadmin.site.site_header = \"PC Usage Analyzer Admin\"\nadmin.site.site_title = \"PC Usage Analyzer Admin Portal\"",
+        "detail": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
+        "documentation": {}
+    },
+    {
+        "label": "admin.site.site_header",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
+        "description": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
+        "peekOfCode": "admin.site.site_header = \"PC Usage Analyzer Admin\"\nadmin.site.site_title = \"PC Usage Analyzer Admin Portal\"",
+        "detail": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
+        "documentation": {}
+    },
+    {
+        "label": "admin.site.site_title",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
+        "description": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
+        "peekOfCode": "admin.site.site_title = \"PC Usage Analyzer Admin Portal\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.urls",
         "documentation": {}
     },
@@ -650,6 +825,42 @@
         "description": "PCUsageAnalyzer.user_auth.apps",
         "peekOfCode": "class UserAuthConfig(AppConfig):\n    default_auto_field = \"django.db.models.BigAutoField\"\n    name = \"user_auth\"",
         "detail": "PCUsageAnalyzer.user_auth.apps",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "PCUsageAnalyzer.user_auth.urls",
+        "description": "PCUsageAnalyzer.user_auth.urls",
+        "peekOfCode": "urlpatterns = [\n    path(\"login_user\", views.login_user, name=\"login\"),\n    path(\"signup_user\", views.signup_user, name=\"signup\"),\n    path(\"dashboard/\", dv.index, name=\"dashboard_index\"),\n]",
+        "detail": "PCUsageAnalyzer.user_auth.urls",
+        "documentation": {}
+    },
+    {
+        "label": "login_user",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.user_auth.views",
+        "description": "PCUsageAnalyzer.user_auth.views",
+        "peekOfCode": "def login_user(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        # check if the user exists\n        user = authenticate(request, username=username, password=password)\n        if user is not None:\n            # if user exists, log them in\n            login(request, user)\n            return redirect(\"dashboard_index\")",
+        "detail": "PCUsageAnalyzer.user_auth.views",
+        "documentation": {}
+    },
+    {
+        "label": "signup_user",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.user_auth.views",
+        "description": "PCUsageAnalyzer.user_auth.views",
+        "peekOfCode": "def signup_user(request):\n    if request.method == \"POST\":\n        print(request.POST)\n        # get form data\n        username = request.POST.get(\"username\", \"\")\n        password = request.POST.get(\"users_pass\", \"\")\n        password_confirm = request.POST.get(\"users_pass_again\", \"\")\n        # dont do anything if they are empty\n        if not username or not password or not password_confirm:\n            messages.error(request, f\"you havent entered anything\")",
+        "detail": "PCUsageAnalyzer.user_auth.views",
+        "documentation": {}
+    },
+    {
+        "label": "logout_user",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.user_auth.views",
+        "description": "PCUsageAnalyzer.user_auth.views",
+        "peekOfCode": "def logout_user(request):\n    logout(request)\n    return redirect(\"login\")",
+        "detail": "PCUsageAnalyzer.user_auth.views",
         "documentation": {}
     },
     {

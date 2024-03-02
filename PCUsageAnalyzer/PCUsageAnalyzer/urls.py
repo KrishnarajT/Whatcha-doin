@@ -16,8 +16,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("user_auth/", include("django.contrib.auth.urls")),
+    path("user_auth/", include("user_auth.urls")),
+    path("dashboard/", include("dashboard.urls"), name="dashboard"),
 ]
+
+# set up admin site
+admin.site.site_header = "PC Usage Analyzer Admin"
+admin.site.site_title = "PC Usage Analyzer Admin Portal"

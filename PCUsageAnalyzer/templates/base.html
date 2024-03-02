@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}PC App Usage Analyzer{% endblock %}</title>
+    {% block css %}
+    <!-- CSS files -->
+    {% endblock %}
+  </head>
+  <body>
+    <header>
+      <!-- Header content -->
+      {% block header_content %}
+      <!-- Main content -->
+      {% endblock %}
+    </header>
+
+    <!-- Navigation content -->
+    {% include 'navbar.html' %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} 
+
+    <main>
+      {% block content %}
+      <!-- Main content -->
+      {% endblock %}
+    </main>
+
+    <footer>
+      <!-- Footer content -->
+    </footer>
+
+    {% block js %}
+    <!-- JavaScript files -->
+    {% endblock %}
+  </body>
+</html>
