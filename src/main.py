@@ -52,7 +52,7 @@ class MainApplication:
         self.start_time_dict = {}
         self.finish = False
         self.data_directory = os.path.join(
-            os.path.expanduser("~\Documents"), "Whatcha Doin Data"
+            os.path.expanduser("~\Documents"), "PC Usage Analyzer Data"
         )
         self.cursor_position = pag.position()
         self.cursor_counter = 0

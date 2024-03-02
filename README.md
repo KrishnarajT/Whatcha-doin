@@ -1,4 +1,4 @@
-# Whatcha Doin
+# PC Usage Analyzer
 An app to track time spent on each app with ability to export data well for analysis. 
 
 ![](./screenshots/start.jpg)
