@@ -17,4 +17,5 @@ urlpatterns = [
     ),
     path("flip_idle_detection", views.flip_idle_detection, name="flip_idle_detection"),
     path("test", views.test, name="test"),
+    path("get_counter", views.get_counter, name="get_counter"),
 ]

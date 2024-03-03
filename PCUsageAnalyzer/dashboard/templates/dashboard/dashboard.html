@@ -11,13 +11,108 @@
         csrfmiddlewaretoken: "{{ csrf_token }}",
       },
       success: function (response) {
-        // replace the current file's html with response
+        // make a plotly graph
+        var data = response;
+        // parse the data as json
+        data = JSON.parse(data);
+
+        // data is a list of json objects.
+        // get the names
+        var names = data.map((x) => x["Title"]);
+        // get the starttime attribute from all data points
+        var starttimes = data.map((x) => x["Start Time"]);
+        // get the endtime attribute from all data points
+        var endtimes = data.map((x) => x["Registered End Time"]);
+        // get the duration attribute from all data points
+        var durations = data.map((x) => x["Real Duration"]);
+
+        // convert time to a date object from epoch time (seconds)
+        starttime = starttimes.map((x) => new Date(x * 1000));
+
+        // convert time to a date object from epoch time (seconds)
+        endtimes = endtimes.map((x) => new Date(x * 1000));
+        // convert duration to a number
+        durations = durations.map((x) => parseInt(x));
+
+        // count occurances of times for each hour
+        var count = {};
+        for (var i = 0; i < starttime.length; i++) {
+          var date = starttime[i];
+          var hour = date.getHours();
+          if (count[hour] == undefined) {
+            count[hour] = 1;
+          } else {
+            count[hour] += 1;
+          }
+        }
+        // plot count as a bar chart
+        var trace = {
+          x: Object.keys(count),
+          y: Object.values(count),
+          type: "line",
+        };
+        var layout = {
+          title: "Count of tasks started at each hour",
+          xaxis: {
+            title: "Hour",
+          },
+          yaxis: {
+            title: "Count",
+          },
+        };
+        var data = [trace];
+        Plotly.newPlot("data", data, layout);
       },
       error: function (response) {
         console.log(response);
       },
     });
   }
+
+  function update_counter_plot() {
+    // request the get_counter url
+    $.ajax({
+      type: "GET",
+      url: "{% url 'get_counter' %}",
+      success: function (response) {
+        // parse the response as json
+        console.log(response)
+        var data = response;
+        // get the first word from the keys
+        var keys = Object.keys(data);
+
+        // get only the first word of the string
+        keys = keys.map((x) => x.split(" ")[0]);
+        // get the values
+        var values = Object.values(data);
+
+        // plot a line graph
+        var trace = {
+          x: keys,
+          y: values,
+          type: "line",
+        };
+        var layout = {
+          title: "Tracking current apps",
+          xaxis: {
+            title: "apps",
+          },
+          yaxis: {
+            title: "current usage",
+          },
+        };
+        var data = [trace];
+        Plotly.newPlot("counter", data, layout);
+      },
+      error: function (response) {
+        console.log(response);
+      },
+    });
+
+  }
+  // run this function every second
+  setInterval(update_test, 10000);
+  setInterval(update_counter_plot, 1000);
 </script>
 
 {% endblock %} {% block title %}Home{% endblock %} {% block content %}
@@ -35,7 +130,23 @@
       </div>
     </div>
   </form>
-  <div id="data">
+  <form method="post" action="{% url 'test' %}">
+    {% csrf_token %} {% comment %} another button to print {% endcomment %}
+    <div class="flex justify-center m-4">
+      <input
+        type="submit"
+        name="test"
+        value="test"
+        class="p-4 w-96 h-20 bg-green-400 text-3xl hover:bg-green-500/80 hover:scale-105 outline rounded-lg"
+      />
+    </div>
+  </form>
+  <div class="flex justify-center m-4 w-full flex-col">
+    <div id="data"></div>
+    <div id="counter"></div>
+  </div>
+
+  <div id="plot_div">
     {{ plot_div|safe }}
     <div></div>
     {% endblock %}

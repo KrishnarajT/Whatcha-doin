@@ -458,6 +458,14 @@
         "documentation": {}
     },
     {
+        "label": "JsonResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
         "label": "plotly.graph_objects",
         "kind": 6,
         "isExtraImport": true,
@@ -754,7 +762,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def export_collaborative_data(request):\n    app.export_collaborative_data()\n    return render(request, \"dashboard/dashboard.html\")\ndef flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")\ndef test(request):\n    df = app.get_db()\n    fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])\n    fig.update_layout(",
+        "peekOfCode": "def export_collaborative_data(request):\n    app.export_collaborative_data()\n    return render(request, \"dashboard/dashboard.html\")\ndef flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")\ndef test(request):\n    #     df = app.get_db()\n    #     fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])\n    #     fig.update_layout(",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -763,7 +771,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")\ndef test(request):\n    df = app.get_db()\n    fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])\n    fig.update_layout(\n        autosize=False,\n        width=200,\n        height=200,",
+        "peekOfCode": "def flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")\ndef test(request):\n    #     df = app.get_db()\n    #     fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])\n    #     fig.update_layout(\n    #         autosize=False,\n    #         width=200,\n    #         height=200,",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -772,7 +780,16 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def test(request):\n    df = app.get_db()\n    fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])\n    fig.update_layout(\n        autosize=False,\n        width=200,\n        height=200,\n        margin=dict(l=0, r=0, b=0, t=0, pad=4),\n    )\n    plot_div = plot(fig, output_type=\"div\", include_plotlyjs=False)",
+        "peekOfCode": "def test(request):\n    #     df = app.get_db()\n    #     fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])\n    #     fig.update_layout(\n    #         autosize=False,\n    #         width=200,\n    #         height=200,\n    #         margin=dict(l=0, r=0, b=0, t=0, pad=4),\n    #     )\n    #     plot_div = plot(fig, output_type=\"div\", include_plotlyjs=False)",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_counter",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def get_counter(request):\n    counter = app.get_counter()\n    return JsonResponse(counter, safe=False)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 import schedule
 import time
 import threading
-
+from django.http import JsonResponse
 import plotly.graph_objects as go
 from plotly.offline import plot
 
@@ -93,16 +93,23 @@ def flip_idle_detection(request):
     app.flip_idle_detection()
     return render(request, "dashboard/dashboard.html")
 
-
 def test(request):
+    #     df = app.get_db()
+    #     fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])
+    #     fig.update_layout(
+    #         autosize=False,
+    #         width=200,
+    #         height=200,
+    #         margin=dict(l=0, r=0, b=0, t=0, pad=4),
+    #     )
+    #     plot_div = plot(fig, output_type="div", include_plotlyjs=False)
+    #     plot_div = plot_div.replace('<div>', '<div id="customId">')
+    #     return render(request, "dashboard/dashboard.html", context={"plot_div": plot_div})
     df = app.get_db()
-    fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])
-    fig.update_layout(
-        autosize=False,
-        width=200,
-        height=200,
-        margin=dict(l=0, r=0, b=0, t=0, pad=4),
-    )
-    plot_div = plot(fig, output_type="div", include_plotlyjs=False)
-    plot_div = plot_div.replace('<div>', '<div id="customId">')
-    return render(request, "dashboard/dashboard.html", context={"plot_div": plot_div})
+    data = df.to_json(orient="records")
+    return JsonResponse(data, safe=False)
+
+
+def get_counter(request):
+    counter = app.get_counter()
+    return JsonResponse(counter, safe=False)
