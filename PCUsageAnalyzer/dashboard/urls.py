@@ -16,4 +16,5 @@ urlpatterns = [
         name="export_collaborative_data",
     ),
     path("flip_idle_detection", views.flip_idle_detection, name="flip_idle_detection"),
+    path("test", views.test, name="test"),
 ]

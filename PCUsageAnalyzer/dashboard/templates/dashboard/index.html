@@ -37,6 +37,18 @@
   </div>
 </form>
 
+<form method="post" action="{% url 'test' %}">
+  {% csrf_token %} {% comment %} another button to print {% endcomment %}
+  <div class="flex justify-center m-4">
+    <input
+      type="submit"
+      name="test"
+      value="test"
+      class="p-4 w-96 h-20 bg-green-400 text-3xl hover:bg-green-500/80 hover:scale-105 outline rounded-lg"
+    />
+  </div>
+</form>
+
 <form method="post" action="{% url 'start_fresh' %}">
   {% csrf_token %} {% comment %} another button to print {% endcomment %}
   <div class="flex justify-center m-4">

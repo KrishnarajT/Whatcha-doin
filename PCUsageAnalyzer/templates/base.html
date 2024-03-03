@@ -24,6 +24,7 @@
       }
       body {
         font-family: "Quicksand", sans-serif;
+        overflow-x: hidden;
       }
       .quicksand {
         font-family: "Quicksand", sans-serif;
@@ -33,6 +34,28 @@
         font-variation-settings: "slnt" 0;
       }
     </style>
+    {% block meta %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PC App Usage Analyzer is a web application that helps you to analyze your PC app usage."
+    />
+    <meta
+      name="keywords"
+      content="PC App Usage Analyzer, PC, App, Usage, Analyzer, Web Application, Web, Application, App Usage, App Usage Analyzer, PC App, PC App Usage, PC App Usage Analyzer"
+    />
+    <meta name="author" content="Krishnaraj T" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="generator" content="PC App Usage Analyzer" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+  {% endblock %}
+  {% block header_stuff %}
+  <!-- Header stuff -->
+  {% endblock %}
   </head>
   <body class="bg-[#f0f2f5]">
     <header>

@@ -4,6 +4,10 @@ import schedule
 import time
 import threading
 
+import plotly.graph_objects as go
+from plotly.offline import plot
+
+
 # importing the main app class.
 from . import MainApp
 
@@ -37,6 +41,7 @@ def start_app(request):
     redirect("dashboard")
     return redirect("dashboard")
 
+
 @login_required
 def pause_or_resume_app(request):
     app.pause_or_resume()
@@ -68,18 +73,36 @@ def run_core():
             break
         time.sleep(app.thread_interval_s)
 
+
 def start_fresh(request):
     app.start_fresh()
     return render(request, "dashboard/dashboard.html")
+
 
 def export_raw(request):
     app.export_raw()
     return render(request, "dashboard/dashboard.html")
 
+
 def export_collaborative_data(request):
     app.export_collaborative_data()
     return render(request, "dashboard/dashboard.html")
 
+
 def flip_idle_detection(request):
     app.flip_idle_detection()
     return render(request, "dashboard/dashboard.html")
+
+
+def test(request):
+    df = app.get_db()
+    fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])
+    fig.update_layout(
+        autosize=False,
+        width=200,
+        height=200,
+        margin=dict(l=0, r=0, b=0, t=0, pad=4),
+    )
+    plot_div = plot(fig, output_type="div", include_plotlyjs=False)
+    plot_div = plot_div.replace('<div>', '<div id="customId">')
+    return render(request, "dashboard/dashboard.html", context={"plot_div": plot_div})

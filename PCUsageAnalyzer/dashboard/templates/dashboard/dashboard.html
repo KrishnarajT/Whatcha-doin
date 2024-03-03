@@ -1,5 +1,26 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block header_stuff %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // make a post request to the server
+  function update_test() {
+    $.ajax({
+      type: "POST",
+      url: "{% url 'test' %}",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+      },
+      success: function (response) {
+        // replace the current file's html with response
+      },
+      error: function (response) {
+        console.log(response);
+      },
+    });
+  }
+</script>
 
+{% endblock %} {% block title %}Home{% endblock %} {% block content %}
 <div>
   <form method="post" action="{% url 'pauseorresume' %}">
     {% csrf_token %}
@@ -14,5 +35,9 @@
       </div>
     </div>
   </form>
+  <div id="data">
+    {{ plot_div|safe }}
+    <div></div>
+    {% endblock %}
+  </div>
 </div>
-{% endblock %}
