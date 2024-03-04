@@ -76,7 +76,7 @@
       url: "{% url 'get_counter' %}",
       success: function (response) {
         // parse the response as json
-        console.log(response)
+        console.log(response);
         var data = response;
         // get the first word from the keys
         var keys = Object.keys(data);
@@ -108,7 +108,6 @@
         console.log(response);
       },
     });
-
   }
   // run this function every second
   setInterval(update_test, 10000);
@@ -116,39 +115,42 @@
 </script>
 
 {% endblock %} {% block title %}Home{% endblock %} {% block content %}
-<div>
-  <form method="post" action="{% url 'pauseorresume' %}">
-    {% csrf_token %}
-    <div class="flex justify-center items-center p-4 flex-col">
-      <div class="flex justify-center m-4">
-        <input
-          type="submit"
-          value="Start"
-          name="start"
-          class="p-4 w-96 h-20 bg-blue-400 text-3xl hover:bg-blue-500/80 hover:scale-105 outline rounded-lg"
-        />
+  <div class="flex w-full gap-0">
+    <div class="min-w-[18vw]"></div>
+    <div class="w-full max-w-[75vw]">
+      <form method="post" action="{% url 'pauseorresume' %}">
+        {% csrf_token %}
+        <div class="flex justify-center items-center p-4 flex-col">
+          <div class="flex justify-center m-4">
+            <input
+              type="submit"
+              value="Start"
+              name="start"
+              class="p-4 w-96 h-20 bg-blue-400 text-3xl hover:bg-blue-500/80 hover:scale-105 outline rounded-lg"
+            />
+          </div>
+        </div>
+      </form>
+      <form method="post" action="{% url 'test' %}">
+        {% csrf_token %} {% comment %} another button to print {% endcomment %}
+        <div class="flex justify-center m-4">
+          <input
+            type="submit"
+            name="test"
+            value="test"
+            class="p-4 w-96 h-20 bg-green-400 text-3xl hover:bg-green-500/80 hover:scale-105 outline rounded-lg"
+          />
+        </div>
+      </form>
+      <div class="flex justify-center m-4 w-full flex-col">
+        <div id="data"></div>
+        <div id="counter"></div>
+      </div>
+
+      <div id="plot_div">
+        {{ plot_div|safe }}
+        <div></div>
+        {% endblock %}
       </div>
     </div>
-  </form>
-  <form method="post" action="{% url 'test' %}">
-    {% csrf_token %} {% comment %} another button to print {% endcomment %}
-    <div class="flex justify-center m-4">
-      <input
-        type="submit"
-        name="test"
-        value="test"
-        class="p-4 w-96 h-20 bg-green-400 text-3xl hover:bg-green-500/80 hover:scale-105 outline rounded-lg"
-      />
-    </div>
-  </form>
-  <div class="flex justify-center m-4 w-full flex-col">
-    <div id="data"></div>
-    <div id="counter"></div>
   </div>
-
-  <div id="plot_div">
-    {{ plot_div|safe }}
-    <div></div>
-    {% endblock %}
-  </div>
-</div>
