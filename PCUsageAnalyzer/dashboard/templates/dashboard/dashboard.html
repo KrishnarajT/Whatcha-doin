@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block header_stuff %}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
   let isRecording;
   let registrationIntervalTimeout;
@@ -130,6 +130,11 @@
     }
   }
 
+  function update_all_charts(){
+    update_test();
+    update_counter_plot();
+  }
+
   function get_recording() {
     $.ajax({
       type: "GET",
@@ -152,8 +157,7 @@
           console.log("recording is false");
 
           // if recording is false, then update the plots once.
-          update_plots_at_registration_interval();
-          update_plots_at_thread_interval();
+          update_all_charts()
         }
       },
       error: function (response) {
@@ -188,39 +192,22 @@
     }
   }
 
+
+
   get_intervals_ms();
   // get recording
   get_recording();
+
+  // get charts atleast once. 
+
+  setInterval(update_all_charts, 100000);
 </script>
 
 {% endblock %} {% block title %}PC Usage Analyzer - Dashboard{% endblock %} {% block content %}
 <div class="flex w-full gap-0">
   <div class="min-w-[18vw]"></div>
   <div class="w-full max-w-[75vw]">
-    <form method="post" action="{% url 'pauseorresume' %}">
-      {% csrf_token %}
-      <div class="flex justify-center items-center p-4 flex-col">
-        <div class="flex justify-center m-4">
-          <input
-            type="submit"
-            value="Start"
-            name="start"
-            class="p-4 w-96 h-20 bg-blue-400 text-3xl hover:bg-blue-500/80 hover:scale-105 outline rounded-lg"
-          />
-        </div>
-      </div>
-    </form>
-    <form method="post" action="{% url 'test' %}">
-      {% csrf_token %} {% comment %} another button to print {% endcomment %}
-      <div class="flex justify-center m-4">
-        <input
-          type="submit"
-          name="test"
-          value="test"
-          class="p-4 w-96 h-20 bg-green-400 text-3xl hover:bg-green-500/80 hover:scale-105 outline rounded-lg"
-        />
-      </div>
-    </form>
+
     <div class="flex justify-center m-4 w-full flex-col">
       <div id="data"></div>
       <div id="counter"></div>

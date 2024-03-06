@@ -680,7 +680,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms).seconds.do(app.init_db)\n        # start the thread for core app\n        t = threading.Thread(target=run_core)",
+        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms / 1000).seconds.do(app.run)\n        # start the thread for core app\n        t = threading.Thread(target=run_core)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -689,7 +689,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms).seconds.do(app.init_db)\n        # start the thread for core app\n        t = threading.Thread(target=run_core)\n        t.start()\n        print(\"started app thread. \")\n        app.set_app_started(True)",
+        "peekOfCode": "def load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms / 1000).seconds.do(app.run)\n        # start the thread for core app\n        t = threading.Thread(target=run_core)\n        t.start()\n        print(\"started app thread. \")\n        app.set_app_started(True)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -707,7 +707,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(\"recording is\", app.get_record())\n    return render(\n        request, \"dashboard/dashboard.html\", context={\"recording\": app.get_record()}\n    )\n@login_required",
+        "peekOfCode": "def load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(\"recording is\", app.get_record())\n    return JsonResponse(app.get_record(), safe=False)\n@login_required\ndef stop_app_and_logout(request):\n    app.set_finish(True)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -716,7 +716,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(\"recording is\", app.get_record())\n    return render(\n        request, \"dashboard/dashboard.html\", context={\"recording\": app.get_record()}\n    )\n@login_required\ndef stop_app_and_logout(request):\n    app.set_finish(True)\n    app.cleanup()",
+        "peekOfCode": "def pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(\"recording is\", app.get_record())\n    return JsonResponse(app.get_record(), safe=False)\n@login_required\ndef stop_app_and_logout(request):\n    app.set_finish(True)\n    app.cleanup()\n    schedule.clear()\n    logout(request)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -734,7 +734,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def print_db(request):\n    app.print_db()\n    # print(app.get_db())\n    return render(request, \"dashboard/dashboard.html\")\ndef run_core():\n    while True:\n        print(\"running thread core function that checks for app.getrecord\")\n        if app.get_record() == True:\n            print(\"record is set to true, so gonna be running the pending schedule\")\n            print(\"next job\", schedule.next_run())",
+        "peekOfCode": "def print_db(request):\n    app.print_db()\n    # print(app.get_db())\n    return render(request, \"dashboard/dashboard.html\")\ndef run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n        if app.get_finish() == True:\n            break",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -743,7 +743,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def run_core():\n    while True:\n        print(\"running thread core function that checks for app.getrecord\")\n        if app.get_record() == True:\n            print(\"record is set to true, so gonna be running the pending schedule\")\n            print(\"next job\", schedule.next_run())\n            schedule.run_pending()\n        if app.get_finish() == True:\n            break\n        time.sleep(app.thread_interval_ms / 1000)",
+        "peekOfCode": "def run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n        if app.get_finish() == True:\n            break\n        time.sleep(app.thread_interval_ms / 1000)\ndef start_fresh(request):\n    app.start_fresh()\n    return render(request, \"dashboard/dashboard.html\")",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -779,7 +779,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")\ndef test(request):\n    df = app.get_db()\n    data = df.to_json(orient=\"records\")\n    return JsonResponse(data, safe=False)\ndef get_counter(request):\n    app.print_db()\n    counter = app.get_counter()",
+        "peekOfCode": "def flip_idle_detection(request):\n    app.flip_idle_detection()\n    return render(request, \"dashboard/dashboard.html\")\ndef test(request):\n    df = app.get_db()\n    data = df.to_json(orient=\"records\")\n    return JsonResponse(data, safe=False)\ndef get_counter(request):\n    # app.print_db()\n    counter = app.get_counter()",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -788,7 +788,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def test(request):\n    df = app.get_db()\n    data = df.to_json(orient=\"records\")\n    return JsonResponse(data, safe=False)\ndef get_counter(request):\n    app.print_db()\n    counter = app.get_counter()\n    return JsonResponse(counter, safe=False)\ndef get_recording(request):\n    recording = app.get_record()",
+        "peekOfCode": "def test(request):\n    df = app.get_db()\n    data = df.to_json(orient=\"records\")\n    return JsonResponse(data, safe=False)\ndef get_counter(request):\n    # app.print_db()\n    counter = app.get_counter()\n    return JsonResponse(counter, safe=False)\ndef get_recording(request):\n    recording = app.get_record()",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -797,7 +797,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def get_counter(request):\n    app.print_db()\n    counter = app.get_counter()\n    return JsonResponse(counter, safe=False)\ndef get_recording(request):\n    recording = app.get_record()\n    return JsonResponse(recording, safe=False)\ndef get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)",
+        "peekOfCode": "def get_counter(request):\n    # app.print_db()\n    counter = app.get_counter()\n    return JsonResponse(counter, safe=False)\ndef get_recording(request):\n    recording = app.get_record()\n    return JsonResponse(recording, safe=False)\ndef get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -833,7 +833,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "app = MainApp.MainApplication()\n@login_required\ndef index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms).seconds.do(app.init_db)",
+        "peekOfCode": "app = MainApp.MainApplication()\n@login_required\ndef index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms / 1000).seconds.do(app.run)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },

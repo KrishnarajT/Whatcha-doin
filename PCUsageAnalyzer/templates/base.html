@@ -9,6 +9,9 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
       rel="stylesheet"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <title>{% block title %}PC App Usage Analyzer{% endblock %}</title>
     {% block css %}
     <!-- CSS files -->
@@ -52,10 +55,9 @@
     <meta name="rating" content="general" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="msapplication-TileColor" content="#ffffff" />
-  {% endblock %}
-  {% block header_stuff %}
-  <!-- Header stuff -->
-  {% endblock %}
+    {% endblock %} {% block header_stuff %}
+    <!-- Header stuff -->
+    {% endblock %}
   </head>
   <body class="bg-[#f0f2f5]">
     <header>

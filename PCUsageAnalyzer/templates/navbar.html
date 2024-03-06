@@ -1,13 +1,33 @@
 {% load static %}
-
 <script>
   document.addEventListener("DOMContentLoaded", (event) => {
     const colors = ["pink", "blue", "green", "yellow", "red", "purple"];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     const numbers = [400, 500, 600, 700, 800, 900];
     const randomNumber = numbers[Math.floor(Math.random() * numbers.length)];
-    document.querySelector("nav").classList.add(`bg-${randomColor}-${randomNumber}`);
+    document
+      .querySelector("nav")
+      .classList.add(`bg-${randomColor}-${randomNumber}`);
   });
+
+  function play_or_pause() {
+    console.log("play or pause");
+    $.ajax({
+      type: "POST",
+      url: "{% url 'pauseorresume' %}",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+      },
+      success: function (response) {
+        console.log(response);
+        // load dashboard
+        window.location.href = "{% url 'dashboard' %}";
+      },
+      error: function (response) {
+        console.log(response);
+      },
+    });
+  }
 </script>
 
 <div class="">
@@ -171,92 +191,90 @@
       class="flex flex-col justify-between max-w-[18vw] p-2 font-sans text-base font-normal text-gray-700 h-full"
     >
       <div class="flex flex-col min-w-36 gap-1">
-        <form method="post" action="{% url 'pauseorresume' %}">
-          {% csrf_token %} {% if recording == True %}
-          <div
-            role="button"
-            onclick="this.closest('form').submit();"
-            tabindex="0"
-            class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all bg-yellow-300/80 bg-opacity-80 hover:bg-yellow-200 hover:bg-opacity-80 focus:bg-yellow-50 focus:bg-opacity-80 active:bg-yellow-50 active:bg-opacity-80 hover:scale-105 duration-200 hover:text-yellow-900 focus:text-yellow-900 active:text-yellow-900 outline-none"
-          >
-            <div class="grid place-items-center mr-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                viewBox="0 0 24 24"
+        {% if recording %}
+        <button
+          onclick="play_or_pause()"
+          tabindex="0"
+          class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all bg-yellow-300/80 bg-opacity-80 hover:bg-yellow-200 hover:bg-opacity-80 focus:bg-yellow-50 focus:bg-opacity-80 active:bg-yellow-50 active:bg-opacity-80 hover:scale-105 duration-200 hover:text-yellow-900 focus:text-yellow-900 active:text-yellow-900 outline-none"
+        >
+          <div class="grid place-items-center mr-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+            >
+              <g
+                fill="currentColor"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
               >
-                <g
-                  fill="currentColor"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                >
-                  <path d="M13 15L8 18L8 6L13 9L13 15">
-                    <animate
-                      fill="freeze"
-                      attributeName="d"
-                      dur="0.4s"
-                      values="M13 15L8 18L8 6L13 9L13 15;M9 18L7 18L7 6L9 6L9 18"
-                    />
-                  </path>
-                  <path d="M13 9L18 12L18 12L13 15L13 9">
-                    <animate
-                      fill="freeze"
-                      attributeName="d"
-                      dur="0.4s"
-                      values="M13 9L18 12L18 12L13 15L13 9;M15 6L17 6L17 18L15 18L15 6"
-                    />
-                  </path>
-                </g>
-              </svg>
-            </div>
-            Pause
-          </div>
-          {% else %}
-          <div
-            role="button"
-            onclick="this.closest('form').submit();"
-            tabindex="0"
-            class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all bg-green-300/80 bg-opacity-80 hover:bg-green-200 hover:bg-opacity-80 focus:bg-green-50 focus:bg-opacity-80 active:bg-green-50 active:bg-opacity-80 hover:scale-105 duration-200 hover:text-green-900 focus:text-green-900 active:text-green-900 outline-none"
-          >
-            <div class="grid place-items-center mr-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  fill-opacity="0"
-                  stroke="currentColor"
-                  stroke-dasharray="36"
-                  stroke-dashoffset="36"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 6L18 12L8 18z"
-                >
+                <path d="M13 15L8 18L8 6L13 9L13 15">
                   <animate
                     fill="freeze"
-                    attributeName="stroke-dashoffset"
+                    attributeName="d"
                     dur="0.4s"
-                    values="36;0"
-                  />
-                  <animate
-                    fill="freeze"
-                    attributeName="fill-opacity"
-                    begin="0.5s"
-                    dur="0.5s"
-                    values="0;1"
+                    values="M13 15L8 18L8 6L13 9L13 15;M9 18L7 18L7 6L9 6L9 18"
                   />
                 </path>
-              </svg>
-            </div>
-            Start / Resume
+                <path d="M13 9L18 12L18 12L13 15L13 9">
+                  <animate
+                    fill="freeze"
+                    attributeName="d"
+                    dur="0.4s"
+                    values="M13 9L18 12L18 12L13 15L13 9;M15 6L17 6L17 18L15 18L15 6"
+                  />
+                </path>
+              </g>
+            </svg>
           </div>
-          {% endif %}
-        </form>
+          Pause
+        </button>
+        {% else %}
+        <button
+          role="button"
+          onClick="play_or_pause()"
+          tabindex="0"
+          class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all bg-green-300/80 bg-opacity-80 hover:bg-green-200 hover:bg-opacity-80 hover:scale-105 duration-200 hover:text-green-900 outline-none"
+        >
+          <div class="grid place-items-center mr-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                fill-opacity="0"
+                stroke="currentColor"
+                stroke-dasharray="36"
+                stroke-dashoffset="36"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 6L18 12L8 18z"
+              >
+                <animate
+                  fill="freeze"
+                  attributeName="stroke-dashoffset"
+                  dur="0.4s"
+                  values="36;0"
+                />
+                <animate
+                  fill="freeze"
+                  attributeName="fill-opacity"
+                  begin="0.5s"
+                  dur="0.5s"
+                  values="0;1"
+                />
+              </path>
+            </svg>
+          </div>
+          Start / Resume
+        </button>
+
+        {% endif %}
         <form method="post" action="{% url 'logout' %}">
           {% csrf_token %}
 

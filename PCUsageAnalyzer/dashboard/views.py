@@ -25,7 +25,7 @@ def load_dashboard(request):
     if app.get_app_started() == False:
         app.set_finish(False)
         app.init_db()
-        schedule.every(app.thread_interval_ms).seconds.do(app.init_db)
+        schedule.every(app.thread_interval_ms / 1000).seconds.do(app.run)
         # start the thread for core app
         t = threading.Thread(target=run_core)
         t.start()
@@ -59,9 +59,7 @@ def load_homepage(request):
 def pause_or_resume_app(request):
     app.pause_or_resume()
     print("recording is", app.get_record())
-    return render(
-        request, "dashboard/dashboard.html", context={"recording": app.get_record()}
-    )
+    return JsonResponse(app.get_record(), safe=False)
 
 
 @login_required
@@ -82,10 +80,7 @@ def print_db(request):
 
 def run_core():
     while True:
-        print("running thread core function that checks for app.getrecord")
         if app.get_record() == True:
-            print("record is set to true, so gonna be running the pending schedule")
-            print("next job", schedule.next_run())
             schedule.run_pending()
         if app.get_finish() == True:
             break
@@ -119,7 +114,7 @@ def test(request):
 
 
 def get_counter(request):
-    app.print_db()
+    # app.print_db()
     counter = app.get_counter()
     return JsonResponse(counter, safe=False)
 
