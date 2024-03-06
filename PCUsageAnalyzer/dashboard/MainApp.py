@@ -18,6 +18,7 @@ class MainApplication:
         self.counter = Counter()
         self.start_time_dict = {}
         self.finish = False
+        self.started_app = False
         self.data_directory = os.path.join(
             os.path.expanduser("~\Documents"), "PC Usage Analyzer Data"
         )
@@ -432,6 +433,9 @@ class MainApplication:
     def get_finish(self):
         return self.finish
 
+    def get_app_started(self):
+        return self.started_app
+
     def get_db(self):
         return self.db
 
@@ -441,6 +445,10 @@ class MainApplication:
         print("counter is", self.counter)
 
     # setter functions
+
+    def set_app_started(self, started_app):
+        self.started_app = started_app
+
     def set_thread_interval_ms(self, thread_interval_ms):
         self.thread_interval_ms = thread_interval_ms
 

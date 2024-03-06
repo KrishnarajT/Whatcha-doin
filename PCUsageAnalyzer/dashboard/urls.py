@@ -7,7 +7,7 @@ urlpatterns = [
     path("startapp", views.start_app, name="startapp"),
     path("pauseorresume", views.pause_or_resume_app, name="pauseorresume"),
     path("printdb", views.print_db, name="printdb"),
-    path("stopapp", views.stop_app, name="stopapp"),
+    path("stopapp", views.stop_app_and_logout, name="stopapp"),
     path("start_fresh", views.start_fresh, name="start_fresh"),
     path("export_raw", views.export_raw, name="export_raw"),
     path(

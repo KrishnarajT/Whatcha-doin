@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 import schedule
 import time
 import threading
@@ -21,8 +22,18 @@ def index(request):
 
 @login_required
 def load_dashboard(request):
-    return render(request, "dashboard/dashboard.html")
-
+    if app.get_app_started() == False:
+        app.set_finish(False)
+        app.init_db()
+        schedule.every(app.thread_interval_ms).seconds.do(app.run)
+        # start the thread for core app
+        t = threading.Thread(target=run_core)
+        t.start()
+        print("started app thread. ")
+        app.set_app_started(True)
+        
+    recording = app.get_record()
+    return render(request, "dashboard/dashboard.html", context={"recording": recording})
 
 @login_required
 def load_homepage(request):
@@ -39,7 +50,8 @@ def start_app(request):
     t.start()
     app.set_record(True)
     redirect("dashboard")
-    return redirect("dashboard")
+    recording = app.get_record()
+    return render(request, "dashboard/dashboard.html", context={"recording": recording})
 
 
 @login_required
@@ -50,18 +62,19 @@ def pause_or_resume_app(request):
 
 
 @login_required
-def stop_app(request):
+def stop_app_and_logout(request):
     app.set_finish(True)
     app.cleanup()
     schedule.clear()
-    return render(request, "dashboard/index.html")
+    logout(request)
+    return redirect("login")
 
 
 @login_required
 def print_db(request):
     app.print_db()
     # print(app.get_db())
-    return render(request, "dashboard/index.html")
+    return render(request, "dashboard/dashboard.html")
 
 
 def run_core():
@@ -93,6 +106,7 @@ def flip_idle_detection(request):
     app.flip_idle_detection()
     return render(request, "dashboard/dashboard.html")
 
+
 def test(request):
     #     df = app.get_db()
     #     fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])
@@ -114,13 +128,16 @@ def get_counter(request):
     counter = app.get_counter()
     return JsonResponse(counter, safe=False)
 
+
 def get_recording(request):
     recording = app.get_record()
     return JsonResponse(recording, safe=False)
 
+
 def get_idle_detection(request):
     idle_detection = app.get_idle_detection()
     return JsonResponse(idle_detection, safe=False)
+
 
 def get_intervals_ms(request):
     intervals_ms = app.get_intervals_ms()

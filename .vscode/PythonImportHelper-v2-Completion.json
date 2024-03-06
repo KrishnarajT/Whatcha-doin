@@ -431,6 +431,38 @@
         "documentation": {}
     },
     {
+        "label": "logout",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "logout",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
         "label": "schedule",
         "kind": 6,
         "isExtraImport": true,
@@ -532,30 +564,6 @@
         "documentation": {}
     },
     {
-        "label": "authenticate",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "login",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
-        "label": "logout",
-        "importPath": "django.contrib.auth",
-        "description": "django.contrib.auth",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth",
-        "documentation": {}
-    },
-    {
         "label": "User",
         "importPath": "django.contrib.auth.models",
         "description": "django.contrib.auth.models",
@@ -645,7 +653,7 @@
         "kind": 6,
         "importPath": "PCUsageAnalyzer.dashboard.MainApp",
         "description": "PCUsageAnalyzer.dashboard.MainApp",
-        "peekOfCode": "class MainApplication:\n    def __init__(self):\n        self.thread_interval_ms = 1000\n        self.registration_interval_ms = 10000\n        self.record = False\n        self.counter = Counter()\n        self.start_time_dict = {}\n        self.finish = False\n        self.data_directory = os.path.join(\n            os.path.expanduser(\"~\\Documents\"), \"PC Usage Analyzer Data\"",
+        "peekOfCode": "class MainApplication:\n    def __init__(self):\n        self.thread_interval_ms = 1000\n        self.registration_interval_ms = 10000\n        self.record = False\n        self.counter = Counter()\n        self.start_time_dict = {}\n        self.finish = False\n        self.started_app = False\n        self.data_directory = os.path.join(",
         "detail": "PCUsageAnalyzer.dashboard.MainApp",
         "documentation": {}
     },
@@ -663,7 +671,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.dashboard.urls",
         "description": "PCUsageAnalyzer.dashboard.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"\", views.load_homepage, name=\"home\"),\n    path(\"dash\", views.load_dashboard, name=\"dashboard\"),\n    path(\"startapp\", views.start_app, name=\"startapp\"),\n    path(\"pauseorresume\", views.pause_or_resume_app, name=\"pauseorresume\"),\n    path(\"printdb\", views.print_db, name=\"printdb\"),\n    path(\"stopapp\", views.stop_app, name=\"stopapp\"),\n    path(\"start_fresh\", views.start_fresh, name=\"start_fresh\"),\n    path(\"export_raw\", views.export_raw, name=\"export_raw\"),\n    path(",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.load_homepage, name=\"home\"),\n    path(\"dash\", views.load_dashboard, name=\"dashboard\"),\n    path(\"startapp\", views.start_app, name=\"startapp\"),\n    path(\"pauseorresume\", views.pause_or_resume_app, name=\"pauseorresume\"),\n    path(\"printdb\", views.print_db, name=\"printdb\"),\n    path(\"stopapp\", views.stop_app_and_logout, name=\"stopapp\"),\n    path(\"start_fresh\", views.start_fresh, name=\"start_fresh\"),\n    path(\"export_raw\", views.export_raw, name=\"export_raw\"),\n    path(",
         "detail": "PCUsageAnalyzer.dashboard.urls",
         "documentation": {}
     },
@@ -672,7 +680,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):",
+        "peekOfCode": "def index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms).seconds.do(app.run)\n        # start the thread for core app\n        t = threading.Thread(target=run_core)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -681,7 +689,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_ms).seconds.do(app.run)",
+        "peekOfCode": "def load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms).seconds.do(app.run)\n        # start the thread for core app\n        t = threading.Thread(target=run_core)\n        t.start()\n        print(\"started app thread. \")\n        app.set_app_started(True)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -699,7 +707,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_ms).seconds.do(app.run)\n    # start the thread for core app\n    t = threading.Thread(target=run_core)\n    t.start()\n    app.set_record(True)\n    redirect(\"dashboard\")\n    return redirect(\"dashboard\")",
+        "peekOfCode": "def start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_ms).seconds.do(app.run)\n    # start the thread for core app\n    t = threading.Thread(target=run_core)\n    t.start()\n    app.set_record(True)\n    redirect(\"dashboard\")\n    recording = app.get_record()",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -708,16 +716,16 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(app.get_record())\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef stop_app(request):\n    app.set_finish(True)\n    app.cleanup()\n    schedule.clear()\n    return render(request, \"dashboard/index.html\")",
+        "peekOfCode": "def pause_or_resume_app(request):\n    app.pause_or_resume()\n    print(app.get_record())\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef stop_app_and_logout(request):\n    app.set_finish(True)\n    app.cleanup()\n    schedule.clear()\n    logout(request)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
     {
-        "label": "stop_app",
+        "label": "stop_app_and_logout",
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def stop_app(request):\n    app.set_finish(True)\n    app.cleanup()\n    schedule.clear()\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef print_db(request):\n    app.print_db()\n    # print(app.get_db())\n    return render(request, \"dashboard/index.html\")",
+        "peekOfCode": "def stop_app_and_logout(request):\n    app.set_finish(True)\n    app.cleanup()\n    schedule.clear()\n    logout(request)\n    return redirect(\"login\")\n@login_required\ndef print_db(request):\n    app.print_db()\n    # print(app.get_db())",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -726,7 +734,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def print_db(request):\n    app.print_db()\n    # print(app.get_db())\n    return render(request, \"dashboard/index.html\")\ndef run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:",
+        "peekOfCode": "def print_db(request):\n    app.print_db()\n    # print(app.get_db())\n    return render(request, \"dashboard/dashboard.html\")\ndef run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -825,7 +833,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "app = MainApp.MainApplication()\n@login_required\ndef index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")",
+        "peekOfCode": "app = MainApp.MainApplication()\n@login_required\ndef index(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef load_dashboard(request):\n    if app.get_app_started() == False:\n        app.set_finish(False)\n        app.init_db()\n        schedule.every(app.thread_interval_ms).seconds.do(app.run)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -906,7 +914,7 @@
         "kind": 5,
         "importPath": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "description": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
-        "peekOfCode": "MIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",\n    \"django.middleware.clickjacking.XFrameOptionsMiddleware\",\n    \"dashboard.middlewares.CleanupMiddleware\",\n]",
+        "peekOfCode": "MIDDLEWARE = [\n    \"django.middleware.security.SecurityMiddleware\",\n    \"django.contrib.sessions.middleware.SessionMiddleware\",\n    \"django.middleware.common.CommonMiddleware\",\n    \"django.middleware.csrf.CsrfViewMiddleware\",\n    \"django.contrib.auth.middleware.AuthenticationMiddleware\",\n    \"django.contrib.messages.middleware.MessageMiddleware\",\n    \"django.middleware.clickjacking.XFrameOptionsMiddleware\",\n]\nROOT_URLCONF = \"PCUsageAnalyzer.urls\"",
         "detail": "PCUsageAnalyzer.PCUsageAnalyzer.settings",
         "documentation": {}
     },
