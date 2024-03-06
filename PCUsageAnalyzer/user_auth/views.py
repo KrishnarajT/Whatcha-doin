@@ -18,7 +18,7 @@ def login_user(request):
         if user is not None:
             # if user exists, log them in
             login(request, user)
-            return redirect("home")
+            return redirect("/dashboard/dash")
         else:
             # if user does not exist, show error message
             messages.error(request, "Invalid username or password.")

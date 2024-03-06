@@ -12,8 +12,8 @@ import pytz
 class MainApplication:
 
     def __init__(self):
-        self.thread_interval_s = 1
-        self.registration_interval_s = 10
+        self.thread_interval_ms = 1000
+        self.registration_interval_ms = 10000
         self.record = False
         self.counter = Counter()
         self.start_time_dict = {}
@@ -200,7 +200,7 @@ class MainApplication:
             self.counter.update([active_window])
         # print(self.counter)
         # check if the counter value is more than checking_interval_s
-        if self.counter[active_window] >= self.registration_interval_s:
+        if self.counter[active_window] >= int(self.registration_interval_ms / 1000):
             # convert counter seconds into datetime object
             self.duration = datetime.timedelta(seconds=self.counter[active_window])
 
@@ -411,8 +411,11 @@ class MainApplication:
         del new_db
 
     # getter functions
-    def get_thread_interval_s(self):
-        return self.thread_interval_s
+    def get_thread_interval_ms(self):
+        return self.thread_interval_ms
+
+    def get_registration_interval_ms(self):
+        return self.registration_interval_ms
 
     def get_checking_interval_s(self):
         return self.checking_interval_s
@@ -438,8 +441,11 @@ class MainApplication:
         print("counter is", self.counter)
 
     # setter functions
-    def set_thread_interval_s(self, thread_interval_s):
-        self.thread_interval_s = thread_interval_s
+    def set_thread_interval_ms(self, thread_interval_ms):
+        self.thread_interval_ms = thread_interval_ms
+
+    def set_registration_interval_ms(self, registration_interval_ms):
+        self.registration_interval_ms = registration_interval_ms
 
     def set_checking_interval_s(self, checking_interval_s):
         self.checking_interval_s = checking_interval_s
@@ -458,3 +464,9 @@ class MainApplication:
 
     def set_finish(self, finish):
         self.finish = finish
+
+    def get_intervals_ms(self):
+        return {
+            "thread_interval_ms": self.thread_interval_ms,
+            "registration_interval_ms": self.registration_interval_ms,
+        }

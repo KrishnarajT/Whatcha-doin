@@ -483,6 +483,14 @@
         "documentation": {}
     },
     {
+        "label": "get",
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "isExtraImport": true,
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
         "label": "get_asgi_application",
         "importPath": "django.core.asgi",
         "description": "django.core.asgi",
@@ -645,7 +653,7 @@
         "kind": 6,
         "importPath": "PCUsageAnalyzer.dashboard.MainApp",
         "description": "PCUsageAnalyzer.dashboard.MainApp",
-        "peekOfCode": "class MainApplication:\n    def __init__(self):\n        self.thread_interval_s = 1\n        self.registration_interval_s = 10\n        self.record = False\n        self.counter = Counter()\n        self.start_time_dict = {}\n        self.finish = False\n        self.data_directory = os.path.join(\n            os.path.expanduser(\"~\\Documents\"), \"PC Usage Analyzer Data\"",
+        "peekOfCode": "class MainApplication:\n    def __init__(self):\n        self.thread_interval_ms = 1000\n        self.registration_interval_ms = 10000\n        self.record = False\n        self.counter = Counter()\n        self.start_time_dict = {}\n        self.finish = False\n        self.data_directory = os.path.join(\n            os.path.expanduser(\"~\\Documents\"), \"PC Usage Analyzer Data\"",
         "detail": "PCUsageAnalyzer.dashboard.MainApp",
         "documentation": {}
     },
@@ -681,7 +689,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_s).seconds.do(app.run)",
+        "peekOfCode": "def load_dashboard(request):\n    return render(request, \"dashboard/dashboard.html\")\n@login_required\ndef load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_ms).seconds.do(app.run)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -690,7 +698,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_s).seconds.do(app.run)\n    # start the thread for core app\n    t = threading.Thread(target=run_core)\n    t.start()",
+        "peekOfCode": "def load_homepage(request):\n    return render(request, \"dashboard/index.html\")\n@login_required\ndef start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_ms).seconds.do(app.run)\n    # start the thread for core app\n    t = threading.Thread(target=run_core)\n    t.start()",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -699,7 +707,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_s).seconds.do(app.run)\n    # start the thread for core app\n    t = threading.Thread(target=run_core)\n    t.start()\n    app.set_record(True)\n    redirect(\"dashboard\")\n    return redirect(\"dashboard\")",
+        "peekOfCode": "def start_app(request):\n    app.set_finish(False)\n    app.init_db()\n    schedule.every(app.thread_interval_ms).seconds.do(app.run)\n    # start the thread for core app\n    t = threading.Thread(target=run_core)\n    t.start()\n    app.set_record(True)\n    redirect(\"dashboard\")\n    return redirect(\"dashboard\")",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -735,7 +743,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:\n            break\n        time.sleep(app.thread_interval_s)\ndef start_fresh(request):\n    app.start_fresh()",
+        "peekOfCode": "def run_core():\n    while True:\n        if app.get_record() == True:\n            schedule.run_pending()\n            # print(\"next job\", schedule.next_run())\n        if app.get_finish() == True:\n            break\n        time.sleep(app.thread_interval_ms)\ndef start_fresh(request):\n    app.start_fresh()",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -789,7 +797,34 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def get_counter(request):\n    counter = app.get_counter()\n    return JsonResponse(counter, safe=False)",
+        "peekOfCode": "def get_counter(request):\n    counter = app.get_counter()\n    return JsonResponse(counter, safe=False)\ndef get_recording(request):\n    recording = app.get_record()\n    return JsonResponse(recording, safe=False)\ndef get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)\ndef get_intervals_ms(request):",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_recording",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def get_recording(request):\n    recording = app.get_record()\n    return JsonResponse(recording, safe=False)\ndef get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)\ndef get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_idle_detection",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)\ndef get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_intervals_ms",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -1086,7 +1121,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.user_auth.views",
         "description": "PCUsageAnalyzer.user_auth.views",
-        "peekOfCode": "def login_user(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        # check if the user exists\n        user = authenticate(request, username=username, password=password)\n        if user is not None:\n            # if user exists, log them in\n            login(request, user)\n            return redirect(\"home\")",
+        "peekOfCode": "def login_user(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        # check if the user exists\n        user = authenticate(request, username=username, password=password)\n        if user is not None:\n            # if user exists, log them in\n            login(request, user)\n            return redirect(\"/dashboard/dash\")",
         "detail": "PCUsageAnalyzer.user_auth.views",
         "documentation": {}
     },

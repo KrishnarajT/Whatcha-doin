@@ -2,6 +2,12 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+  let isRecording;
+  let registrationIntervalTimeout;
+  let threadIntervalTimeout;
+  let thread_intervals_ms = 1000;
+  let registration_intervals_ms = 10000;
+
   // make a post request to the server
   function update_test() {
     $.ajax({
@@ -109,48 +115,115 @@
       },
     });
   }
-  // run this function every second
-  setInterval(update_test, 10000);
-  setInterval(update_counter_plot, 1000);
+
+  function update_plots_at_thread_interval() {
+    // if recording is true, then update the plots
+    if (isRecording) {
+      update_counter_plot();
+    }
+  }
+
+  function update_plots_at_registration_interval() {
+    // if recording is true, then update the plots
+    if (isRecording) {
+      update_test();
+    }
+  }
+
+  function get_recording() {
+    $.ajax({
+      type: "GET",
+      url: "{% url 'get_recording' %}",
+      success: function (response) {
+        isRecording = response;
+        if (isRecording) {
+          console.log("recording is true");
+          registrationIntervalTimeout = setInterval(
+            update_plots_at_registration_interval,
+            registration_intervals_ms
+          );
+          threadIntervalTimeout = setInterval(
+            update_plots_at_thread_interval,
+            thread_intervals_ms
+          );
+        } else {
+          clear_intervals();
+          console.log("recording is false");
+
+          // if recording is false, then update the plots once.
+          update_plots_at_registration_interval();
+          update_plots_at_thread_interval();
+        }
+      },
+      error: function (response) {
+        console.log(response);
+      },
+    });
+  }
+
+  function get_intervals_ms() {
+    $.ajax({
+      type: "GET",
+      url: "{% url 'get_intervals_ms' %}",
+      success: function (response) {
+        thread_intervals_ms = response["thread_intervals_ms"];
+        registration_intervals_ms = response["registration_intervals_ms"];
+      },
+      error: function (response) {
+        console.log(response);
+      },
+    });
+
+  function clear_intervals() {
+    if (registrationIntervalTimeout) {
+      clearInterval(registrationIntervalTimeout);
+    }
+    if (threadIntervalTimeout) {
+      clearInterval(threadIntervalTimeout);
+    }
+  }
+
+  // get recording
+  get_recording();
 </script>
 
 {% endblock %} {% block title %}Home{% endblock %} {% block content %}
-  <div class="flex w-full gap-0">
-    <div class="min-w-[18vw]"></div>
-    <div class="w-full max-w-[75vw]">
-      <form method="post" action="{% url 'pauseorresume' %}">
-        {% csrf_token %}
-        <div class="flex justify-center items-center p-4 flex-col">
-          <div class="flex justify-center m-4">
-            <input
-              type="submit"
-              value="Start"
-              name="start"
-              class="p-4 w-96 h-20 bg-blue-400 text-3xl hover:bg-blue-500/80 hover:scale-105 outline rounded-lg"
-            />
-          </div>
-        </div>
-      </form>
-      <form method="post" action="{% url 'test' %}">
-        {% csrf_token %} {% comment %} another button to print {% endcomment %}
+<div class="flex w-full gap-0">
+  <div class="min-w-[18vw]"></div>
+  <div class="w-full max-w-[75vw]">
+    <form method="post" action="{% url 'pauseorresume' %}">
+      {% csrf_token %}
+      <div class="flex justify-center items-center p-4 flex-col">
         <div class="flex justify-center m-4">
           <input
             type="submit"
-            name="test"
-            value="test"
-            class="p-4 w-96 h-20 bg-green-400 text-3xl hover:bg-green-500/80 hover:scale-105 outline rounded-lg"
+            value="Start"
+            name="start"
+            class="p-4 w-96 h-20 bg-blue-400 text-3xl hover:bg-blue-500/80 hover:scale-105 outline rounded-lg"
           />
         </div>
-      </form>
-      <div class="flex justify-center m-4 w-full flex-col">
-        <div id="data"></div>
-        <div id="counter"></div>
       </div>
+    </form>
+    <form method="post" action="{% url 'test' %}">
+      {% csrf_token %} {% comment %} another button to print {% endcomment %}
+      <div class="flex justify-center m-4">
+        <input
+          type="submit"
+          name="test"
+          value="test"
+          class="p-4 w-96 h-20 bg-green-400 text-3xl hover:bg-green-500/80 hover:scale-105 outline rounded-lg"
+        />
+      </div>
+    </form>
+    <div class="flex justify-center m-4 w-full flex-col">
+      <div id="data"></div>
+      <div id="counter"></div>
+    </div>
 
-      <div id="plot_div">
-        {{ plot_div|safe }}
-        <div></div>
-        {% endblock %}
-      </div>
+    <div id="plot_div">
+      {{ plot_div|safe }}
+      <div></div>
+      {% endblock %}
     </div>
   </div>
+</div>

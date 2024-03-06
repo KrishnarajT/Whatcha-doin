@@ -9,6 +9,7 @@ from plotly.offline import plot
 
 
 # importing the main app class.
+from PCUsageAnalyzer.dashboard.views import get
 from . import MainApp
 
 app = MainApp.MainApplication()
@@ -33,7 +34,7 @@ def load_homepage(request):
 def start_app(request):
     app.set_finish(False)
     app.init_db()
-    schedule.every(app.thread_interval_s).seconds.do(app.run)
+    schedule.every(app.thread_interval_ms).seconds.do(app.run)
     # start the thread for core app
     t = threading.Thread(target=run_core)
     t.start()
@@ -71,7 +72,7 @@ def run_core():
             # print("next job", schedule.next_run())
         if app.get_finish() == True:
             break
-        time.sleep(app.thread_interval_s)
+        time.sleep(app.thread_interval_ms)
 
 
 def start_fresh(request):
@@ -113,3 +114,15 @@ def test(request):
 def get_counter(request):
     counter = app.get_counter()
     return JsonResponse(counter, safe=False)
+
+def get_recording(request):
+    recording = app.get_record()
+    return JsonResponse(recording, safe=False)
+
+def get_idle_detection(request):
+    idle_detection = app.get_idle_detection()
+    return JsonResponse(idle_detection, safe=False)
+
+def get_intervals_ms(request):
+    intervals_ms = app.get_intervals_ms()
+    return JsonResponse(intervals_ms, safe=False)
