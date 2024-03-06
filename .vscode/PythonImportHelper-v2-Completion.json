@@ -806,7 +806,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def get_recording(request):\n    recording = app.get_record()\n    return JsonResponse(recording, safe=False)\ndef get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)\ndef get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)",
+        "peekOfCode": "def get_recording(request):\n    recording = app.get_record()\n    return JsonResponse(recording, safe=False)\ndef get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)\ndef get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)\ndef get_category(request):",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -815,7 +815,7 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)\ndef get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)",
+        "peekOfCode": "def get_idle_detection(request):\n    idle_detection = app.get_idle_detection()\n    return JsonResponse(idle_detection, safe=False)\ndef get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)\ndef get_category(request):\n    category = {\"Code\": 35, \"Social Media\": 10, \"Entertainment\": 15, \"Productivity\": 40}\n    return JsonResponse(category, safe=False)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },
@@ -824,7 +824,16 @@
         "kind": 2,
         "importPath": "PCUsageAnalyzer.dashboard.views",
         "description": "PCUsageAnalyzer.dashboard.views",
-        "peekOfCode": "def get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)",
+        "peekOfCode": "def get_intervals_ms(request):\n    intervals_ms = app.get_intervals_ms()\n    return JsonResponse(intervals_ms, safe=False)\ndef get_category(request):\n    category = {\"Code\": 35, \"Social Media\": 10, \"Entertainment\": 15, \"Productivity\": 40}\n    return JsonResponse(category, safe=False)",
+        "detail": "PCUsageAnalyzer.dashboard.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_category",
+        "kind": 2,
+        "importPath": "PCUsageAnalyzer.dashboard.views",
+        "description": "PCUsageAnalyzer.dashboard.views",
+        "peekOfCode": "def get_category(request):\n    category = {\"Code\": 35, \"Social Media\": 10, \"Entertainment\": 15, \"Productivity\": 40}\n    return JsonResponse(category, safe=False)",
         "detail": "PCUsageAnalyzer.dashboard.views",
         "documentation": {}
     },

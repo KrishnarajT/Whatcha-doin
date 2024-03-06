@@ -55,7 +55,10 @@
         var trace = {
           x: Object.keys(count),
           y: Object.values(count),
-          type: "line",
+          type: "scatter", // Change "line" to "scatter"
+          mode: "lines", // Add this line
+          fill: "tozeroy", // Add this line
+          fillcolor: "rgba(0,128,0,0.2)", // Add this line
         };
         var layout = {
           title: "Count of tasks started at each hour",
@@ -67,7 +70,7 @@
           },
         };
         var data = [trace];
-        Plotly.newPlot("data", data, layout);
+        Plotly.newPlot("hourly_usage", data, layout);
       },
       error: function (response) {
         console.log(response);
@@ -96,7 +99,10 @@
         var trace = {
           x: keys,
           y: values,
-          type: "line",
+          type: "scatter", // Change "line" to "scatter"
+          mode: "lines", // Add this line
+          fill: "tozeroy", // Add this line
+          fillcolor: "rgba(48 42 224 / 0.2)", // Add this line
         };
         var layout = {
           title: "Tracking current apps",
@@ -108,8 +114,44 @@
           },
         };
         var data = [trace];
-        Plotly.newPlot("counter", data, layout);
+        Plotly.newPlot("current_apps", data, layout);
       },
+      error: function (response) {
+        console.log(response);
+      },
+    });
+  }
+
+  function update_category_plot() {
+    $.ajax({
+      type: "GET",
+      url: "{% url 'get_category' %}",
+      success: function (response) {
+        // parse the response as json
+        console.log(response);
+        // data looks like this
+        // category = {"Code": 35, "Social Media": 10, "Entertainment": 15, "Productivity": 40}
+
+        var data = response;
+        // make a donut chart from the data
+        var keys = Object.keys(data);
+        var values = Object.values(data);
+
+        var trace = {
+          labels: keys,
+          values: values,
+          hole: 0.4,
+          type: "pie",
+        };
+
+        var layout = {
+          title: "Category usage",
+        };
+
+        var data = [trace];
+        Plotly.newPlot("category", data, layout);
+      },
+
       error: function (response) {
         console.log(response);
       },
@@ -120,6 +162,7 @@
     // if recording is true, then update the plots
     if (isRecording) {
       update_counter_plot();
+      update_category_plot();
     }
   }
 
@@ -130,9 +173,10 @@
     }
   }
 
-  function update_all_charts(){
+  function update_all_charts() {
     update_test();
     update_counter_plot();
+    update_category_plot();
   }
 
   function get_recording() {
@@ -157,7 +201,7 @@
           console.log("recording is false");
 
           // if recording is false, then update the plots once.
-          update_all_charts()
+          update_all_charts();
         }
       },
       error: function (response) {
@@ -173,7 +217,7 @@
       success: function (response) {
         thread_intervals_ms = response["thread_intervals_ms"];
         registration_intervals_ms = response["registration_intervals_ms"];
-        console.log(response)
+        console.log(response);
         console.log(thread_intervals_ms);
         console.log(registration_intervals_ms);
       },
@@ -192,31 +236,37 @@
     }
   }
 
-
-
   get_intervals_ms();
   // get recording
   get_recording();
-
-  // get charts atleast once. 
-
-  setInterval(update_all_charts, 100000);
 </script>
 
-{% endblock %} {% block title %}PC Usage Analyzer - Dashboard{% endblock %} {% block content %}
+{% endblock %} {% block title %}PC Usage Analyzer - Dashboard{% endblock %}
+
+<!-- content -->
+
+{% block content %}
 <div class="flex w-full gap-0">
   <div class="min-w-[18vw]"></div>
-  <div class="w-full max-w-[75vw]">
-
-    <div class="flex justify-center m-4 w-full flex-col">
-      <div id="data"></div>
-      <div id="counter"></div>
+  <div class="w-full max-w-[75vw] flex flex-col p-4">
+    {% comment %} 1st row {% endcomment %}
+    <div class="flex flex-row w-full">
+      <div class="w-2/3" id="current_apps"></div>
+      <div class="w-1/3" id="category"></div>
     </div>
 
-    <div id="plot_div">
-      {{ plot_div|safe }}
-      <div></div>
-      {% endblock %}
+    {% comment %} 2nd row {% endcomment %}
+    <div class="flex flex-row w-full">
+      <div class="w-full">
+        <div id="hourly_usage"></div>
+      </div>
+      {% comment %}
+      <div class="w-1/2">
+        <div id="counter"></div>
+      </div>
+      {% endcomment %}
     </div>
   </div>
 </div>
+
+{% endblock %}

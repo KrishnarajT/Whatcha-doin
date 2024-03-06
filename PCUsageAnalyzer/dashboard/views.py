@@ -132,3 +132,8 @@ def get_idle_detection(request):
 def get_intervals_ms(request):
     intervals_ms = app.get_intervals_ms()
     return JsonResponse(intervals_ms, safe=False)
+
+
+def get_category(request):
+    category = {"Code": 35, "Social Media": 10, "Entertainment": 15, "Productivity": 40}
+    return JsonResponse(category, safe=False)
