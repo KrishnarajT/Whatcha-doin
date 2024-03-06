@@ -269,12 +269,21 @@
       <!-- Right Pane -->
       <div class="w-full bg-gray-100 lg:w-1/2 flex items-center justify-center">
         <div class="max-w-md w-full p-6">
-          <h1 class="text-3xl font-semibold mb-6 text-black text-center">
+          <h1 class="text-3xl font-semibold mb-3 text-black text-center">
             Sign Up to PC Usage Analyzer
           </h1>
-          <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">
-            Begin Tracking and Analyzing how much time you spend on your PC
+          <h1 class="text-sm font-semibold text-gray-500 text-center">
+            Track and Analyse your PC Usage.
           </h1>
+          <br />
+          <span class="text-red-800">
+            Signing up is important as this data is sensitive, and will be
+            encrypted with your account credentials. Only you can see your data.
+          </span>
+          <br />
+          <span class="text-green-700 italic"
+            >All Encrypted and stored Locally.
+          </span>
 
           <form action="#" method="POST" class="space-y-4">
             {% csrf_token %}
@@ -336,9 +345,7 @@
           <div class="mt-4 text-sm text-gray-600 text-center">
             <p>
               Already have an account?
-              <a href="{% url 'login' %}" class="text-black hover:underline"
-                >Login here</a
-              >
+              <a href="{% url 'login' %}" class="text-blue-500">Log In!</a>
             </p>
           </div>
         </div>

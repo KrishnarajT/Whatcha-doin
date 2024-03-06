@@ -315,6 +315,16 @@
             </div>
             <div class="flex justify-center w-full">
               <div class="flex jusitfy-center text-center w-full">
+                <div class="text-gray-700 text-center">
+                  Dont Have an Account?
+                  <a href="{% url 'signup' %}" class="text-blue-500"
+                    >Sign Up!</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-center w-full">
+              <div class="flex jusitfy-center text-center w-full">
                 {% if messages %} {% for message in messages %}
                 <div class="text-red-400 text-center">{{ message }}</div>
                 {% endfor %} {% endif %}

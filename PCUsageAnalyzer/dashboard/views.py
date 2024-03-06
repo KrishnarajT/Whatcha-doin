@@ -9,7 +9,6 @@ from plotly.offline import plot
 
 
 # importing the main app class.
-from PCUsageAnalyzer.dashboard.views import get
 from . import MainApp
 
 app = MainApp.MainApplication()

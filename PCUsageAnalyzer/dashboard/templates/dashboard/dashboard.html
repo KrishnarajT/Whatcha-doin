@@ -138,6 +138,7 @@
         isRecording = response;
         if (isRecording) {
           console.log("recording is true");
+          clear_intervals();
           registrationIntervalTimeout = setInterval(
             update_plots_at_registration_interval,
             registration_intervals_ms
@@ -173,6 +174,7 @@
         console.log(response);
       },
     });
+  }
 
   function clear_intervals() {
     if (registrationIntervalTimeout) {
@@ -183,11 +185,12 @@
     }
   }
 
+  get_intervals_ms();
   // get recording
   get_recording();
 </script>
 
-{% endblock %} {% block title %}Home{% endblock %} {% block content %}
+{% endblock %} {% block title %}PC Usage Analyzer - Dashboard{% endblock %} {% block content %}
 <div class="flex w-full gap-0">
   <div class="min-w-[18vw]"></div>
   <div class="w-full max-w-[75vw]">

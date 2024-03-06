@@ -19,4 +19,5 @@ urlpatterns = [
     path("test", views.test, name="test"),
     path("get_counter", views.get_counter, name="get_counter"),
     path("get_recording", views.get_recording, name="get_recording"),
+    path("get_intervals_ms", views.get_intervals_ms, name="get_intervals_ms"),
 ]

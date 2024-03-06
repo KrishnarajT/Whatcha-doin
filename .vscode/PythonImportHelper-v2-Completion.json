@@ -483,14 +483,6 @@
         "documentation": {}
     },
     {
-        "label": "get",
-        "importPath": "PCUsageAnalyzer.dashboard.views",
-        "description": "PCUsageAnalyzer.dashboard.views",
-        "isExtraImport": true,
-        "detail": "PCUsageAnalyzer.dashboard.views",
-        "documentation": {}
-    },
-    {
         "label": "get_asgi_application",
         "importPath": "django.core.asgi",
         "description": "django.core.asgi",
