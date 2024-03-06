@@ -169,6 +169,9 @@
       success: function (response) {
         thread_intervals_ms = response["thread_intervals_ms"];
         registration_intervals_ms = response["registration_intervals_ms"];
+        console.log(response)
+        console.log(thread_intervals_ms);
+        console.log(registration_intervals_ms);
       },
       error: function (response) {
         console.log(response);

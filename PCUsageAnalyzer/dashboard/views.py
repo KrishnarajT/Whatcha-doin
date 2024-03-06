@@ -25,19 +25,15 @@ def load_dashboard(request):
     if app.get_app_started() == False:
         app.set_finish(False)
         app.init_db()
-        schedule.every(app.thread_interval_ms).seconds.do(app.run)
+        schedule.every(app.thread_interval_ms).seconds.do(app.init_db)
         # start the thread for core app
         t = threading.Thread(target=run_core)
         t.start()
         print("started app thread. ")
         app.set_app_started(True)
-        
+
     recording = app.get_record()
     return render(request, "dashboard/dashboard.html", context={"recording": recording})
-
-@login_required
-def load_homepage(request):
-    return render(request, "dashboard/index.html")
 
 
 @login_required
@@ -55,10 +51,17 @@ def start_app(request):
 
 
 @login_required
+def load_homepage(request):
+    return render(request, "dashboard/index.html")
+
+
+@login_required
 def pause_or_resume_app(request):
     app.pause_or_resume()
-    print(app.get_record())
-    return render(request, "dashboard/dashboard.html")
+    print("recording is", app.get_record())
+    return render(
+        request, "dashboard/dashboard.html", context={"recording": app.get_record()}
+    )
 
 
 @login_required
@@ -79,12 +82,14 @@ def print_db(request):
 
 def run_core():
     while True:
+        print("running thread core function that checks for app.getrecord")
         if app.get_record() == True:
+            print("record is set to true, so gonna be running the pending schedule")
+            print("next job", schedule.next_run())
             schedule.run_pending()
-            # print("next job", schedule.next_run())
         if app.get_finish() == True:
             break
-        time.sleep(app.thread_interval_ms)
+        time.sleep(app.thread_interval_ms / 1000)
 
 
 def start_fresh(request):
@@ -108,23 +113,13 @@ def flip_idle_detection(request):
 
 
 def test(request):
-    #     df = app.get_db()
-    #     fig = go.Figure(data=[go.Bar(y=[2, 1, 3])])
-    #     fig.update_layout(
-    #         autosize=False,
-    #         width=200,
-    #         height=200,
-    #         margin=dict(l=0, r=0, b=0, t=0, pad=4),
-    #     )
-    #     plot_div = plot(fig, output_type="div", include_plotlyjs=False)
-    #     plot_div = plot_div.replace('<div>', '<div id="customId">')
-    #     return render(request, "dashboard/dashboard.html", context={"plot_div": plot_div})
     df = app.get_db()
     data = df.to_json(orient="records")
     return JsonResponse(data, safe=False)
 
 
 def get_counter(request):
+    app.print_db()
     counter = app.get_counter()
     return JsonResponse(counter, safe=False)
 

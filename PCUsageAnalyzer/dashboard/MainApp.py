@@ -172,12 +172,12 @@ class MainApplication:
             return "Sleeping"
 
     def run(self):
+        print("running main run function")
         """
         Runs the application. This runs every thread_interval_s seconds from the thread.
         """
         # Get the active window
         active_window = self.get_active_window()
-
         if self.idle_detection:
             if self.cursor_position == pag.position():
                 self.cursor_counter += 1
@@ -441,7 +441,7 @@ class MainApplication:
 
     def print_db(self):
         print(self.get_record())
-        print(self.db.tail(30))
+        print(self.db.tail(3))
         print("counter is", self.counter)
 
     # setter functions
@@ -475,6 +475,6 @@ class MainApplication:
 
     def get_intervals_ms(self):
         return {
-            "thread_interval_ms": self.thread_interval_ms,
-            "registration_interval_ms": self.registration_interval_ms,
+            "thread_intervals_ms": self.thread_interval_ms,
+            "registration_intervals_ms": self.registration_interval_ms,
         }
