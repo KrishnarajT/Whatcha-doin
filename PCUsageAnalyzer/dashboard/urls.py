@@ -22,3 +22,4 @@ urlpatterns = [
     path("get_intervals_ms", views.get_intervals_ms, name="get_intervals_ms"),
     path("get_category", views.get_category, name="get_category"),
 ]
+ 

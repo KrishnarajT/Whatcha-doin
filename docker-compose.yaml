@@ -1,7 +1,7 @@
 version: '3.10'
 services:
   web:
-    build: .
+    image: krishnarajt/pc-usage-analyzer:1
     command: 
       - /bin/sh
       - -c
@@ -10,6 +10,6 @@ services:
         python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
-      - ${%USERPROFILE%}\Documents:~/documents
+      - ${USERPROFILE}\Documents:/root/documents
     ports:
       - 8000:8000
