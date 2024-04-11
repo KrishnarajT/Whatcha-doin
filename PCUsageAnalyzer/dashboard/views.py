@@ -146,6 +146,15 @@ def start_fresh(request):
     return render(request, "dashboard/dashboard.html")
 
 
+def get_todays_app_usage(request):
+    todays_app_usage = app.get_todays_app_usage()
+    return JsonResponse(todays_app_usage, safe=False)
+
+
+def get_hourly_pc_usage(request):
+    hourly_pc_usage = app.get_hourly_pc_usage()
+    return JsonResponse(hourly_pc_usage, safe=False)
+
 ## pages
 
 

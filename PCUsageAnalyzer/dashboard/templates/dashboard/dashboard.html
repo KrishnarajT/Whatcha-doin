@@ -2,90 +2,22 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script>
+  var colorPalette = [
+    "#1f77b4",
+    "#ff7f0e",
+    "#2ca02c",
+    "#d62728",
+    "#9467bd",
+    "#8c564b",
+    "#e377c2",
+    "#7f7f7f",
+    "#bcbd22",
+    "#17becf",
+  ];
+
   let isRecording;
   let threadIntervalTimeout;
   let thread_intervals_ms = 1000;
-
-  // make a post request to the server
-  function update_test() {
-    $.ajax({
-      type: "POST",
-      url: "{% url 'test' %}",
-      data: {
-        csrfmiddlewaretoken: "{{ csrf_token }}",
-      },
-      success: function (response) {
-        // make a plotly graph
-        var data = response;
-        // parse the data as json
-        data = JSON.parse(data);
-
-        // data is a list of json objects.
-        // get the names
-        var names = data.map((x) => x["Title"]);
-        // get the starttime attribute from all data points
-        var starttimes = data.map((x) => x["Start Time"]);
-        // get the endtime attribute from all data points
-        var endtimes = data.map((x) => x["Registered End Time"]);
-        // get the duration attribute from all data points
-        var durations = data.map((x) => x["Real Duration"]);
-
-        // convert time to a date object from epoch time (seconds)
-        starttime = starttimes.map((x) => new Date(x * 1000));
-
-        // convert time to a date object from epoch time (seconds)
-        endtimes = endtimes.map((x) => new Date(x * 1000));
-        // convert duration to a number
-        durations = durations.map((x) => parseInt(x));
-
-        // count occurances of times for each hour
-        var count = {};
-        for (var i = 0; i < starttime.length; i++) {
-          var date = starttime[i];
-          var hour = date.getHours();
-          if (count[hour] == undefined) {
-            count[hour] = 1;
-          } else {
-            count[hour] += 1;
-          }
-        }
-        // plot count as a bar chart
-        var trace = {
-          x: Object.keys(count),
-          y: Object.values(count),
-          type: "scatter", // Change "line" to "scatter"
-          mode: "lines", // Add this line
-          fill: "tozeroy", // Add this line
-          fillcolor: "rgba(0,128,0,0.2)", // Add this line
-        };
-        var layout = {
-          title: {
-            text: "Count of apps used per hour",
-            font: {
-              family: "Quicksand, sans-serif",
-              size: 20,
-            },
-          },
-          font: {
-            family: "JetBrains Mono, monospace",
-            size: 12,
-          },
-          legend: {
-            font: {
-              family: "JetBrains Mono, monospace",
-              size: 12,
-            },
-            orientation: "h",
-          },
-        };
-        var data = [trace];
-        Plotly.newPlot("hourly_usage", data, layout);
-      },
-      error: function (response) {
-        console.log(response);
-      },
-    });
-  }
 
   function update_current_app_usage() {
     // request the get_counter url
@@ -95,31 +27,74 @@
       success: function (response) {
         // parse the response as json
         console.log(response);
-        var data = response;
-        // get the first word from the keys
-        var keys = Object.keys(data);
+        // put title in the div
+        $("#title").text(response["Title"]);
+        // put process name in the div
+        $("#processname").text(response["Process Name"]);
+        // put memory in the div
+        $("#memory").text(
+          "Memory: " +
+            parseFloat(response["Current Memory Usage"]).toFixed(2) +
+            " MB"
+        );
+        // put time in the div
+        $("#time").text("Time: " + response["Time"]);
+      },
+      error: function (response) {
+        console.log(response);
+      },
+    });
+  }
 
-        // get only the first word of the string
-        keys = keys.map((x) => x.split(" ")[0]);
-        // get the values
-        var values = Object.values(data);
+  function getRandomColor() {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 
-        // plot a line graph
+    //return colorPalette[Math.floor(Math.random() * colorPalette.length)];
+  }
+
+  function update_todays_app_usage() {
+    $.ajax({
+      type: "GET",
+      url: "{% url 'get_todays_app_usage' %}",
+      success: function (response) {
+        console.log(response);
+
+        var processes = Object.values(response["Process"]);
+        var times = Object.values(response["Time"]);
+
+        // remove exe from process names
+        processes = processes.map((x) => x.replace(".exe", ""));
+
+        // plot a bar graph
         var trace = {
-          x: keys,
-          y: values,
-          type: "scatter", // Change "line" to "scatter"
-          mode: "lines", // Add this line
-          fill: "tozeroy", // Add this line
-          fillcolor: "rgba(48 42 224 / 0.2)", // Add this line
+          x: processes,
+          y: times,
+          type: "bar",
+          marker: {
+            color: processes.map(
+              (_, i) => colorPalette[i % colorPalette.length]
+            ), // assign a color from the palette to each bar
+          },
         };
+
         var layout = {
           title: {
-            text: "Tracking Current Apps",
+            text: "Today's app usage",
             font: {
               family: "Quicksand, sans-serif",
               size: 20,
             },
+          },
+          yaxis: {
+            title: "Time (Hours)",
+          },
+          xaxis: {
+            title: "Apps",
           },
           font: {
             family: "JetBrains Mono, monospace",
@@ -133,8 +108,9 @@
             orientation: "h",
           },
         };
+
         var data = [trace];
-        Plotly.newPlot("current_apps", data, layout);
+        Plotly.newPlot("todays_apps", data, layout);
       },
       error: function (response) {
         console.log(response);
@@ -204,13 +180,69 @@
     if (isRecording) {
       update_current_app_usage();
       update_category_plot();
+      update_todays_app_usage();
+      update_hourly_pc_usage();
     }
   }
 
+  function update_hourly_pc_usage() {
+    $.ajax({
+      type: "GET",
+      url: "{% url 'get_hourly_pc_usage' %}",
+      success: function (response) {
+        console.log(response);
+        var data = response;
+        var hours = Object.values(data["Hour"]);
+        var durations = Object.values(data["Time"]);
+        var trace = {
+          x: hours,
+          y: durations,
+          type: "bar",
+        };
+
+        var layout = {
+          title: {
+            text: "Hourly PC usage",
+            font: {
+              family: "Quicksand, sans-serif",
+              size: 20,
+            },
+          },
+          yaxis: {
+            title: "Usage (Hours)",
+          },
+
+          xaxis: {
+            title: "Hours",
+          },
+
+          font: {
+            family: "JetBrains Mono, monospace",
+            size: 12,
+          },
+          legend: {
+            font: {
+              family: "JetBrains Mono, monospace",
+              size: 12,
+            },
+            orientation: "h",
+          },
+        };
+
+        var data = [trace];
+        Plotly.newPlot("hourly_usage", data, layout);
+      },
+      error: function (response) {
+        console.log(response);
+      },
+    });
+  }
+
   function update_all_charts() {
-    update_test();
     update_current_app_usage();
+    update_todays_app_usage();
     update_category_plot();
+    update_hourly_pc_usage();
   }
 
   function get_recording() {
@@ -279,14 +311,34 @@
       {% comment %} 1st row {% endcomment %}
       <div class="flex flex-row w-full">
         {% comment %} graph 1 {% endcomment %}
-        <div class="w-2/3 p-4">
-          <div class="rounded-xl p-2 bg-white">
-            <div id="current_apps"></div>
+        <div class="w-1/3 p-4 h-[60vh]">
+          <div class="rounded-xl p-2 bg-white h-full">
+            <div
+              id="current_app"
+              class="h-full p-8 flex flex-col justify-center quicksand p-4 text-2xl"
+            >
+              <div
+                id="title"
+                class="text-2xl font-bold text-blue-800 bg-gray-100 rounded-2xl p-4 shadow shadow-sm shadow-gray-200 mt-2"
+              ></div>
+              <div
+                id="processname"
+                class="text-lg font-bold text-gray-800 p-4 border-b border-green-800 shadow-gray-200 mt-2"
+              ></div>
+              <div
+                id="memory"
+                class="text-lg font-bold text-gray-800 p-4 border-b border-green-800 shadow-gray-200 mt-2"
+              ></div>
+              <div
+                id="time"
+                class="text-lg font-bold text-gray-800 p-4 border-b border-green-800 shadow-gray-200 mt-2"
+              ></div>
+            </div>
           </div>
         </div>
-        <div class="w-1/3 p-4">
-          <div class="rounded-xl p-2 bg-white">
-            <div id="category"></div>
+        <div class="w-2/3 p-4 h-[60vh]">
+          <div class="rounded-xl p-2 bg-white h-full">
+            <div id="todays_apps" class="h-full"></div>
           </div>
         </div>
       </div>

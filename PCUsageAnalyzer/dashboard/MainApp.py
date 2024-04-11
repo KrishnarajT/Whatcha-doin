@@ -99,7 +99,7 @@ class MainApplication:
                         dtype={
                             "Title": str,
                             "Process Name": str,
-                            "Current Memory Usage": int,
+                            "Current Memory Usage": float,
                             "Start Time": str,
                             "Registered End Time": str,
                             "Duration": str,
@@ -415,6 +415,8 @@ class MainApplication:
             "thread_intervals_ms": self.thread_interval_ms,
         }
 
+    # calculation and data processing functions
+
     def get_current_app_usage(self):
 
         # calculate current app time by iterating over the database, and summing up duration where process name is the same as the active process
@@ -429,9 +431,90 @@ class MainApplication:
             if self.db.iloc[i]["Process Name"] == current_process_name:
                 current_app_time += self.db.iloc[i]["Duration"]
 
+        # make current app time in human readable format from pd.timedelta
+        current_app_time = str(current_app_time)
+
         return {
             "Title": self.get_active_window(),
             "Process Name": current_process_name,
             "Current Memory Usage": current_process_memory,
             "Time": current_app_time,
         }
+
+    def get_todays_app_usage(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for todays apps process names
+        # y is a list for todays apps process durations summed
+        todays_apps = {}
+
+        # get todays date
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # iterate over the database, and sum up the duration where the date is today
+        for i in range(len(self.db)):
+            if self.db.iloc[i]["Start Time"].split(" ")[0] == today:
+                if self.db.iloc[i]["Process Name"] in todays_apps:
+                    todays_apps[self.db.iloc[i]["Process Name"]] += (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+                else:
+                    todays_apps[self.db.iloc[i]["Process Name"]] = (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+
+        # convert the dictionary to a dataframe
+        todays_apps = pd.DataFrame(
+            list(todays_apps.items()), columns=["Process", "Time"]
+        )
+
+        # sort the dataframe by time
+        todays_apps = todays_apps.sort_values(by="Time", ascending=False)
+
+        # get the top 10 apps
+        todays_apps = todays_apps.head(10)
+
+        # convert the dataframe to a dictionary
+        todays_apps = todays_apps.to_dict()
+
+        return todays_apps
+
+    def get_hourly_pc_usage(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for hours
+        # y is a list for duration summed for each hour
+        hourly_pc_usage = {str(i): 0 for i in range(24)}
+
+        # this is only for today
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # iterate over the database, and sum up the duration where the date is today
+        for i in range(len(self.db)):
+            if self.db.iloc[i]["Start Time"].split(" ")[0] == today:
+                hour = self.db.iloc[i]["Start Time"].split(" ")[1].split(":")[0]
+                if hour in hourly_pc_usage:
+                    hourly_pc_usage[hour] += (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+                else:
+                    hourly_pc_usage[hour] = (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+
+        # convert the dictionary to a dataframe
+        hourly_pc_usage = pd.DataFrame(
+            list(hourly_pc_usage.items()), columns=["Hour", "Time"]
+        )
+
+        # sort the dataframe by time
+        hourly_pc_usage = hourly_pc_usage.sort_values(by="Hour")
+
+        # convert the dataframe to a dictionary
+        hourly_pc_usage = hourly_pc_usage.to_dict()
+
+        # # for any hour from 0 to 23 not present in the dictionary, add it with 0 value
+        # for i in range(24):
+        #     if str(i) not in hourly_pc_usage["Hour"]:
+        #         hourly_pc_usage["Hour"][str(i)] = i
+        #         hourly_pc_usage["Time"][str(i)] = 0
+
+        return hourly_pc_usage

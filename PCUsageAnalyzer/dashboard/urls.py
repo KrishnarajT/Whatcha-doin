@@ -27,7 +27,11 @@ urlpatterns = [
     ),
     path("start_fresh", views.start_fresh, name="start_fresh"),
     path("export_data", views.export_raw, name="export_data"),
-    # pages
+    path("get_todays_app_usage", views.get_todays_app_usage, name="get_todays_app_usage"),
+    path("get_hourly_pc_usage", views.get_hourly_pc_usage, name="get_hourly_pc_usage"),
+
+
+    ########### pages ##############
     path("top_apps_this_week", views.top_apps_this_week, name="top_apps_this_week"),
     path("top_apps_this_month", views.top_apps_this_month, name="top_apps_this_month"),
     path("top_apps_all_time", views.top_apps_all_time, name="top_apps_all_time"),
