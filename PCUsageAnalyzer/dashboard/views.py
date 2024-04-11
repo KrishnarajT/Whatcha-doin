@@ -171,6 +171,31 @@ def get_top_apps_all_time(request):
     return JsonResponse(top_apps_all_time, safe=False)
 
 
+def get_weekly_analytics(request):
+    weekly_analytics = app.get_weekly_analytics()
+    return JsonResponse(weekly_analytics, safe=False)
+
+
+def get_least_used_this_week(request):
+    least_used_this_week = app.get_least_used_this_week()
+    return JsonResponse(least_used_this_week, safe=False)
+
+
+def get_least_used_this_month(request):
+    least_used_this_month = app.get_least_used_this_month()
+    return JsonResponse(least_used_this_month, safe=False)
+
+
+def get_least_used_all_time(request):
+    least_used_all_time = app.get_least_used_all_time()
+    return JsonResponse(least_used_all_time, safe=False)
+
+
+def get_most_active_hours_all_time(request):
+    most_active_hours_all_time = app.get_active_hours_all_time()
+    return JsonResponse(most_active_hours_all_time, safe=False)
+
+
 ## pages
 
 

@@ -27,21 +27,36 @@ urlpatterns = [
     ),
     path("start_fresh", views.start_fresh, name="start_fresh"),
     path("export_data", views.export_raw, name="export_data"),
-    path("get_todays_app_usage", views.get_todays_app_usage, name="get_todays_app_usage"),
+    path(
+        "get_todays_app_usage", views.get_todays_app_usage, name="get_todays_app_usage"
+    ),
     path("get_hourly_pc_usage", views.get_hourly_pc_usage, name="get_hourly_pc_usage"),
-
-
     ########### pages ##############
     path("top_apps_this_week", views.top_apps_this_week, name="top_apps_this_week"),
-    path("get_top_apps_this_week", views.get_top_apps_this_week, name="get_top_apps_this_week"),
+    path(
+        "get_top_apps_this_week",
+        views.get_top_apps_this_week,
+        name="get_top_apps_this_week",
+    ),
     path("top_apps_this_month", views.top_apps_this_month, name="top_apps_this_month"),
-    path("get_top_apps_this_month", views.get_top_apps_this_month, name="get_top_apps_this_month"),
+    path(
+        "get_top_apps_this_month",
+        views.get_top_apps_this_month,
+        name="get_top_apps_this_month",
+    ),
     path("top_apps_all_time", views.top_apps_all_time, name="top_apps_all_time"),
-    path("get_top_apps_all_time", views.get_top_apps_all_time, name="get_top_apps_all_time"),
+    path(
+        "get_top_apps_all_time",
+        views.get_top_apps_all_time,
+        name="get_top_apps_all_time",
+    ),
     path(
         "view_weekly_analytics",
         views.view_weekly_analytics,
         name="view_weekly_analytics",
+    ),
+    path(
+        "get_weekly_analytics", views.get_weekly_analytics, name="get_weekly_analytics"
     ),
     path(
         "most_distracting_this_week",
@@ -60,12 +75,32 @@ urlpatterns = [
         name="most_active_hours_all_time",
     ),
     path(
+        "get_most_active_hours_all_time",
+        views.get_most_active_hours_all_time,
+        name="get_most_active_hours_all_time",
+    ),
+    path(
         "least_used_this_week", views.least_used_this_week, name="least_used_this_week"
+    ),
+    path(
+        "get_least_used_this_week",
+        views.get_least_used_this_week,
+        name="get_least_used_this_week",
     ),
     path(
         "least_used_this_month",
         views.least_used_this_month,
         name="least_used_this_month",
     ),
+    path(
+        "get_least_used_this_month",
+        views.get_least_used_this_month,
+        name="get_least_used_this_month",
+    ),
     path("least_used_all_time", views.least_used_all_time, name="least_used_all_time"),
+    path(
+        "get_least_used_all_time",
+        views.get_least_used_all_time,
+        name="get_least_used_all_time",
+    ),
 ]

@@ -2,55 +2,82 @@
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script>
+  var colorPalette = [
+    "#1f77b4",
+    "#ff7f0e",
+    "#2ca02c",
+    "#d62728",
+    "#9467bd",
+    "#8c564b",
+    "#e377c2",
+    "#7f7f7f",
+    "#bcbd22",
+    "#17becf",
+  ];
+  function getRandomColor() {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+
+    //return colorPalette[Math.floor(Math.random() * colorPalette.length)];
+  }
+
   function update_category_plot() {
     $.ajax({
       type: "GET",
-      url: "{% url 'get_category' %}",
+      url: "{% url 'get_most_active_hours_all_time' %}",
       success: function (response) {
-        // parse the response as json
         console.log(response);
-        // data looks like this
-        // category = {"Code": 35, "Social Media": 10, "Entertainment": 15, "Productivity": 40}
 
-        var data = response;
-        // make a donut chart from the data
-        var keys = Object.keys(data);
-        var values = Object.values(data);
+        var hours = Object.values(response["Hour"]);
+        var times = Object.values(response["Time"]);
 
+        // sort the hours and times in descending order of time
+        var indices = times.map((x, i) => i);
+        indices.sort((a, b) => times[b] - times[a]);
+        hours = indices.map((i) => hours[i]);
+        times = indices.map((i) => times[i]);
+
+        // remove exe from process names
+        hours = hours.map((x) => x.replace(".exe", ""));
+
+        // plot a bar graph
         var trace = {
-          labels: keys,
-          values: values,
-          hole: 0.4,
-          type: "pie",
-          domain: {
-            x: [0, 1],
-            y: [0, 1],
+          x: hours,
+          y: times,
+          type: "bar",
+          marker: {
+            color: hours.map((_, i) => colorPalette[i % colorPalette.length]), // assign a color from the palette to each bar
           },
         };
 
         var layout = {
           title: {
-            text: "Category usage",
+            text: "Your Hourly Activity Distributed Across 24 Hours",
             font: {
               family: "Quicksand, sans-serif",
               size: 20,
             },
           },
+          yaxis: {
+            title: "Time (Hours)",
+          },
+          xaxis: {
+            title: "Hours",
+          },
           font: {
             family: "JetBrains Mono, monospace",
-            size: 12,
+            size: 16,
           },
-          legend: {
-            font: {
-              family: "JetBrains Mono, monospace",
-              size: 12,
-            },
-            orientation: "h",
-          },
+          width: window.innerWidth * 0.7, // 80% of viewport width
+          height: window.innerHeight * 0.7, // 80% of viewport height
         };
 
         var data = [trace];
-        Plotly.newPlot("top_app_this_week_div", data, layout);
+        Plotly.newPlot("most_active_hours", data, layout);
       },
 
       error: function (response) {
@@ -75,7 +102,7 @@
     style="font-family: Montserrat"
     class="flex font-medium items-center justify-center"
   >
-    <section><div id="top_app_this_week_div"></div></section>
+    <section><div id="most_active_hours"></div></section>
   </section>
 </div>
 {% endblock %}
