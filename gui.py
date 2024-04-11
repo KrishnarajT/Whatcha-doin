@@ -36,9 +36,12 @@ class DjangoServerControl(tk.Tk):
         # stop everything and exit everything
         if self.server_process is not None:
             self.server_process.terminate()
-            self.server_process = None
+            self.server_process = None  
             self.start_button.config(state=tk.NORMAL)
             self.stop_button.config(state=tk.DISABLED)
+
+        # stop all processes running at localhost 8000 on windows
+        os.system("taskkill /f /im python.exe")
 
         # exit this program
         self.destroy()
