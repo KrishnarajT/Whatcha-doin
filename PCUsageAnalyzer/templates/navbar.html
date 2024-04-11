@@ -277,7 +277,7 @@
         </button>
 
         {% endif %}
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'top_apps_this_week' %}">
           {% csrf_token %}
 
           <div
@@ -362,7 +362,7 @@
             Top Apps this Week
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'top_apps_this_month' %}">
           {% csrf_token %}
 
           <div
@@ -440,7 +440,7 @@
             Top Apps this Month
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'top_apps_all_time' %}">
           {% csrf_token %}
 
           <div
@@ -518,7 +518,7 @@
             Top Apps All Time
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'view_weekly_analytics' %}">
           {% csrf_token %}
 
           <div
@@ -596,7 +596,7 @@
             View Weekly Analytics
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'most_distracting_this_week' %}">
           {% csrf_token %}
 
           <div
@@ -695,7 +695,7 @@
             Most Distracting this Week
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'most_distracting_all_time' %}">
           {% csrf_token %}
 
           <div
@@ -794,7 +794,7 @@
             Most Distracting All Time
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'most_played_games' %}">
           {% csrf_token %}
 
           <div
@@ -867,7 +867,7 @@
             Most Played Games
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'most_active_hours_all_time' %}">
           {% csrf_token %}
 
           <div
@@ -952,7 +952,7 @@
             Most Active Hours All Time
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'least_used_this_week' %}">
           {% csrf_token %}
 
           <div
@@ -1030,7 +1030,7 @@
             Least Used This week
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'least_used_this_month' %}">
           {% csrf_token %}
 
           <div
@@ -1108,7 +1108,7 @@
             Least Used this Month
           </div>
         </form>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'least_used_all_time' %}">
           {% csrf_token %}
 
           <div

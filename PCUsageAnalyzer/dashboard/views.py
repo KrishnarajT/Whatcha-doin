@@ -7,6 +7,7 @@ import threading
 from django.http import JsonResponse
 import plotly.graph_objects as go
 from plotly.offline import plot
+from django.shortcuts import render, redirect
 
 
 # importing the main app class.
@@ -132,7 +133,55 @@ def get_category(request):
     category = {"Code": 35, "Social Media": 10, "Entertainment": 15, "Productivity": 40}
     return JsonResponse(category, safe=False)
 
+
 def get_current_app_usage(request):
     current_app_usage = app.get_current_app_usage()
     app.print_db()
     return JsonResponse(current_app_usage, safe=False)
+
+
+## pages
+
+
+def top_apps_this_week(request):
+    return render(request, "dashboard/top_apps_this_week.html")
+
+
+def top_apps_this_month(request):
+    return render(request, "dashboard/top_apps_this_month.html")
+
+
+def top_apps_all_time(request):
+    return render(request, "dashboard/top_apps_all_time.html")
+
+
+def view_weekly_analytics(request):
+    return render(request, "dashboard/view_weekly_analytics.html")
+
+
+def most_distracting_this_week(request):
+    return render(request, "dashboard/most_distracting_this_week.html")
+
+
+def most_distracting_all_time(request):
+    return render(request, "dashboard/most_distracting_all_time.html")
+
+
+def most_played_games(request):
+    return render(request, "dashboard/most_played_games.html")
+
+
+def most_active_hours_all_time(request):
+    return render(request, "dashboard/most_active_hours_all_time.html")
+
+
+def least_used_this_week(request):
+    return render(request, "dashboard/least_used_this_week.html")
+
+
+def least_used_this_month(request):
+    return render(request, "dashboard/least_used_this_month.html")
+
+
+def least_used_all_time(request):
+    return render(request, "dashboard/least_used_all_time.html")
