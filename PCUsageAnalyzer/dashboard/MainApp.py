@@ -182,7 +182,7 @@ class MainApplication:
             int: the memory in mb.
         """
         # Get the memory usage of the process
-        total_memory = 0
+        total_memory = p.memory_full_info().uss
 
         # Get the child processes
         children = p.children(recursive=True)
@@ -191,7 +191,7 @@ class MainApplication:
         for child in children:
             total_memory += child.memory_full_info().uss
 
-        return total_memory
+        return total_memory / (1024 * 1024)
 
     def run(self):
         print("running main run function")

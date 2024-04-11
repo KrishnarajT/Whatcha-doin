@@ -69,4 +69,5 @@ def about(request):
 
 @login_required
 def profile(request):
-    return render(request, "user_auth/profile.html")
+    user = request.user
+    return render(request, "user_auth/profile.html", {"user": user})

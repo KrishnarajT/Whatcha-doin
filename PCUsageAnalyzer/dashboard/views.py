@@ -94,6 +94,7 @@ def start_fresh(request):
 
 
 def export_raw(request):
+    print("exporting raw data")
     app.export_raw()
     return render(request, "dashboard/dashboard.html")
 
@@ -138,6 +139,11 @@ def get_current_app_usage(request):
     current_app_usage = app.get_current_app_usage()
     app.print_db()
     return JsonResponse(current_app_usage, safe=False)
+
+
+def start_fresh(request):
+    app.start_fresh()
+    return render(request, "dashboard/dashboard.html")
 
 
 ## pages
