@@ -155,6 +155,22 @@ def get_hourly_pc_usage(request):
     hourly_pc_usage = app.get_hourly_pc_usage()
     return JsonResponse(hourly_pc_usage, safe=False)
 
+
+def get_top_apps_this_week(request):
+    top_apps_this_week = app.get_top_apps_this_week()
+    return JsonResponse(top_apps_this_week, safe=False)
+
+
+def get_top_apps_this_month(request):
+    top_apps_this_month = app.get_top_apps_this_month()
+    return JsonResponse(top_apps_this_month, safe=False)
+
+
+def get_top_apps_all_time(request):
+    top_apps_all_time = app.get_top_apps_all_time()
+    return JsonResponse(top_apps_all_time, safe=False)
+
+
 ## pages
 
 

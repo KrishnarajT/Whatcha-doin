@@ -33,8 +33,11 @@ urlpatterns = [
 
     ########### pages ##############
     path("top_apps_this_week", views.top_apps_this_week, name="top_apps_this_week"),
+    path("get_top_apps_this_week", views.get_top_apps_this_week, name="get_top_apps_this_week"),
     path("top_apps_this_month", views.top_apps_this_month, name="top_apps_this_month"),
+    path("get_top_apps_this_month", views.get_top_apps_this_month, name="get_top_apps_this_month"),
     path("top_apps_all_time", views.top_apps_all_time, name="top_apps_all_time"),
+    path("get_top_apps_all_time", views.get_top_apps_all_time, name="get_top_apps_all_time"),
     path(
         "view_weekly_analytics",
         views.view_weekly_analytics,

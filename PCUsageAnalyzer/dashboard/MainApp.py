@@ -518,3 +518,306 @@ class MainApplication:
         #         hourly_pc_usage["Time"][str(i)] = 0
 
         return hourly_pc_usage
+
+    def get_top_apps_this_week(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for top apps process names
+        # y is a list for top apps process durations summed
+        top_apps = {}
+
+        # get todays date
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # get the date 7 days ago
+        seven_days_ago = (
+            datetime.datetime.now() - datetime.timedelta(days=7)
+        ).strftime("%Y-%m-%d")
+
+        # iterate over the database, and sum up the duration where the date is between today and 7 days ago
+        for i in range(len(self.db)):
+            if (
+                self.db.iloc[i]["Start Time"].split(" ")[0] <= today
+                and self.db.iloc[i]["Start Time"].split(" ")[0] >= seven_days_ago
+            ):
+                if self.db.iloc[i]["Process Name"] in top_apps:
+                    top_apps[self.db.iloc[i]["Process Name"]] += (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+                else:
+                    top_apps[self.db.iloc[i]["Process Name"]] = (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+
+        # convert the dictionary to a dataframe
+        top_apps = pd.DataFrame(list(top_apps.items()), columns=["Process", "Time"])
+
+        # sort the dataframe by time
+        top_apps = top_apps.sort_values(by="Time", ascending=False)
+
+        # get the top 10 apps
+        top_apps = top_apps.head(10)
+
+        # convert the dataframe to a dictionary
+        top_apps = top_apps.to_dict()
+
+        return top_apps
+
+    def get_top_apps_this_month(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for top apps process names
+        # y is a list for top apps process durations summed
+        top_apps = {}
+
+        # get todays date
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # get the date 30 days ago
+        thirty_days_ago = (
+            datetime.datetime.now() - datetime.timedelta(days=30)
+        ).strftime("%Y-%m-%d")
+
+        # iterate over the database, and sum up the duration where the date is between today and 30 days ago
+        for i in range(len(self.db)):
+            if (
+                self.db.iloc[i]["Start Time"].split(" ")[0] <= today
+                and self.db.iloc[i]["Start Time"].split(" ")[0] >= thirty_days_ago
+            ):
+                if self.db.iloc[i]["Process Name"] in top_apps:
+                    top_apps[self.db.iloc[i]["Process Name"]] += (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+                else:
+                    top_apps[self.db.iloc[i]["Process Name"]] = (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+
+        # convert the dictionary to a dataframe
+        top_apps = pd.DataFrame(list(top_apps.items()), columns=["Process", "Time"])
+
+        # sort the dataframe by time
+        top_apps = top_apps.sort_values(by="Time", ascending=False)
+
+        # get the top 10 apps
+        top_apps = top_apps.head(10)
+
+        # convert the dataframe to a dictionary
+        top_apps = top_apps.to_dict()
+
+        return top_apps
+
+    def get_top_apps_all_time(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for top apps process names
+        # y is a list for top apps process durations summed
+        top_apps = {}
+
+        # iterate over the database, and sum up the duration for each process
+        for i in range(len(self.db)):
+            if self.db.iloc[i]["Process Name"] in top_apps:
+                top_apps[self.db.iloc[i]["Process Name"]] += (
+                    self.db.iloc[i]["Duration"].total_seconds() / 3600
+                )
+            else:
+                top_apps[self.db.iloc[i]["Process Name"]] = (
+                    self.db.iloc[i]["Duration"].total_seconds() / 3600
+                )
+
+        # convert the dictionary to a dataframe
+        top_apps = pd.DataFrame(list(top_apps.items()), columns=["Process", "Time"])
+
+        # sort the dataframe by time
+        top_apps = top_apps.sort_values(by="Time", ascending=False)
+
+        # get the top 10 apps
+        top_apps = top_apps.head(10)
+
+        # convert the dataframe to a dictionary
+        top_apps = top_apps.to_dict()
+
+        return top_apps
+
+    def get_weekly_analytics(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for days
+        # y is a list for duration summed for each day
+
+        weekly_analytics = {str(i): 0 for i in range(7)}  # 0 is Monday
+
+        # get todays date
+        today = datetime.datetime.now()
+
+        # get the date 7 days ago
+        seven_days_ago = today - datetime.timedelta(days=7)
+
+        # iterate over the database, and sum up the duration where the date is between today and 7 days ago
+        for i in range(len(self.db)):
+            current_date = datetime.datetime.strptime(
+                self.db.iloc[i]["Start Time"].split(" ")[0], "%Y-%m-%d"
+            )
+            if current_date <= today and current_date >= seven_days_ago:
+                day = current_date.weekday()
+                if str(day) in weekly_analytics:
+                    weekly_analytics[str(day)] += (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+                else:
+                    weekly_analytics[str(day)] = (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+
+        # convert the dictionary to a dataframe
+        weekly_analytics = pd.DataFrame(
+            list(weekly_analytics.items()), columns=["Day", "Time"]
+        )
+
+        # sort the dataframe by day
+        weekly_analytics = weekly_analytics.sort_values(by="Day")
+
+        # convert the dataframe to a dictionary
+        weekly_analytics = weekly_analytics.to_dict()
+
+        return weekly_analytics
+
+    def get_active_hours_all_time(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for hours
+        # y is a list for duration summed for each hour
+        active_hours = {str(i): 0 for i in range(24)}
+
+        # iterate over the database, and sum up the duration for each hour
+        for i in range(len(self.db)):
+            hour = self.db.iloc[i]["Start Time"].split(" ")[1].split(":")[0]
+            if hour in active_hours:
+                active_hours[hour] += self.db.iloc[i]["Duration"].total_seconds() / 3600
+            else:
+                active_hours[hour] = self.db.iloc[i]["Duration"].total_seconds() / 3600
+
+        # convert the dictionary to a dataframe
+        active_hours = pd.DataFrame(
+            list(active_hours.items()), columns=["Hour", "Time"]
+        )
+
+        # sort the dataframe by time
+        active_hours = active_hours.sort_values(by="Hour")
+
+        # convert the dataframe to a dictionary
+        active_hours = active_hours.to_dict()
+
+        return active_hours
+
+    def get_least_used_this_week(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for least used apps process names
+        # y is a list for least used apps process durations summed
+        least_used = {}
+
+        # get todays date
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # get the date 7 days ago
+        seven_days_ago = (
+            datetime.datetime.now() - datetime.timedelta(days=7)
+        ).strftime("%Y-%m-%d")
+
+        # iterate over the database, and sum up the duration where the date is between today and 7 days ago
+        for i in range(len(self.db)):
+            if (
+                self.db.iloc[i]["Start Time"].split(" ")[0] <= today
+                and self.db.iloc[i]["Start Time"].split(" ")[0] >= seven_days_ago
+            ):
+                if self.db.iloc[i]["Process Name"] in least_used:
+                    least_used[self.db.iloc[i]["Process Name"]] += (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+                else:
+                    least_used[self.db.iloc[i]["Process Name"]] = (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+
+        # convert the dictionary to a dataframe
+        least_used = pd.DataFrame(list(least_used.items()), columns=["Process", "Time"])
+
+        # sort the dataframe by time
+        least_used = least_used.sort_values(by="Time")
+
+        # get the top 10 apps
+        least_used = least_used.head(10)
+
+        # convert the dataframe to a dictionary
+        least_used = least_used.to_dict()
+
+        return least_used
+
+    def get_least_used_this_month(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for least used apps process names
+        # y is a list for least used apps process durations summed
+        least_used = {}
+
+        # get todays date
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # get the date 30 days ago
+        thirty_days_ago = (
+            datetime.datetime.now() - datetime.timedelta(days=30)
+        ).strftime("%Y-%m-%d")
+
+        # iterate over the database, and sum up the duration where the date is between today and 30 days ago
+        for i in range(len(self.db)):
+            if (
+                self.db.iloc[i]["Start Time"].split(" ")[0] <= today
+                and self.db.iloc[i]["Start Time"].split(" ")[0] >= thirty_days_ago
+            ):
+                if self.db.iloc[i]["Process Name"] in least_used:
+                    least_used[self.db.iloc[i]["Process Name"]] += (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+                else:
+                    least_used[self.db.iloc[i]["Process Name"]] = (
+                        self.db.iloc[i]["Duration"].total_seconds() / 3600
+                    )
+
+        # convert the dictionary to a dataframe
+        least_used = pd.DataFrame(list(least_used.items()), columns=["Process", "Time"])
+
+        # sort the dataframe by time
+        least_used = least_used.sort_values(by="Time")
+
+        # get the top 10 apps
+        least_used = least_used.head(10)
+
+        # convert the dataframe to a dictionary
+        least_used = least_used.to_dict()
+
+        return least_used
+
+    def get_least_used_all_time(self):
+        # returns a dictionary with x and y values for the graph
+        # x is a list for least used apps process names
+        # y is a list for least used apps process durations summed
+        least_used = {}
+
+        # iterate over the database, and sum up the duration for each process
+        for i in range(len(self.db)):
+            if self.db.iloc[i]["Process Name"] in least_used:
+                least_used[self.db.iloc[i]["Process Name"]] += (
+                    self.db.iloc[i]["Duration"].total_seconds() / 3600
+                )
+            else:
+                least_used[self.db.iloc[i]["Process Name"]] = (
+                    self.db.iloc[i]["Duration"].total_seconds() / 3600
+                )
+
+        # convert the dictionary to a dataframe
+        least_used = pd.DataFrame(list(least_used.items()), columns=["Process", "Time"])
+
+        # sort the dataframe by time
+        least_used = least_used.sort_values(by="Time")
+
+        # get the top 10 apps
+        least_used = least_used.head(10)
+
+        # convert the dataframe to a dictionary
+        least_used = least_used.to_dict()
+
+        return least_used
