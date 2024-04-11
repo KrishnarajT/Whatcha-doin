@@ -113,12 +113,6 @@ def test(request):
     return JsonResponse(data, safe=False)
 
 
-def get_counter(request):
-    # app.print_db()
-    counter = app.get_counter()
-    return JsonResponse(counter, safe=False)
-
-
 def get_recording(request):
     recording = app.get_record()
     return JsonResponse(recording, safe=False)
@@ -137,3 +131,8 @@ def get_intervals_ms(request):
 def get_category(request):
     category = {"Code": 35, "Social Media": 10, "Entertainment": 15, "Productivity": 40}
     return JsonResponse(category, safe=False)
+
+def get_current_app_usage(request):
+    current_app_usage = app.get_current_app_usage()
+    app.print_db()
+    return JsonResponse(current_app_usage, safe=False)

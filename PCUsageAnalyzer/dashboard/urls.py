@@ -17,9 +17,8 @@ urlpatterns = [
     ),
     path("flip_idle_detection", views.flip_idle_detection, name="flip_idle_detection"),
     path("test", views.test, name="test"),
-    path("get_counter", views.get_counter, name="get_counter"),
     path("get_recording", views.get_recording, name="get_recording"),
     path("get_intervals_ms", views.get_intervals_ms, name="get_intervals_ms"),
     path("get_category", views.get_category, name="get_category"),
+    path("get_current_app_usage", views.get_current_app_usage, name="get_current_app_usage"),
 ]
- 

@@ -3,10 +3,8 @@
 
 <script>
   let isRecording;
-  let registrationIntervalTimeout;
   let threadIntervalTimeout;
   let thread_intervals_ms = 1000;
-  let registration_intervals_ms = 10000;
 
   // make a post request to the server
   function update_test() {
@@ -89,11 +87,11 @@
     });
   }
 
-  function update_counter_plot() {
+  function update_current_app_usage() {
     // request the get_counter url
     $.ajax({
       type: "GET",
-      url: "{% url 'get_counter' %}",
+      url: "{% url 'get_current_app_usage' %}",
       success: function (response) {
         // parse the response as json
         console.log(response);
@@ -204,21 +202,14 @@
   function update_plots_at_thread_interval() {
     // if recording is true, then update the plots
     if (isRecording) {
-      update_counter_plot();
+      update_current_app_usage();
       update_category_plot();
-    }
-  }
-
-  function update_plots_at_registration_interval() {
-    // if recording is true, then update the plots
-    if (isRecording) {
-      update_test();
     }
   }
 
   function update_all_charts() {
     update_test();
-    update_counter_plot();
+    update_current_app_usage();
     update_category_plot();
   }
 
@@ -231,10 +222,7 @@
         if (isRecording) {
           console.log("recording is true");
           clear_intervals();
-          registrationIntervalTimeout = setInterval(
-            update_plots_at_registration_interval,
-            registration_intervals_ms
-          );
+
           threadIntervalTimeout = setInterval(
             update_plots_at_thread_interval,
             thread_intervals_ms
@@ -259,10 +247,8 @@
       url: "{% url 'get_intervals_ms' %}",
       success: function (response) {
         thread_intervals_ms = response["thread_intervals_ms"];
-        registration_intervals_ms = response["registration_intervals_ms"];
         console.log(response);
         console.log(thread_intervals_ms);
-        console.log(registration_intervals_ms);
       },
       error: function (response) {
         console.log(response);
@@ -271,9 +257,6 @@
   }
 
   function clear_intervals() {
-    if (registrationIntervalTimeout) {
-      clearInterval(registrationIntervalTimeout);
-    }
     if (threadIntervalTimeout) {
       clearInterval(threadIntervalTimeout);
     }
