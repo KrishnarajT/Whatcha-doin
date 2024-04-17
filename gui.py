@@ -6,8 +6,6 @@ import pandas
 import sklearn
 import pyautogui
 import numpy
-import matplotlib
-import seaborn
 import psutil
 import schedule
 
