@@ -1,6 +1,15 @@
 import tkinter as tk
 import subprocess
 import os
+import django
+import pandas
+import sklearn
+import pyautogui
+import numpy
+import matplotlib
+import seaborn
+import psutil
+import schedule
 
 
 class DjangoServerControl(tk.Tk):
@@ -28,6 +37,7 @@ class DjangoServerControl(tk.Tk):
         if self.server_process is None:
             os.chdir("PCUsageAnalyzer")
             print(os.getcwd())
+            os.system("python manage.py migrate")
             self.server_process = subprocess.Popen(["python", "manage.py", "runserver"])
             self.start_button.config(state=tk.DISABLED)
             self.stop_button.config(state=tk.NORMAL)
