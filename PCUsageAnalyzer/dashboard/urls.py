@@ -32,6 +32,35 @@ urlpatterns = [
     ),
     path("get_hourly_pc_usage", views.get_hourly_pc_usage, name="get_hourly_pc_usage"),
     ########### pages ##############
+    path(
+        "categories_this_week", views.categories_this_week, name="categories_this_week"
+    ),
+    path(
+        "get_categories_this_week",
+        views.get_categories_this_week,
+        name="get_categories_this_week",
+    ),
+    path(
+        "get_categories_today",
+        views.get_categories_today,
+        name="get_categories_today",
+    ),
+    path(
+        "categories_this_month",
+        views.categories_this_month,
+        name="categories_this_month",
+    ),
+    path(
+        "get_categories_this_month",
+        views.get_categories_this_month,
+        name="get_categories_this_month",
+    ),
+    path("categories_all_time", views.categories_all_time, name="categories_all_time"),
+    path(
+        "get_categories_all_time",
+        views.get_categories_all_time,
+        name="get_categories_all_time",
+    ),
     path("top_apps_this_week", views.top_apps_this_week, name="top_apps_this_week"),
     path(
         "get_top_apps_this_week",

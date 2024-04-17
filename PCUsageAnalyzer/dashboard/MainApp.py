@@ -9,6 +9,301 @@ import pytz
 import psutil
 from ctypes import wintypes
 import ctypes
+import pickle
+
+# importing for training naive bayes model
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.pipeline import Pipeline
+
+training_data = {
+    "code": [
+        "code",
+        "visual studio",
+        "sublime text",
+        "gcc",
+        "atom",
+        "pycharm",
+        "notepad++",
+        "intellij idea",
+        "netbeans",
+        "eclipse",
+        "android studio",
+        "xcode",
+        "vim",
+        "emacs",
+        "brackets",
+        "webstorm",
+        "phpstorm",
+        "rubymine",
+        "textmate",
+        "gedit",
+        "jupyter notebook",
+        "spyder",
+        "r studio",
+        "bluej",
+        "code::blocks",
+        "nano",
+        "visual studio code",
+        "komodo edit",
+        "lighttable",
+        "kate",
+    ],
+    "design": [
+        "photoshop",
+        "illustrator",
+        "sketch",
+        "figma",
+        "adobe xd",
+        "indesign",
+        "coreldraw",
+        "gimp",
+        "affinity designer",
+        "canva",
+        "zeplin",
+        "invision studio",
+        "balsamiq",
+        "figjam",
+        "adobe spark",
+        "autodesk sketchbook",
+        "lunacy",
+        "gravit designer",
+        "marvel app",
+        "flinto",
+        "sketchbook",
+        "vectr",
+        "affinity photo",
+        "sketchup",
+        "proto.io",
+        "corel painter",
+        "adobe animate",
+        "principle",
+        "adobe captivate",
+        "moqups",
+    ],
+    "web": [
+        "chrome",
+        "firefox",
+        "edge",
+        "safari",
+        "opera",
+        "brave",
+        "vivaldi",
+        "tor browser",
+        "uc browser",
+        "yandex browser",
+        "maxthon",
+        "avant browser",
+        "epic privacy browser",
+        "pale moon",
+        "lynx browser",
+        "dolphin browser",
+        "midori browser",
+        "qutebrowser",
+        "seamonkey",
+        "comodo dragon",
+        "sleipnir",
+        "waterfox",
+        "cyberfox",
+        "beaker browser",
+        "netsurf",
+        "galeon",
+        "konqueror",
+        "rekonq",
+        "arora",
+        "falkon",
+    ],
+    "video": [
+        "vlc",
+        "netflix",
+        "prime video",
+        "youtube",
+        "hulu",
+        "disney+",
+        "hbomax",
+        "apple tv+",
+        "twitch",
+        "peacock",
+        "crunchyroll",
+        "vimeo",
+        "dailymotion",
+        "funimation",
+        "crackle",
+        "tubi",
+        "hotstar",
+        "sony liv",
+        "voot",
+        "zee5",
+        "altbalaji",
+        "hoichoi",
+        "mx player",
+        "jio cinema",
+        "eros now",
+        "amazon prime video",
+        "google play movies",
+        "itunes",
+        "youtube tv",
+        "sling tv",
+    ],
+    "music": [
+        "spotify",
+        "itunes",
+        "soundcloud",
+        "youtube music",
+        "pandora",
+        "amazon music",
+        "google play music",
+        "tidal",
+        "deezer",
+        "napster",
+        "jiosaavn",
+        "gaana",
+        "wynk music",
+        "hungama music",
+        "spotify lite",
+        "musixmatch",
+        "shazam",
+        "last.fm",
+        "yandex music",
+        "kkbox",
+        "iheartradio",
+        "8tracks",
+        "pocketcasts",
+        "podbean",
+        "stitcher",
+        "castbox",
+        "anchor",
+        "overcast",
+        "radiopublic",
+        "breakermag",
+    ],
+    "chat": [
+        "whatsapp",
+        "messenger",
+        "slack",
+        "discord",
+        "telegram",
+        "signal",
+        "skype",
+        "viber",
+        "snapchat",
+        "wechat",
+        "line",
+        "kik",
+        "telegram x",
+        "groupme",
+        "zulip",
+        "wire",
+        "rocket.chat",
+        "chatwork",
+        "tox",
+        "kakao talk",
+        "discord lite",
+        "discord nitro",
+        "discord plus",
+        "discord classic",
+        "discord alpha",
+        "discord beta",
+        "discord canary",
+        "discord ptb",
+        "discord development",
+        "discord test",
+    ],
+    "social": [
+        "facebook",
+        "instagram",
+        "twitter",
+        "linkedin",
+        "reddit",
+        "tumblr",
+        "pinterest",
+        "snapchat",
+        "tiktok",
+        "youtube",
+        "whatsapp",
+        "messenger",
+        "telegram",
+        "signal",
+        "discord",
+        "vkontakte",
+        "wechat",
+        "wechat lite",
+        "wechat pay",
+        "wechat work",
+        "wechat work lite",
+        "wechat reading",
+        "wechat design",
+        "wechat office",
+        "wechat mini program",
+        "wechat mini program lite",
+        "wechat scan",
+        "wechat games",
+        "wechat video",
+    ],
+    "email": [
+        "gmail",
+        "outlook",
+        "yahoo mail",
+        "thunderbird",
+        "mailchimp",
+        "aol mail",
+        "protonmail",
+        "zoho mail",
+        "icloud mail",
+        "roundcube",
+        "yandex mail",
+        "tutanota",
+        "fastmail",
+        "gmx mail",
+        "mail.com",
+        "inbox.com",
+        "hushmail",
+        "aol desktop gold",
+        "zimbra",
+        "the bat!",
+        "eudora",
+        "postbox",
+        "sylpheed",
+        "claws mail",
+        "evolution mail",
+        "geary",
+        "nylas mail",
+        "eureka mail",
+        "horde",
+    ],
+    "productivity": [
+        "word",
+        "excel",
+        "powerpoint",
+        "onenote",
+        "google docs",
+        "google sheets",
+        "google slides",
+        "google keep",
+        "microsoft office",
+        "libreoffice",
+        "openoffice",
+        "wps office",
+        "zoho workplace",
+        "notion",
+        "evernote",
+        "todoist",
+        "trello",
+        "asana",
+        "slack",
+        "microsoft teams",
+        "zoom",
+        "skype for business",
+        "webex",
+        "gotomeeting",
+        "jira",
+        "confluence",
+        "zendesk",
+        "salesforce",
+        "basecamp",
+    ],
+}
 
 
 class MainApplication:
@@ -821,3 +1116,171 @@ class MainApplication:
         least_used = least_used.to_dict()
 
         return least_used
+
+    def train_model(self):
+        # train a naive bayes classifier to predict the category of the app based on the process name
+        # if a modle.pkl file exists here, load it and return
+        if os.path.exists(os.path.join(self.data_directory, "model.pkl")):
+            print("model exists, loading it")
+            return
+
+        # make a dataframe from the training data
+        training_data_dict = {"Process Name": [], "Category": []}
+        for key in training_data.keys():
+            for value in training_data[key]:
+                training_data_dict["Process Name"].append(value)
+                training_data_dict["Category"].append(key)
+
+        training_data_df = pd.DataFrame(training_data_dict)
+
+        # now we will train the model
+
+        # create a pipeline
+        text_clf = Pipeline(
+            [
+                ("vect", CountVectorizer()),
+                ("tfidf", TfidfTransformer()),
+                ("clf", MultinomialNB()),
+            ]
+        )
+
+        # train the model
+        text_clf.fit(training_data_df["Process Name"], training_data_df["Category"])
+
+        # save the model
+        with open(os.path.join(self.data_directory, "model.pkl"), "wb") as f:
+            pickle.dump(text_clf, f)
+
+        print("model trained and saved")
+
+        return text_clf
+
+    def get_categories_this_week(self):
+        self.train_model()
+        # returns a dictionary percentage of categories. The categories are based on the process names and are tested with the loaded model.
+
+        # get todays date
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # get the date 7 days ago
+        seven_days_ago = (
+            datetime.datetime.now() - datetime.timedelta(days=7)
+        ).strftime("%Y-%m-%d")
+
+        # get the dataframe for the current timeframe
+        current_timeframe = self.db[
+            (self.db["Start Time"].str.split(" ").str[0] <= today)
+            & (self.db["Start Time"].str.split(" ").str[0] >= seven_days_ago)
+        ]
+
+        text_clf = None
+        # load the model
+        with open(os.path.join(self.data_directory, "model.pkl"), "rb") as f:
+            text_clf = pickle.load(f)
+
+        # now predict using the model.
+        # predict the categories of the test data
+        predicted = text_clf.predict(current_timeframe["Title"])
+
+        # return the counts by percentage of predicted
+        categories = {}
+        for i in range(len(predicted)):
+            if predicted[i] in categories:
+                categories[predicted[i]] += 1
+            else:
+                categories[predicted[i]] = 1
+
+        return categories
+
+    def get_categories_this_month(self):
+        self.train_model()
+        # returns a dictionary percentage of categories. The categories are based on the process names and are tested with the loaded model.
+
+        # get todays date
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # get the date 30 days ago
+        thirty_days_ago = (
+            datetime.datetime.now() - datetime.timedelta(days=30)
+        ).strftime("%Y-%m-%d")
+
+        # get the dataframe for the current timeframe
+        current_timeframe = self.db[
+            (self.db["Start Time"].str.split(" ").str[0] <= today)
+            & (self.db["Start Time"].str.split(" ").str[0] >= thirty_days_ago)
+        ]
+
+        text_clf = None
+        # load the model
+        with open(os.path.join(self.data_directory, "model.pkl"), "rb") as f:
+            text_clf = pickle.load(f)
+
+        # now predict using the model.
+        # predict the categories of the test data
+        predicted = text_clf.predict(current_timeframe["Title"])
+
+        # return the counts by percentage of predicted
+        categories = {}
+        for i in range(len(predicted)):
+            if predicted[i] in categories:
+                categories[predicted[i]] += 1
+            else:
+                categories[predicted[i]] = 1
+
+        return categories
+
+    def get_categories_all_time(self):
+
+        self.train_model()
+        # returns a dictionary percentage of categories. The categories are based on the process names and are tested with the loaded model.
+
+        text_clf = None
+        # load the model
+        with open(os.path.join(self.data_directory, "model.pkl"), "rb") as f:
+            text_clf = pickle.load(f)
+
+        # now predict using the model.
+        # predict the categories of the test data
+        predicted = text_clf.predict(self.db["Title"])
+
+        # return the counts by percentage of predicted
+        categories = {}
+        for i in range(len(predicted)):
+            if predicted[i] in categories:
+                categories[predicted[i]] += 1
+            else:
+                categories[predicted[i]] = 1
+
+        return categories
+
+    def get_categories_today(self):
+
+        self.train_model()
+        # returns a dictionary percentage of categories. The categories are based on the process names and are tested with the loaded model.
+
+        # get todays date
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        # get the dataframe for the current timeframe
+        current_timeframe = self.db[
+            self.db["Start Time"].str.split(" ").str[0] == today
+        ]
+
+        text_clf = None
+        # load the model
+        with open(os.path.join(self.data_directory, "model.pkl"), "rb") as f:
+            text_clf = pickle.load(f)
+
+        # now predict using the model.
+        # predict the categories of the test data
+        predicted = text_clf.predict(current_timeframe["Title"])
+
+        # return the counts by percentage of predicted
+        categories = {}
+        for i in range(len(predicted)):
+            if predicted[i] in categories:
+                categories[predicted[i]] += 1
+            else:
+                categories[predicted[i]] = 1
+
+        return categories

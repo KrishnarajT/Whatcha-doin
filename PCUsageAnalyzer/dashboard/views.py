@@ -5,8 +5,6 @@ import schedule
 import time
 import threading
 from django.http import JsonResponse
-import plotly.graph_objects as go
-from plotly.offline import plot
 from django.shortcuts import render, redirect
 
 
@@ -68,6 +66,7 @@ def stop_app_and_logout(request):
     app.set_finish(True)
     app.cleanup()
     schedule.clear()
+    app.init_db()
     logout(request)
     return redirect("login")
 
@@ -196,6 +195,26 @@ def get_most_active_hours_all_time(request):
     return JsonResponse(most_active_hours_all_time, safe=False)
 
 
+def get_categories_this_week(request):
+    categories_this_week = app.get_categories_this_week()
+    return JsonResponse(categories_this_week, safe=False)
+
+
+def get_categories_today(request):
+    categories_today = app.get_categories_today()
+    return JsonResponse(categories_today, safe=False)
+
+
+def get_categories_this_month(request):
+    categories_this_month = app.get_categories_this_month()
+    return JsonResponse(categories_this_month, safe=False)
+
+
+def get_categories_all_time(request):
+    categories_all_time = app.get_categories_all_time()
+    return JsonResponse(categories_all_time, safe=False)
+
+
 ## pages
 
 
@@ -241,3 +260,15 @@ def least_used_this_month(request):
 
 def least_used_all_time(request):
     return render(request, "dashboard/least_used_all_time.html")
+
+
+def categories_this_week(request):
+    return render(request, "dashboard/categories_this_week.html")
+
+
+def categories_this_month(request):
+    return render(request, "dashboard/categories_this_month.html")
+
+
+def categories_all_time(request):
+    return render(request, "dashboard/categories_all_time.html")

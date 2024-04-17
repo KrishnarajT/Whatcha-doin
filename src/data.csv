@@ -1,0 +1,129 @@
+Title,Process Name,Current Memory Usage,Start Time,Registered End Time,Duration
+PC Usage Analyzer - Dashboard - Personal - Microsoft Edge,msedge.exe,1425.5078125,2024-04-12 02:23:20,2024-04-12 02:23:23,0 days 00:00:04
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1734.21484375,2024-04-12 02:23:25,2024-04-12 02:23:27,0 days 00:00:03
+DevTools - 127.0.0.1:8000/dashboard/dash,msedge.exe,1718.90625,2024-04-12 02:23:28,2024-04-12 02:23:28,0 days 00:00:01
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1761.05859375,2024-04-12 02:23:29,2024-04-12 02:23:30,0 days 00:00:02
+PC Usage Analyzer,dopus.exe,160.2265625,2024-04-12 02:23:31,2024-04-12 02:23:33,0 days 00:00:03
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1761.50390625,2024-04-12 02:23:34,2024-04-12 02:23:34,0 days 00:00:01
+Task View,explorer.exe,149.0859375,2024-04-12 02:23:35,2024-04-12 02:23:35,0 days 00:00:01
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1728.59375,2024-04-12 02:23:36,2024-04-12 02:23:36,0 days 00:00:01
+Search,SearchHost.exe,96.58984375,2024-04-12 02:23:37,2024-04-12 02:23:53,0 days 00:00:16
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1711.44921875,2024-04-12 02:23:54,2024-04-12 02:23:54,0 days 00:00:01
+Notification Center,ShellExperienceHost.exe,41.72265625,2024-04-12 02:23:55,2024-04-12 02:23:58,0 days 00:00:04
+Desktop,explorer.exe,125.296875,2024-04-12 02:23:59,2024-04-12 02:23:59,0 days 00:00:01
+Quick settings,ShellExperienceHost.exe,41.46484375,2024-04-12 02:24:00,2024-04-12 02:24:02,0 days 00:00:03
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1741.046875,2024-04-12 02:24:03,2024-04-12 02:24:04,0 days 00:00:02
+System tray overflow window.,explorer.exe,125.93359375,2024-04-12 02:24:05,2024-04-12 02:24:08,0 days 00:00:04
+Desktop,explorer.exe,125.93359375,2024-04-12 02:24:09,2024-04-12 02:24:11,0 days 00:00:03
+Free Download Manager,fdm.exe,20.76171875,2024-04-12 02:24:12,2024-04-12 02:24:16,0 days 00:00:05
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1735.25,2024-04-12 02:24:18,2024-04-12 02:24:18,0 days 00:00:01
+Desktop,explorer.exe,152.1015625,2024-04-12 02:24:19,2024-04-12 02:24:19,0 days 00:00:01
+Task View,explorer.exe,153.90234375,2024-04-12 02:24:20,2024-04-12 02:24:20,0 days 00:00:01
+Copilot (preview),msedge.exe,1399.57421875,2024-04-12 02:24:21,2024-04-12 02:24:23,0 days 00:00:03
+Desktop,explorer.exe,130.48046875,2024-04-12 02:24:24,2024-04-12 02:24:24,0 days 00:00:01
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1774.0859375,2024-04-12 02:24:25,2024-04-12 02:24:26,0 days 00:00:02
+Krishnaraj's Notebook - OneNote for Windows 10,ApplicationFrameHost.exe,15.6640625,2024-04-12 02:24:27,2024-04-12 02:24:30,0 days 00:00:04
+Media Player,ApplicationFrameHost.exe,13.1328125,2024-04-12 02:24:31,2024-04-12 02:24:32,0 days 00:00:02
+Sonu Nigam - Kaun Kenda,Spotify.exe,282.421875,2024-04-12 02:24:33,2024-04-12 02:24:36,0 days 00:00:04
+Task View,explorer.exe,156.92578125,2024-04-12 02:24:37,2024-04-12 02:24:37,0 days 00:00:01
+Desktop,explorer.exe,159.140625,2024-04-12 02:24:38,2024-04-12 02:24:38,0 days 00:00:01
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1711.80078125,2024-04-12 02:24:40,2024-04-12 02:24:43,0 days 00:00:04
+PC Usage Analyzer - Dashboard and 1 more page - Personal - Microsoft Edge,msedge.exe,1242.57421875,2024-04-14 23:31:47,2024-04-14 23:31:56,0 days 00:00:09
+This PC,dopus.exe,80.765625,2024-04-14 23:31:57,2024-04-14 23:32:05,0 days 00:00:09
+Search,SearchHost.exe,142.04296875,2024-04-14 23:32:06,2024-04-14 23:32:09,0 days 00:00:04
+This PC,dopus.exe,80.80859375,2024-04-14 23:32:10,2024-04-14 23:32:10,0 days 00:00:01
+WhatsApp,ApplicationFrameHost.exe,8.80078125,2024-04-14 23:32:11,2024-04-14 23:32:11,0 days 00:00:01
+Meet - wep-uwpa-zaz and 4 more pages - Personal - Microsoft Edge,msedge.exe,1186.70703125,2024-04-14 23:32:12,2024-04-14 23:32:14,0 days 00:00:02
+WhatsApp,ApplicationFrameHost.exe,8.83984375,2024-04-14 23:32:15,2024-04-14 23:32:18,0 days 00:00:04
+Task View,explorer.exe,331.9609375,2024-04-14 23:32:19,2024-04-14 23:32:20,0 days 00:00:02
+This PC,dopus.exe,80.8671875,2024-04-14 23:32:21,2024-04-14 23:32:40,0 days 00:00:20
+PC Usage Analyzer - Dashboard and 1 more page - Personal - Microsoft Edge,msedge.exe,1141.49609375,2024-04-14 23:32:41,2024-04-14 23:34:23,0 days 00:00:21
+Search,SearchHost.exe,140.2265625,2024-04-14 23:34:24,2024-04-14 23:34:27,0 days 00:00:04
+PC Usage Analyzer - Dashboard and 1 more page - Personal - Microsoft Edge,msedge.exe,1297.4375,2024-04-14 23:34:29,2024-04-14 23:34:32,0 days 00:00:04
+urls.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,765.1171875,2024-04-14 23:34:33,2024-04-14 23:35:02,0 days 00:00:28
+PC Usage Analyzer - Dashboard and 1 more page - Personal - Microsoft Edge,msedge.exe,1301.57421875,2024-04-14 23:35:03,2024-04-14 23:35:21,0 days 00:00:17
+urls.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,760.36328125,2024-04-14 23:35:22,2024-04-14 23:35:32,0 days 00:00:10
+PC App Usage Analyzer and 1 more page - Personal - Microsoft Edge,msedge.exe,1417.515625,2024-04-14 23:35:33,2024-04-14 23:37:57,0 days 00:02:11
+PC Usage Analyzer - Dashboard and 1 more page - Personal - Microsoft Edge,msedge.exe,1328.2421875,2024-04-14 23:37:59,2024-04-14 23:38:58,0 days 00:00:14
+This PC,dopus.exe,39.51171875,2024-04-14 23:38:59,2024-04-14 23:39:55,0 days 00:00:56
+PC Usage Analyzer - Dashboard and 1 more page - Personal - Microsoft Edge,msedge.exe,1247.6953125,2024-04-14 23:39:56,2024-04-14 23:47:06,0 days 00:00:28
+Task View,explorer.exe,339.05859375,2024-04-14 23:47:07,2024-04-14 23:47:12,0 days 00:00:06
+PC Usage Analyzer - Dashboard and 1 more page - Personal - Microsoft Edge,msedge.exe,1533.5625,2024-04-14 23:47:13,2024-04-14 23:47:27,0 days 00:00:13
+Task View,explorer.exe,343.8125,2024-04-14 23:47:28,2024-04-14 23:47:36,0 days 00:00:08
+New Tab and 1 more page - Personal - Microsoft Edge,msedge.exe,1199.81640625,2024-04-14 23:47:37,2024-04-14 23:47:37,0 days 00:00:01
+This PC,dopus.exe,36.25,2024-04-14 23:47:38,2024-04-14 23:47:38,0 days 00:00:01
+Machine Learning,dopus.exe,36.3671875,2024-04-14 23:47:39,2024-04-14 23:47:40,0 days 00:00:02
+The StatQuest Illustrated G_ (Z-Library).pdf - Foxit PhantomPDF,FoxitPhantomPDF.exe,14.01953125,2024-04-14 23:47:41,2024-04-14 23:48:04,0 days 00:00:24
+Nice Apps,Notion.exe,920.19921875,2024-04-14 23:48:06,2024-04-14 23:48:08,0 days 00:00:03
+Machine Learning,Notion.exe,1176.50390625,2024-04-14 23:48:09,2024-04-14 23:48:11,0 days 00:00:03
+Data Science and Analytics,Notion.exe,1093.84765625,2024-04-14 23:48:12,2024-04-14 23:48:13,0 days 00:00:02
+Machine Learning,Notion.exe,1133.734375,2024-04-14 23:48:14,2024-04-14 23:48:17,0 days 00:00:03
+Regression,Notion.exe,1147.19921875,2024-04-14 23:48:18,2024-04-14 23:48:19,0 days 00:00:02
+Linear Regression,Notion.exe,1164.36328125,2024-04-14 23:48:20,2024-04-14 23:48:20,0 days 00:00:01
+Multiple Regression,Notion.exe,1192.73828125,2024-04-14 23:48:21,2024-04-14 23:48:21,0 days 00:00:01
+Regression,Notion.exe,1196.859375,2024-04-14 23:48:22,2024-04-14 23:48:22,0 days 00:00:01
+Machine Learning,Notion.exe,1193.93359375,2024-04-14 23:48:23,2024-04-14 23:48:23,0 days 00:00:01
+Classification,Notion.exe,1212.32421875,2024-04-14 23:48:25,2024-04-14 23:48:25,0 days 00:00:01
+Naive Bayes,Notion.exe,1233.85546875,2024-04-14 23:48:26,2024-04-14 23:48:27,0 days 00:00:02
+Bayes Theorem,Notion.exe,1227.4921875,2024-04-14 23:48:28,2024-04-14 23:48:29,0 days 00:00:02
+Theorems,Notion.exe,1309.53125,2024-04-14 23:48:30,2024-04-14 23:48:30,0 days 00:00:01
+Statistics and Probability,Notion.exe,1329.78515625,2024-04-14 23:48:31,2024-04-14 23:48:31,0 days 00:00:01
+Probability,Notion.exe,1296.23046875,2024-04-14 23:48:33,2024-04-14 23:48:33,0 days 00:00:01
+Terminologies,Notion.exe,1341.8359375,2024-04-14 23:48:34,2024-04-14 23:48:35,0 days 00:00:02
+Probability,Notion.exe,1350.609375,2024-04-14 23:48:36,2024-04-14 23:48:36,0 days 00:00:01
+Statistics and Probability,Notion.exe,1360.25,2024-04-14 23:48:37,2024-04-14 23:48:37,0 days 00:00:01
+Data Science and Analytics,Notion.exe,1358.70703125,2024-04-14 23:48:38,2024-04-14 23:48:38,0 days 00:00:01
+Machine Learning,Notion.exe,1369.69140625,2024-04-14 23:48:39,2024-04-14 23:48:41,0 days 00:00:03
+Gradient Descent,Notion.exe,1383.05859375,2024-04-14 23:48:43,2024-04-14 23:48:43,0 days 00:00:01
+Machine Learning,Notion.exe,1381.0546875,2024-04-14 23:48:44,2024-04-14 23:48:47,0 days 00:00:04
+The StatQuest Illustrated G_ (Z-Library).pdf - Foxit PhantomPDF,FoxitPhantomPDF.exe,192.4296875,2024-04-14 23:48:48,2024-04-14 23:49:01,0 days 00:00:13
+Desktop,explorer.exe,322.87890625,2024-04-14 23:49:02,2024-04-14 23:49:03,0 days 00:00:02
+Starting,MailClient.exe,62.1328125,2024-04-14 23:49:04,2024-04-14 23:49:05,0 days 00:00:02
+eM Client,MailClient.exe,190.453125,2024-04-14 23:49:06,2024-04-14 23:50:15,0 days 00:01:08
+The StatQuest Illustrated G_ (Z-Library).pdf - Foxit PhantomPDF,FoxitPhantomPDF.exe,192.56640625,2024-04-14 23:50:16,2024-04-14 23:50:16,0 days 00:00:01
+WhatsApp,ApplicationFrameHost.exe,13.26953125,2024-04-14 23:50:17,2024-04-14 23:53:00,0 days 00:02:40
+Save As,PickerHost.exe,14.09765625,2024-04-14 23:53:01,2024-04-14 23:53:06,0 days 00:00:06
+WhatsApp,ApplicationFrameHost.exe,13.109375,2024-04-14 23:53:07,2024-04-14 23:53:12,0 days 00:00:06
+T.Y. B. Tech. CSF_End Term Practical_Oral Exam_April-May 2024[1].pdf - Foxit PhantomPDF,FoxitPhantomPDF.exe,240.359375,2024-04-14 23:53:13,2024-04-14 23:55:49,0 days 00:02:32
+WhatsApp,ApplicationFrameHost.exe,13.23828125,2024-04-14 23:55:50,2024-04-14 23:56:25,0 days 00:00:35
+Desktop,explorer.exe,317.10546875,2024-04-14 23:56:26,2024-04-14 23:56:29,0 days 00:00:04
+Meet - wep-uwpa-zaz and 4 more pages - Personal - Microsoft Edge,msedge.exe,1152.734375,2024-04-14 23:56:30,2024-04-14 23:56:30,0 days 00:00:01
+New Tab and 5 more pages - Personal - Microsoft Edge,msedge.exe,1203.3984375,2024-04-14 23:56:32,2024-04-14 23:56:39,0 days 00:00:08
+publish a scientific paper - Google Search and 5 more pages - Personal - Microsoft Edge,msedge.exe,1203.6953125,2024-04-14 23:56:40,2024-04-14 23:56:42,0 days 00:00:02
+publish a scientific paper - Google Search and 6 more pages - Personal - Microsoft Edge,msedge.exe,1348.25,2024-04-14 23:56:43,2024-04-14 23:56:43,0 days 00:00:01
+wellcomeopenresearch.org/for-authors/publish-your-research?utm_source=google&utm_medium=sem&utm_campaign=JRF29309&gad_source=1&gclid=CjwKCAjw_e2wBhAEEiwAyFFFo1hCho6d3_HQBqWdKwkHZXcGXnOCxduyAsAxIgpUfXvJ66qhOzk8qxoCgMkQAvD_BwE and 6 more pages - Personal - Microsoft Edge,msedge.exe,1368.2265625,2024-04-14 23:56:44,2024-04-14 23:56:45,0 days 00:00:02
+Submit your Research | Wellcome Open Research and 6 more pages - Personal - Microsoft Edge,msedge.exe,1430.9375,2024-04-14 23:56:46,2024-04-14 23:56:46,0 days 00:00:01
+PC Usage Analyzer - Dashboard and 3 more pages - Personal - Microsoft Edge,msedge.exe,1285.68359375,2024-04-17 14:00:35,2024-04-17 14:00:36,0 days 00:00:02
+C:\WINDOWS\system32\cmd.exe - python  manage.py runserver,WindowsTerminal.exe,30.4140625,2024-04-17 14:00:37,2024-04-17 14:00:37,0 days 00:00:01
+ds Assignment_7.pdf - Foxit PhantomPDF,FoxitPhantomPDF.exe,27.53515625,2024-04-17 14:00:38,2024-04-17 14:00:42,0 days 00:00:05
+C:\WINDOWS\system32\cmd.exe - python  manage.py runserver,WindowsTerminal.exe,30.40625,2024-04-17 14:00:43,2024-04-17 14:00:43,0 days 00:00:01
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1299.26171875,2024-04-17 14:00:44,2024-04-17 14:00:45,0 days 00:00:02
+C:\WINDOWS\system32\cmd.exe - python  manage.py runserver,WindowsTerminal.exe,30.40625,2024-04-17 14:00:46,2024-04-17 14:00:48,0 days 00:00:02
+Media Player,ApplicationFrameHost.exe,19.59375,2024-04-17 14:00:49,2024-04-17 14:00:54,0 days 00:00:06
+Spotify,Spotify.exe,267.8203125,2024-04-17 14:00:55,2024-04-17 14:00:58,0 days 00:00:04
+Attendence-Assistant,dopus.exe,163.109375,2024-04-17 14:00:59,2024-04-17 14:01:00,0 days 00:00:02
+Spotify,Spotify.exe,281.83203125,2024-04-17 14:01:01,2024-04-17 14:01:01,0 days 00:00:01
+WhatsApp,ApplicationFrameHost.exe,23.82421875,2024-04-17 14:01:02,2024-04-17 14:04:39,0 days 00:03:36
+Desktop,explorer.exe,3238.06640625,2024-04-17 14:04:41,2024-04-17 14:04:41,0 days 00:00:01
+Media Player,ApplicationFrameHost.exe,20.796875,2024-04-17 14:04:42,2024-04-17 14:04:44,0 days 00:00:03
+Attendence-Assistant,dopus.exe,163.14453125,2024-04-17 14:04:45,2024-04-17 14:04:45,0 days 00:00:01
+Search,SearchHost.exe,129.75,2024-04-17 14:04:46,2024-04-17 14:04:46,0 days 00:00:01
+Task View,explorer.exe,3290.24609375,2024-04-17 14:04:47,2024-04-17 14:04:48,0 days 00:00:02
+C:\WINDOWS\system32\cmd.exe - python  manage.py runserver,WindowsTerminal.exe,30.4296875,2024-04-17 14:04:49,2024-04-17 14:04:54,0 days 00:00:06
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1278.93359375,2024-04-17 14:04:55,2024-04-17 14:04:57,0 days 00:00:03
+C:\WINDOWS\system32\cmd.exe - python  manage.py runserver,WindowsTerminal.exe,30.43359375,2024-04-17 14:04:58,2024-04-17 14:04:59,0 days 00:00:02
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1305.67578125,2024-04-17 14:05:00,2024-04-17 14:05:05,0 days 00:00:05
+Free Download Manager,fdm.exe,98.046875,2024-04-17 14:05:06,2024-04-17 14:05:09,0 days 00:00:04
+Desktop,explorer.exe,3312.94140625,2024-04-17 14:05:10,2024-04-17 14:05:12,0 days 00:00:03
+DevTools - 127.0.0.1:8000/dashboard/dash,msedge.exe,1112.8125,2024-04-17 14:05:13,2024-04-17 14:05:13,0 days 00:00:01
+WhatsApp,ApplicationFrameHost.exe,23.74609375,2024-04-17 14:05:14,2024-04-17 14:14:34,0 days 00:09:17
+Desktop,explorer.exe,3562.9375,2024-04-17 14:14:35,2024-04-17 14:14:35,0 days 00:00:01
+Notification Center,ShellExperienceHost.exe,39.65625,2024-04-17 14:14:36,2024-04-17 14:14:37,0 days 00:00:02
+Desktop,explorer.exe,3557.98046875,2024-04-17 14:14:39,2024-04-17 14:14:45,0 days 00:00:07
+PC Usage Analyzer - Dashboard and 4 more pages - Personal - Microsoft Edge,msedge.exe,1231.875,2024-04-17 15:09:42,2024-04-17 15:09:56,0 days 00:00:14
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1292.953125,2024-04-17 15:09:57,2024-04-17 15:10:08,0 days 00:00:12
+PC Usage Analyzer - Dashboard and 4 more pages - Personal - Microsoft Edge,msedge.exe,1748.62890625,2024-04-17 15:10:09,2024-04-17 15:13:06,0 days 00:02:34
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1300.80859375,2024-04-17 15:13:07,2024-04-17 15:13:11,0 days 00:00:05
+PC Usage Analyzer - Dashboard and 4 more pages - Personal - Microsoft Edge,msedge.exe,1329.53515625,2024-04-17 15:13:12,2024-04-17 15:13:24,0 days 00:00:12
+MainApp.py - PC Usage Analyzer - python - Visual Studio Code,Code.exe,1281.5078125,2024-04-17 15:13:25,2024-04-17 15:13:32,0 days 00:00:08
+PC Usage Analyzer - Dashboard and 4 more pages - Personal - Microsoft Edge,msedge.exe,1373.20703125,2024-04-17 15:15:31,2024-04-17 15:15:38,0 days 00:00:08
